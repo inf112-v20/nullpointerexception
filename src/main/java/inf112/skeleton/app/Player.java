@@ -40,7 +40,7 @@ public class Player extends InputAdapter {
         return playerLayer;
     }
 
-
+//heihei test
     @Override
     public boolean keyUp(int keycode) {
         playerLayer.setCell((int) player.x, (int) player.y, null);
