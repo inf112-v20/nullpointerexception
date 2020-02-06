@@ -13,14 +13,19 @@ import com.badlogic.gdx.math.Vector2;
 public class Player extends InputAdapter {
 
     private TiledMapTileLayer playerLayer;
-
     private Texture playerTexture;
     private TiledMapTileLayer.Cell playerCell;
     private TiledMapTileLayer.Cell playerDiedCell;
     private TiledMapTileLayer.Cell playerWonCell;
+    //Vector holds players position
     private Vector2 player;
 
-
+    /**
+     * Initializing default/dying/winning cells of a player.
+     * Texture region splits the playertexture into 3 different textures and puts them in a 2-dimensional array.
+     * Initializing the inputProcessor for input-listening.
+     * @param map
+     */
     public Player(TiledMap map) {
         playerLayer = (TiledMapTileLayer) map.getLayers().get("Player");
         playerTexture = new Texture("assets/player.png");
@@ -31,8 +36,6 @@ public class Player extends InputAdapter {
         playerWonCell = new TiledMapTileLayer.Cell().setTile(new StaticTiledMapTile(playerPictures[0][2]));
 
         player = new Vector2();
-
-
         Gdx.input.setInputProcessor(this);
     }
 
@@ -40,7 +43,13 @@ public class Player extends InputAdapter {
         return playerLayer;
     }
 
-//heihei test
+    /**
+     * Refreshing the former players position to null
+     * Implements the map-movement of a player
+     * Prints out the current position
+     * @param keycode - an integer representation of different possible inputs
+     * @return true/false
+     */
     @Override
     public boolean keyUp(int keycode) {
         playerLayer.setCell((int) player.x, (int) player.y, null);
@@ -58,7 +67,6 @@ public class Player extends InputAdapter {
         System.out.println(player.y);
         return super.keyDown(keycode);
     }
-
 
     public TiledMapTileLayer.Cell setPlayerToDead() {
         return playerDiedCell;
