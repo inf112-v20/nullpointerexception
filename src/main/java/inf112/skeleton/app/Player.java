@@ -22,12 +22,13 @@ public class Player extends InputAdapter {
 
     /**
      * Initializing default/dying/winning cells of a player.
-     * Texture region splits the playertexture into 3 different textures and puts them in a 2-dimensional array.
+     * Texture region splits the player texture into 3 different textures and puts them in a 2-dimensional array.
      * Initializing the inputProcessor for input-listening.
-     * @param map
+     *
+     * @param board board object
      */
-    public Player(TiledMap map) {
-        playerLayer = (TiledMapTileLayer) map.getLayers().get("Player");
+    public Player(TiledMap board) {
+        playerLayer = (TiledMapTileLayer) board.getLayers().get("Player");
         playerTexture = new Texture("assets/player.png");
         TextureRegion[][] playerPictures = TextureRegion.split(playerTexture, 300, 300);
 
@@ -39,14 +40,20 @@ public class Player extends InputAdapter {
         Gdx.input.setInputProcessor(this);
     }
 
+    /**
+     * Returns a layer consisting of players
+     *
+     * @return the layer with player(s)
+     */
     public TiledMapTileLayer getLayer() {
         return playerLayer;
     }
 
     /**
      * Refreshing the former players position to null
-     * Implements the map-movement of a player
+     * Implements the board-movement of a player
      * Prints out the current position
+     *
      * @param keycode - an integer representation of different possible inputs
      * @return true/false
      */
@@ -62,28 +69,50 @@ public class Player extends InputAdapter {
             player.y += 1;
         if (keycode == Input.Keys.DOWN)
             player.y -= 1;
-
-        System.out.println(player.x);
-        System.out.println(player.y);
         return super.keyDown(keycode);
     }
 
+    /**
+     * Sets the current player state to dead
+     *
+     * @return the new player state
+     */
     public TiledMapTileLayer.Cell setPlayerToDead() {
         return playerDiedCell;
     }
 
+    /**
+     * Sets the current player state to won
+     *
+     * @return the new player state
+     */
     public TiledMapTileLayer.Cell setPlayerToWon() {
         return playerWonCell;
     }
 
+    /**
+     * Sets the current player state to default
+     *
+     * @return the new player state
+     */
     public TiledMapTileLayer.Cell setPlayerToDefault() {
         return playerCell;
     }
 
+    /**
+     * Returns the x position on the grid for the player
+     *
+     * @return x value
+     */
     public float getX() {
         return player.x;
     }
 
+    /**
+     * Returns the y position on the grid for the player
+     *
+     * @return y value
+     */
     public float getY() {
         return player.y;
     }
