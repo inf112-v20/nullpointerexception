@@ -1,5 +1,5 @@
-# INF112 Maven template 
-Simple skeleton with libgdx. 
+# INF112 - RoboRally Project
+Simple board with a moveable player 
 
 
 ## Known bugs

@@ -26,7 +26,9 @@ public class Game implements ApplicationListener {
     public void create() {
         board = new Board();
         camera = new OrthographicCamera();
-        camera.setToOrtho(false, board.getBoardWidth(), board.getBoardHeight());
+        camera.setToOrtho(false,
+                board.getBoardWidth() * Board.TILE_SIZE,
+                board.getBoardHeight() * Board.TILE_SIZE);
         camera.update();
 
         renderer = new OrthogonalTiledMapRenderer(board.getBoard());

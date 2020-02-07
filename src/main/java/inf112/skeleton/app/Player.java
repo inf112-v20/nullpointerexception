@@ -30,7 +30,9 @@ public class Player extends InputAdapter {
     public Player(TiledMap board) {
         playerLayer = (TiledMapTileLayer) board.getLayers().get("Player");
         playerTexture = new Texture("assets/player.png");
-        TextureRegion[][] playerPictures = TextureRegion.split(playerTexture, 300, 300);
+        TextureRegion[][] playerPictures = TextureRegion.split(playerTexture,
+                (int) Board.TILE_SIZE,
+                (int) Board.TILE_SIZE);
 
         playerCell = new TiledMapTileLayer.Cell().setTile(new StaticTiledMapTile(playerPictures[0][0]));
         playerDiedCell = new TiledMapTileLayer.Cell().setTile(new StaticTiledMapTile(playerPictures[0][1]));
