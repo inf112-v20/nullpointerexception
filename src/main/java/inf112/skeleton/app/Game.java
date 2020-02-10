@@ -13,7 +13,6 @@ public class Game implements ApplicationListener {
     private Player player;
 
     private OrthogonalTiledMapRenderer renderer;
-    private OrthographicCamera camera;
 
     private TiledMapTileLayer holeLayer;
     private TiledMapTileLayer playerLayer;
@@ -25,7 +24,7 @@ public class Game implements ApplicationListener {
     @Override
     public void create() {
         board = new Board();
-        camera = new OrthographicCamera();
+        OrthographicCamera camera = new OrthographicCamera();
         camera.setToOrtho(false,
                 board.getBoardWidth() * Board.TILE_SIZE,
                 board.getBoardHeight() * Board.TILE_SIZE);

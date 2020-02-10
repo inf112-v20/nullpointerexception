@@ -13,7 +13,6 @@ import com.badlogic.gdx.math.Vector2;
 public class Player extends InputAdapter {
 
     private TiledMapTileLayer playerLayer;
-    private Texture playerTexture;
     private TiledMapTileLayer.Cell playerCell;
     private TiledMapTileLayer.Cell playerDiedCell;
     private TiledMapTileLayer.Cell playerWonCell;
@@ -29,12 +28,17 @@ public class Player extends InputAdapter {
      */
     public Player(TiledMap board) {
         playerLayer = (TiledMapTileLayer) board.getLayers().get("Player");
-        playerTexture = new Texture("assets/player.png");
+        Texture playerTexture = new Texture("assets/player.png");
         TextureRegion[][] playerPictures = TextureRegion.split(playerTexture,
                 (int) Board.TILE_SIZE,
                 (int) Board.TILE_SIZE);
 
-        playerCell = new TiledMapTileLayer.Cell().setTile(new StaticTiledMapTile(playerPictures[0][0]));
+        Texture robotTextures = new Texture("assets/robot.png");
+        TextureRegion[][] robotTexture = TextureRegion.split(robotTextures,
+                (int) Board.TILE_SIZE,
+                (int) Board.TILE_SIZE);
+
+        playerCell = new TiledMapTileLayer.Cell().setTile(new StaticTiledMapTile(robotTexture[0][0]));
         playerDiedCell = new TiledMapTileLayer.Cell().setTile(new StaticTiledMapTile(playerPictures[0][1]));
         playerWonCell = new TiledMapTileLayer.Cell().setTile(new StaticTiledMapTile(playerPictures[0][2]));
 
