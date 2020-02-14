@@ -1,4 +1,4 @@
-package inf112.skeleton.app;
+package inf112.app;
 
 import org.junit.Before;
 import org.junit.Test;
