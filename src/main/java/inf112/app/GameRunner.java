@@ -7,7 +7,7 @@ public class GameRunner extends Game {
 
     public static int SCREEN_WIDTH = 900;
     public static int SCREEN_HEIGHT = 900;
-    public static SpriteBatch batch;
+    public SpriteBatch batch;
 
     @Override
     public void create() {
