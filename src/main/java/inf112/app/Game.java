@@ -2,19 +2,33 @@ package inf112.app;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 
-public class Game extends ApplicationAdapter {
+public class Game implements Screen {
     private Board board;
     private Player player;
 
     private OrthogonalTiledMapRenderer renderer;
 
+    public Game(){
+        board = new Board();
+        player = new Player(board.getBoardLayers(), this);
+
+        OrthographicCamera camera = new OrthographicCamera();
+        camera.setToOrtho(false,
+                board.getBoardWidth() * Board.TILE_SIZE,
+                board.getBoardHeight() * Board.TILE_SIZE);
+        camera.update();
+
+        renderer = new OrthogonalTiledMapRenderer(board.getBoard());
+        renderer.setView(camera);
+    }
     /**
      * Initializing a board, camera, renderer and player in addition to creating the needed TiledMap layers.
-     */
+
     @Override
     public void create() {
         board = new Board();
@@ -29,6 +43,18 @@ public class Game extends ApplicationAdapter {
         renderer = new OrthogonalTiledMapRenderer(board.getBoard());
         renderer.setView(camera);
     }
+    */
+
+
+    @Override
+    public void render(float v) {
+        Gdx.gl.glClearColor(1, 1, 1, 1);
+        Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT);
+
+        player.checkPlayerState();
+
+        renderer.render();
+    }
 
     /**
      * Called when the Application is destroyed. Preceded by a call to pause().
@@ -41,7 +67,7 @@ public class Game extends ApplicationAdapter {
     /**
      * A loop method which renders the changes on the screen
      * Shows the player default/winning/dying state on the board
-     */
+
     @Override
     public void render() {
         Gdx.gl.glClearColor(1, 1, 1, 1);
@@ -51,7 +77,7 @@ public class Game extends ApplicationAdapter {
 
         renderer.render();
     }
-
+    */
     /**
      * Checks if there is a wall in the current tile or the next tile
      * which the player is trying to move into.
@@ -83,5 +109,30 @@ public class Game extends ApplicationAdapter {
         if (newX >= board.getBoardWidth() || newX < 0)
             return false;
         return newY < board.getBoardHeight() && newY >= 0;
+    }
+
+    @Override
+    public void show() {
+
+    }
+
+    @Override
+    public void resize(int i, int i1) {
+
+    }
+
+    @Override
+    public void pause() {
+
+    }
+
+    @Override
+    public void resume() {
+
+    }
+
+    @Override
+    public void hide() {
+
     }
 }
