@@ -47,6 +47,7 @@ public class MenuScreen extends ScreenAdapter {
         //Current mouse position on X-axis
         int mousePosition_X = Gdx.input.getX();
 
+        //Scaling mouse position when the resolution changes
         int scaleX = (mousePosition_X * GameRunner.SCREEN_WIDTH) / Gdx.graphics.getWidth();
         int scaleY = (mousePosition_Y * GameRunner.SCREEN_HEIGHT) / Gdx.graphics.getHeight();
 
