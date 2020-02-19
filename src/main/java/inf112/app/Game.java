@@ -77,11 +77,13 @@ public class Game extends ScreenAdapter {
      * @return boolean true or false if player can move
      */
     public boolean canMove(int newX, int newY, Directions dir) {
-        if (hasWall(newX, newY, dir))
-            return false;
-        if (newX >= board.getBoardWidth() || newX < 0)
-            return false;
-        return newY < board.getBoardHeight() && newY >= 0;
+        return ! hasWall(newX, newY, dir);
+
+    }
+    public boolean outOfMap(int newX, int newY) {
+        if (newX < 0 || newX >= board.getBoardWidth())
+            return true;
+        return newY < 0 || newY >= board.getBoardHeight();
     }
 
 }

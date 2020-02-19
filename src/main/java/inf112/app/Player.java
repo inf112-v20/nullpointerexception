@@ -67,25 +67,36 @@ public class Player extends InputAdapter {
         layers.get("player").setCell((int) player.x, (int) player.y, null);
 
         if (keycode == Input.Keys.RIGHT)
-            if (game.canMove(getX() + 1, getY(), direction) && direction == Directions.EAST)
+            if (game.outOfMap(getX() + 1, getY()))
+                player.setZero();
+            else if (game.canMove(getX() + 1, getY(), direction) && direction == Directions.EAST)
                 player.x += 1;
             else
                 direction = Directions.EAST;
 
         if (keycode == Input.Keys.LEFT)
-            if (game.canMove(getX() - 1, getY(), direction) && direction == Directions.WEST)
+            if (game.outOfMap(getX() - 1, getY()))
+                player.setZero();
+            else if (game.canMove(getX() - 1, getY(), direction) && direction == Directions.WEST)
                 player.x -= 1;
+
             else
                 direction = Directions.WEST;
 
         if (keycode == Input.Keys.UP)
-            if (game.canMove(getX(), getY() + 1, direction) && direction == Directions.NORTH)
+            if (game.outOfMap(getX(), getY() + 1)) {
+                player.setZero();
+            }
+            else if (game.canMove(getX(), getY() + 1, direction) && direction == Directions.NORTH) {
                 player.y += 1;
+            }
             else
                 direction = Directions.NORTH;
 
         if (keycode == Input.Keys.DOWN) {
-            if (game.canMove(getX(), getY() - 1, direction) && direction == Directions.SOUTH)
+            if (game.outOfMap(getX(), getY() -1))
+                player.setZero();
+            else if (game.canMove(getX(), getY() - 1, direction) && direction == Directions.SOUTH)
                 player.y -= 1;
             else
                 direction = Directions.SOUTH;
