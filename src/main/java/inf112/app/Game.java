@@ -9,6 +9,7 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 public class Game extends ScreenAdapter {
     private Board board;
     private Player player;
+    private BoardObjects boardObjects;
 
     private OrthogonalTiledMapRenderer renderer;
 
@@ -17,6 +18,7 @@ public class Game extends ScreenAdapter {
      */
     public Game(){
         board = new Board();
+        boardObjects = new BoardObjects(board);
         player = new Player(board.getBoardLayers(), this);
 
         OrthographicCamera camera = new OrthographicCamera();

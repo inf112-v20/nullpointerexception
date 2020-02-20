@@ -19,6 +19,7 @@ public class Player extends InputAdapter {
     private TiledMapTileLayer.Cell playerWonCell;
     //Vector holds players position
     private Vector2 player;
+    private Position pos;
     private Directions direction;
     private Game game;
 
@@ -52,6 +53,8 @@ public class Player extends InputAdapter {
         playerWonCell = new TiledMapTileLayer.Cell().setTile(new StaticTiledMapTile(playerPictures[0][2]));
 
         player = new Vector2();
+        pos = new Position((int) player.x, (int) player.y);
+
         Gdx.input.setInputProcessor(this);
     }
 
@@ -67,23 +70,25 @@ public class Player extends InputAdapter {
     public boolean keyUp(int keycode) {
         layers.get("player").setCell((int) player.x, (int) player.y, null);
 
-        if (keycode == Input.Keys.RIGHT)
-            if (direction != Directions.EAST)
-                direction = Directions.EAST;
-            else if (game.outOfMap(getX() + 1, getY()) && game.canMove(getX() + 1, getY(), direction))
-                player.setZero();
-            else if (game.canMove(getX() + 1, getY(), direction) && direction == Directions.EAST)
-                player.x += 1;
+        switch(keycode) {
+            case Input.Keys.RIGHT:
+                if (direction != Directions.EAST)
+                    direction = Directions.EAST;
+                else if (game.outOfMap(getX() + 1, getY()) && game.canMove(getX() + 1, getY(), direction))
+                    player.setZero();
+                else if (game.canMove(getX() + 1, getY(), direction) && direction == Directions.EAST)
+                    player.x += 1;
+                break;
+            case Input.Keys.LEFT:
+                if (direction != Directions.WEST)
+                    direction = Directions.WEST;
+                else if (game.outOfMap(getX() - 1, getY()) && game.canMove(getX() - 1, getY(), direction))
+                    player.setZero();
+                else if (game.canMove(getX() - 1, getY(), direction) && direction == Directions.WEST)
+                    player.x -= 1;
+                break;
 
-
-        if (keycode == Input.Keys.LEFT)
-            if (direction != Directions.WEST)
-                direction = Directions.WEST;
-            else if (game.outOfMap(getX() - 1, getY()) && game.canMove(getX() - 1, getY(), direction))
-                player.setZero();
-            else if (game.canMove(getX() - 1, getY(), direction) && direction == Directions.WEST)
-                player.x -= 1;
-
+        }
 
         if (keycode == Input.Keys.UP)
             if (direction != Directions.NORTH)
