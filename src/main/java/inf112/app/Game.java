@@ -16,9 +16,9 @@ public class Game extends ScreenAdapter {
     /**
      * Initializing a board, camera, renderer and player in addition to creating the needed TiledMap layers.
      */
-    public Game(){
+    public Game() {
         board = new Board();
-        boardObjects = new BoardObjects(board);
+        boardObjects = new BoardObjects(board.getBoardLayers());
         player = new Player(board.getBoardLayers(), this);
 
         OrthographicCamera camera = new OrthographicCamera();
@@ -34,13 +34,13 @@ public class Game extends ScreenAdapter {
     /**
      * A loop method which renders the changes on the screen
      * Shows the player default/winning/dying state on the board
-    */
-     @Override
+     */
+    @Override
     public void render(float v) {
         Gdx.gl.glClearColor(1, 1, 1, 1);
         Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT);
 
-        player.checkPlayerState();
+        player.updatePlayerState();
 
         renderer.render();
     }
@@ -53,39 +53,42 @@ public class Game extends ScreenAdapter {
         renderer.dispose();
     }
 
-    /**
-     * Checks if there is a wall in the current tile or the next tile
-     * which the player is trying to move into.
-     *
-     * @param newX x coordinate player is trying to move towards
-     * @param newY y coordinate player is trying to move towards
-     * @param dir  direction the player is facing/wanting to move towards
-     * @return boolean true or false if the tile has a wall
-     */
-    private boolean hasWall(int newX, int newY, Directions dir) {
-        //Checks if there is a wall in the direction the player is trying to move
-        if (board.getBoardLayers().get("wall" + Directions.getName(dir)).getCell(player.getX(), player.getY()) != null)
+    public boolean outOfBoard(Position newPos) {
+        if (newPos.getX() < 0 || newPos.getX() >= board.getBoardWidth())
             return true;
-        //Checks if there is a wall in the next tile, from the direction the player is coming from
-        return board.getBoardLayers().get("wall" + Directions.getName(Directions.reverse(dir))).getCell(newX, newY) != null;
+        return newPos.getY() < 0 || newPos.getY() >= board.getBoardHeight();
     }
 
-    /**
-     * Checks if the player can move in a certain direction
-     *
-     * @param newX x coordinate player is trying to move towards
-     * @param newY y coordinate player is trying to move towards
-     * @param dir  direction the player is facing/wanting to move towards
-     * @return boolean true or false if player can move
-     */
-    public boolean canMove(int newX, int newY, Directions dir) {
-        return ! hasWall(newX, newY, dir);
-
-    }
-    public boolean outOfMap(int newX, int newY) {
-        if (newX < 0 || newX >= board.getBoardWidth())
-            return true;
-        return newY < 0 || newY >= board.getBoardHeight();
+    public boolean canMove(Position newPos, Directions direction) {
+        return !boardObjects.tileHasWall(player.getPlayerPos(), newPos, direction);
     }
 
+    public void movePlayer(Position pos) {
+        if (!canMove(pos.getNextPos(player.getDirection()), player.getDirection())) {
+            System.out.println("Something is blocking");
+            return;
+        }
+        if (outOfBoard(player.getPlayerPos().getNextPos(player.getDirection())))
+            player.checkpoint();
+        else
+            player.movePlayer(player.getPlayerPos().getNextPos(player.getDirection()));
+    }
+
+    public void checkCurrentTile(Position pos) {
+        if (boardObjects.tileHasFlag(pos)) {
+            System.out.println("Player is standing on a flag!");
+        }
+        if (boardObjects.tileHasHole(pos)) {
+            System.out.println("Player is standing on a hole!");
+        }
+        if (boardObjects.tileHasTrack(pos)) {
+            System.out.println("Player is standing on a track!");
+        }
+        if (boardObjects.tileHasTurnWheel(pos)) {
+            System.out.println("Player is standing on a turnwheel!");
+        }
+        if (boardObjects.tileHasLaser(pos)) {
+            System.out.println("Player is standing on a laser!");
+        }
+    }
 }

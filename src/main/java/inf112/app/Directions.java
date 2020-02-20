@@ -1,7 +1,16 @@
 package inf112.app;
 
 public enum Directions {
-    NORTH, EAST, SOUTH, WEST;
+    NORTH(2),
+    EAST(1),
+    SOUTH(0),
+    WEST(3);
+
+    private final int id;
+
+    Directions(int id) {
+        this.id = id;
+    }
 
     public static String getName(Directions dir) {
         if (dir == NORTH)
@@ -25,5 +34,9 @@ public enum Directions {
         if (dir == WEST)
             return EAST;
         return null;
+    }
+
+    public int getID() {
+        return this.id;
     }
 }
