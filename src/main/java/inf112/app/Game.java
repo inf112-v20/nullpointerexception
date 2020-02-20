@@ -72,22 +72,19 @@ public class Game extends ScreenAdapter {
             player.checkpoint();
         else
             player.movePlayer(player.getPlayerPos().getNextPos(player.getDirection()));
+        System.out.println("Player moved");
     }
 
     public void checkCurrentTile(Position pos) {
         if (boardObjects.tileHasFlag(pos)) {
             System.out.println("Player is standing on a flag!");
-        }
-        if (boardObjects.tileHasHole(pos)) {
+        } else if (boardObjects.tileHasHole(pos)) {
             System.out.println("Player is standing on a hole!");
-        }
-        if (boardObjects.tileHasTrack(pos)) {
+        } else if (boardObjects.tileHasTrack(pos)) {
             System.out.println("Player is standing on a track!");
-        }
-        if (boardObjects.tileHasTurnWheel(pos)) {
+        } else if (boardObjects.tileHasTurnWheel(pos)) {
             System.out.println("Player is standing on a turnwheel!");
-        }
-        if (boardObjects.tileHasLaser(pos)) {
+        } else if (boardObjects.tileHasLaser(pos)) {
             System.out.println("Player is standing on a laser!");
         }
     }

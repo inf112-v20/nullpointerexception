@@ -39,6 +39,5 @@ public class BoardObjects {
 
     public boolean tileHasLaser(Position pos) {
         return board.get("laser").getCell(pos.getX(), pos.getY()) != null;
-
     }
 }

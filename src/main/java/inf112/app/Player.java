@@ -120,6 +120,8 @@ public class Player extends InputAdapter {
                 else
                     game.movePlayer(pos);
                 break;
+            case Input.Keys.Q:
+                game.checkCurrentTile(pos);
         }
 
         game.checkCurrentTile(pos);
