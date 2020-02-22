@@ -1,4 +1,4 @@
-package inf112.app;
+package inf112.app.Board.Player;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -8,14 +8,16 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.tiles.StaticTiledMapTile;
 import com.badlogic.gdx.math.Vector2;
+import inf112.app.Board.Board;
+import inf112.app.Game;
 
 import java.util.Map;
 
 public class Player extends InputAdapter {
 
-    private TiledMapTileLayer.Cell playerCell;
     //Vector holds players position
     private Vector2 player;
+    private TiledMapTileLayer.Cell playerCell;
     private Position pos;
     private Directions dir;
     private Game game;
@@ -124,7 +126,6 @@ public class Player extends InputAdapter {
                 game.checkCurrentTile(pos);
         }
 
-        game.checkCurrentTile(pos);
         updatePlayerState();
         return super.keyDown(keycode);
     }
@@ -160,5 +161,9 @@ public class Player extends InputAdapter {
 
     public Directions getDirection() {
         return dir;
+    }
+
+    public void setDirection(Directions turn) {
+        dir = turn;
     }
 }

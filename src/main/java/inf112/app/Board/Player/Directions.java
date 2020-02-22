@@ -1,4 +1,4 @@
-package inf112.app;
+package inf112.app.Board.Player;
 
 public enum Directions {
     NORTH(2),
@@ -33,6 +33,30 @@ public enum Directions {
             return NORTH;
         if (dir == WEST)
             return EAST;
+        return null;
+    }
+
+    public static Directions turnLeft(Directions dir) {
+        if (dir == NORTH)
+            return WEST;
+        if (dir == EAST)
+            return NORTH;
+        if (dir == SOUTH)
+            return EAST;
+        if (dir == WEST)
+            return SOUTH;
+        return null;
+    }
+
+    public static Directions turnRight(Directions dir) {
+        if (dir == NORTH)
+            return EAST;
+        if (dir == EAST)
+            return SOUTH;
+        if (dir == SOUTH)
+            return WEST;
+        if (dir == WEST)
+            return NORTH;
         return null;
     }
 
