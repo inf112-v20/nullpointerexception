@@ -5,6 +5,12 @@ import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import inf112.app.Board.Board;
+import inf112.app.Board.BoardObjects;
+import inf112.app.Board.Player.Directions;
+import inf112.app.Board.Player.Player;
+import inf112.app.Board.Player.Position;
+import inf112.app.Board.Tiles.Turnwheel;
 
 public class Game extends ScreenAdapter {
     private Board board;
@@ -18,7 +24,7 @@ public class Game extends ScreenAdapter {
      */
     public Game() {
         board = new Board();
-        boardObjects = new BoardObjects(board.getBoardLayers());
+        boardObjects = new BoardObjects(board.getBoardLayers(), this);
         player = new Player(board.getBoardLayers(), this);
 
         OrthographicCamera camera = new OrthographicCamera();
@@ -72,7 +78,7 @@ public class Game extends ScreenAdapter {
             player.checkpoint();
         else
             player.movePlayer(player.getPlayerPos().getNextPos(player.getDirection()));
-        System.out.println("Player moved");
+        //System.out.println("Player moved");
     }
 
     public void checkCurrentTile(Position pos) {
@@ -80,14 +86,23 @@ public class Game extends ScreenAdapter {
             System.out.println("Player is standing on a flag!");
         }
         if (boardObjects.tileHasHole(pos)) {
-            System.out.println("Player is standing on a hole!");
+            player.checkpoint();
+            System.out.println("Player stepped in a hole!");
         }
-        if (boardObjects.tileHasTrack(pos)) {
+        if (boardObjects.tileHasTrack(pos, player.getDirection())) {
+//            Conveyor conveyor = new Conveyor(board.getBoardLayers().get("conveyorbelt").getCell(pos.getX(), pos.getY()));
+
             System.out.println("Player is standing on a track!");
         }
         if (boardObjects.tileHasTurnWheel(pos)) {
-            System.out.println("Player is standing on a turnwheel!");
+            Turnwheel turnwheel = new Turnwheel(board.getBoardLayers().get("turnwheel").getCell(pos.getX(), pos.getY()));
+            if (turnwheel.getID() == 53)
+                player.setDirection(Directions.turnLeft(player.getDirection()));
+            else
+                player.setDirection(Directions.turnRight(player.getDirection()));
+            System.out.println("Player was turned by a turnwheel");
         }
+
         if (boardObjects.tileHasLaser(pos)) {
             System.out.println("Player is standing on a laser!");
         }
