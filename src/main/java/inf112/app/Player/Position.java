@@ -1,4 +1,4 @@
-package inf112.app.Board.Player;
+package inf112.app.Player;
 
 public class Position {
 
@@ -23,7 +23,7 @@ public class Position {
         return yCoordinate;
     }
 
-    public Position getNextPos(Directions dir) {
+    public Position getNextPos(Direction dir) {
         switch (dir) {
             case NORTH:
                 return new Position(xCoordinate, yCoordinate + 1);
@@ -36,13 +36,5 @@ public class Position {
             default:
                 throw new IllegalStateException("Unexpected value: " + dir);
         }
-    }
-
-    @Override
-    public String toString() {
-        return "Position{" +
-                "xCoordinate=" + xCoordinate +
-                ", yCoordinate=" + yCoordinate +
-                '}';
     }
 }
