@@ -2,8 +2,8 @@ package inf112.app.Player;
 
 public class Position {
 
-    int xCoordinate;
-    int yCoordinate;
+    private int xCoordinate;
+    private int yCoordinate;
 
     public Position(int x, int y) {
         xCoordinate = x;
