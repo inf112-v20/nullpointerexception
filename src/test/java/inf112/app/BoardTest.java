@@ -21,7 +21,6 @@ public class BoardTest {
         assertEquals(board.getBoardHeight(), 6);
     }
 
-
     @Test
     public void checksBoardWidth() {
         assertEquals(board.getBoardWidth(), 5);
