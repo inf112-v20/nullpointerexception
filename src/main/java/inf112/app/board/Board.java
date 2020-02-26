@@ -1,4 +1,4 @@
-package inf112.app.Board;
+package inf112.app.board;
 
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
