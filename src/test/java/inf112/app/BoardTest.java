@@ -1,5 +1,6 @@
 package inf112.app;
 
+import inf112.app.Board.Board;
 import org.junit.Before;
 import org.junit.Test;
 

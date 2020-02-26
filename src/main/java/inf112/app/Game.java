@@ -5,40 +5,61 @@ import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import inf112.app.Board.Board;
+import inf112.app.Board.BoardObjects;
+import inf112.app.Player.Direction;
+import inf112.app.Player.Player;
+import inf112.app.Player.Position;
 
 public class Game extends ScreenAdapter {
+    public static final float TILE_SIZE = 300;
+
     private Board board;
     private Player player;
+    private BoardObjects boardObjects;
+
 
     private OrthogonalTiledMapRenderer renderer;
+
 
     /**
      * Initializing a board, camera, renderer and player in addition to creating the needed TiledMap layers.
      */
-    public Game(){
-        board = new Board();
-        player = new Player(board.getBoardLayers(), this);
+    public Game() {
+        //String boardName1 = "Risky_Exchange.tmx";
+        String boardName2 = "Whirlwind Tour.tmx";
+
+        board = new Board(boardName2);
+        boardObjects = new BoardObjects(board.getBoardLayers(), this);
+        player = new Player(this);
+        updatePlayer();
 
         OrthographicCamera camera = new OrthographicCamera();
         camera.setToOrtho(false,
-                board.getBoardWidth() * Board.TILE_SIZE,
-                board.getBoardHeight() * Board.TILE_SIZE);
+                board.getBoardWidth() * TILE_SIZE,
+                board.getBoardHeight() * TILE_SIZE);
         camera.update();
 
         renderer = new OrthogonalTiledMapRenderer(board.getBoard());
         renderer.setView(camera);
     }
 
+    public void updatePlayer() {
+        board.getBoardLayers()
+                .get("player")
+                .setCell(player.getPlayerPos().getX(), player.getPlayerPos().getY(), player.setPlayerToDefault());
+    }
+
     /**
      * A loop method which renders the changes on the screen
      * Shows the player default/winning/dying state on the board
-    */
-     @Override
+     */
+    @Override
     public void render(float v) {
         Gdx.gl.glClearColor(1, 1, 1, 1);
         Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT);
 
-        player.checkPlayerState();
+        player.updatePlayerState();
 
         renderer.render();
     }
@@ -51,47 +72,66 @@ public class Game extends ScreenAdapter {
         renderer.dispose();
     }
 
-    /**
-     * Checks if there is a wall in the current tile or the next tile
-     * which the player is trying to move into.
-     *
-     * @param newX x coordinate player is trying to move towards
-     * @param newY y coordinate player is trying to move towards
-     * @param dir  direction the player is facing/wanting to move towards
-     * @return boolean true or false if the tile has a wall
-     */
-    public boolean hasWall(int newX, int newY, Directions dir) {
-        //Checks if there is a wall in the direction the player is trying to move
-        if (board.getBoardLayers().get("wall" + Directions.getName(dir)).getCell(player.getX(), player.getY()) != null)
-            return true;
-        //Checks if there is a wall in the next tile, from the direction the player is coming from
-        return board.getBoardLayers().get("wall" + Directions.getName(Directions.reverse(dir))).getCell(newX, newY) != null;
-    }
-
-    /**
-     * Checks if the player can move in a certain direction
-     *
-     * @param newX x coordinate player is trying to move towards
-     * @param newY y coordinate player is trying to move towards
-     * @param dir  direction the player is facing/wanting to move towards
-     * @return boolean true or false if player can move
-     */
-    public boolean canMove(int newX, int newY, Directions dir) {
-        return ! hasWall(newX, newY, dir);
-
-    }
-    public boolean outOfMap(int newX, int newY) {
-        if (newX < 0 || newX >= board.getBoardWidth()){
+    public boolean outOfBoard(Position newPos) {
+        if (newPos.getX() < 0 || newPos.getX() >= board.getBoardWidth()) {
+            System.out.println("Player moved out of the board");
             return true;
         }
-        if ((board.getBoardLayers().get("hole").getCell(newX, newY) != null)) {return true;}
-        return newY < 0 || newY >= board.getBoardHeight();
-    }
-    public int getHeight() {
-        return board.getBoardHeight();
-    }
-    public int getWidth() {
-        return board.getBoardWidth();
+        if ((board.getBoardLayers().get("hole").getCell(newPos.getX(), newPos.getX()) != null)) {return true;}
+        return newPos.getY() < 0 || newPos.getY() >= board.getBoardHeight();
     }
 
+    public boolean canMove(Position newPos, Direction direction) {
+        return !boardObjects.tileHasWall(player.getPlayerPos(), newPos, direction);
+    }
+
+    public Position movePlayer(Position pos, Direction dir) {
+        board.getBoardLayers().get("player").setCell(pos.getX(), pos.getY(), null);
+
+        if (!canMove(pos.getNextPos(dir), dir)) {
+            System.out.println("Something is blocking");
+        } else if (outOfBoard(pos.getNextPos(dir)))
+            resetPlayer(pos);
+        else
+            player.setPos(pos.getNextPos(dir));
+        updatePlayer();
+
+        return player.getPlayerPos();
+    }
+
+    public Position getPlayerPos() {
+        return player.getPlayerPos();
+    }
+
+    public void turnPlayer(Direction dir) {
+        player.setDirection(dir);
+    }
+
+    public void resetPlayer(Position pos) {
+        board.getBoardLayers().get("player").setCell(pos.getX(), pos.getY(), null);
+        player.checkpoint();
+        updatePlayer();
+    }
+
+    public void checkCurrentTile(Position pos) {
+        if (boardObjects.tileHasFlag(pos)) {
+            System.out.println("Player is standing on a flag!");
+        }
+        if (boardObjects.tileHasHole(pos)) {
+            System.out.println("Player stepped in a hole!");
+        }
+        if (boardObjects.tileHasConveyor(pos, player.getDirection())) {
+            System.out.println("PLayer was moved by a conveyorbelt");
+        }
+        if (boardObjects.tileHasTurnWheel(pos, player.getDirection())) {
+            System.out.println("Player was turned by a turnwheel");
+        }
+        if (boardObjects.tileHasLaser(pos)) {
+            System.out.println("Player is standing on a laser!");
+        }
+        if (boardObjects.tileHasRepair(pos)) {
+            System.out.println("Player is standing on a repair kit!");
+        }
+
+    }
 }
