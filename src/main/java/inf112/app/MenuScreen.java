@@ -2,27 +2,23 @@ package inf112.app;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
-import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.GL30;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.badlogic.gdx.utils.viewport.Viewport;
+
 
 public class MenuScreen extends ScreenAdapter {
 
     private GameRunner gameRunner;
     private Texture startButton;
     private Texture startButtonActive;
-
+    private Texture background;
 
 
     public MenuScreen(GameRunner gameRunner) {
         this.gameRunner = gameRunner;
         startButton = new Texture("start_game.png");
         startButtonActive = new Texture("start_game_active.png");
+        background = new Texture("roborally_background.jpg");
     }
 
 
@@ -38,6 +34,7 @@ public class MenuScreen extends ScreenAdapter {
         Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT);
         gameRunner.batch.begin();
 
+        gameRunner.batch.draw(background,0 ,0,GameRunner.SCREEN_WIDTH,GameRunner.SCREEN_HEIGHT);
         //X and Y pos where the image is being drawn
         int x = (GameRunner.SCREEN_WIDTH / 2) - (startButton.getWidth() / 2);
         int y = GameRunner.SCREEN_HEIGHT / 2 -startButton.getHeight()/2;
@@ -68,9 +65,9 @@ public class MenuScreen extends ScreenAdapter {
 
     @Override
     public void dispose() {
-        gameRunner.batch.dispose();
+        background.dispose();
         startButton.dispose();
         startButtonActive.dispose();
+        gameRunner.batch.dispose();
     }
-
 }
