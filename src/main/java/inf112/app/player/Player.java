@@ -85,6 +85,7 @@ public class Player extends InputAdapter {
             case Input.Keys.Q:
                 game.checkCurrentTile(pos);
                 break;
+            default:
         }
 
         return super.keyDown(keycode);

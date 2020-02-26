@@ -1,16 +1,20 @@
 package inf112.app;
+
 import inf112.app.player.Direction;
-//import org.graalvm.compiler.loop.InductionVariable;
-//import org.junit.Before;
 import org.junit.Test;
+
 import static org.junit.Assert.assertEquals;
 
+//import org.graalvm.compiler.loop.InductionVariable;
+//import org.junit.Before;
+
 public class DirectionsTest {
-    Direction dirN;
-    Direction dirS;
-    Direction dirE;
-    Direction dirW;
-    Direction dirNone;
+    private Direction dirN;
+    private Direction dirS;
+    private Direction dirE;
+    private Direction dirW;
+    private Direction dirNone;
+
     public DirectionsTest() {
         dirN = Direction.NORTH;
         dirS = Direction.SOUTH;

@@ -10,7 +10,7 @@ import java.util.Map;
 public class BoardObjects {
 
     private final Game game;
-    Map<String, TiledMapTileLayer> board;
+    private Map<String, TiledMapTileLayer> board;
 
     public BoardObjects(Map<String, TiledMapTileLayer> board, Game game) {
         this.board = board;
