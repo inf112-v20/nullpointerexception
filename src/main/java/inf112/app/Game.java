@@ -77,7 +77,9 @@ public class Game extends ScreenAdapter {
             System.out.println("player moved out of the board");
             return true;
         }
-        if ((board.getBoardLayers().get("hole").getCell(newPos.getX(), newPos.getX()) != null)) {return true;}
+
+        //if ((board.getBoardLayers().get("hole").getCell(newPos.getX(), newPos.getX()) != null)) {return true;}
+
         return newPos.getY() < 0 || newPos.getY() >= board.getBoardHeight();
     }
 
