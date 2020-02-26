@@ -60,7 +60,7 @@ public class Game extends ScreenAdapter {
      * @param dir  direction the player is facing/wanting to move towards
      * @return boolean true or false if the tile has a wall
      */
-    private boolean hasWall(int newX, int newY, Directions dir) {
+    public boolean hasWall(int newX, int newY, Directions dir) {
         //Checks if there is a wall in the direction the player is trying to move
         if (board.getBoardLayers().get("wall" + Directions.getName(dir)).getCell(player.getX(), player.getY()) != null)
             return true;
@@ -81,9 +81,17 @@ public class Game extends ScreenAdapter {
 
     }
     public boolean outOfMap(int newX, int newY) {
-        if (newX < 0 || newX >= board.getBoardWidth())
+        if (newX < 0 || newX >= board.getBoardWidth()){
             return true;
+        }
+        if ((board.getBoardLayers().get("hole").getCell(newX, newY) != null)) {return true;}
         return newY < 0 || newY >= board.getBoardHeight();
+    }
+    public int getHeight() {
+        return board.getBoardHeight();
+    }
+    public int getWidth() {
+        return board.getBoardWidth();
     }
 
 }
