@@ -1,4 +1,4 @@
-package inf112.app.Player;
+package inf112.app.player;
 
 public class Position {
 

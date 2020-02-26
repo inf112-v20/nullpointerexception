@@ -7,9 +7,9 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import inf112.app.Board.Board;
 import inf112.app.Board.BoardObjects;
-import inf112.app.Player.Direction;
-import inf112.app.Player.Player;
-import inf112.app.Player.Position;
+import inf112.app.player.Direction;
+import inf112.app.player.Player;
+import inf112.app.player.Position;
 
 public class Game extends ScreenAdapter {
     public static final float TILE_SIZE = 300;
@@ -74,7 +74,7 @@ public class Game extends ScreenAdapter {
 
     public boolean outOfBoard(Position newPos) {
         if (newPos.getX() < 0 || newPos.getX() >= board.getBoardWidth()) {
-            System.out.println("Player moved out of the board");
+            System.out.println("player moved out of the board");
             return true;
         }
         if ((board.getBoardLayers().get("hole").getCell(newPos.getX(), newPos.getX()) != null)) {return true;}
@@ -115,22 +115,22 @@ public class Game extends ScreenAdapter {
 
     public void checkCurrentTile(Position pos) {
         if (boardObjects.tileHasFlag(pos)) {
-            System.out.println("Player is standing on a flag!");
+            System.out.println("player is standing on a flag!");
         }
         if (boardObjects.tileHasHole(pos)) {
-            System.out.println("Player stepped in a hole!");
+            System.out.println("player stepped in a hole!");
         }
         if (boardObjects.tileHasConveyor(pos, player.getDirection())) {
             System.out.println("PLayer was moved by a conveyorbelt");
         }
         if (boardObjects.tileHasTurnWheel(pos, player.getDirection())) {
-            System.out.println("Player was turned by a turnwheel");
+            System.out.println("player was turned by a turnwheel");
         }
         if (boardObjects.tileHasLaser(pos)) {
-            System.out.println("Player is standing on a laser!");
+            System.out.println("player is standing on a laser!");
         }
         if (boardObjects.tileHasRepair(pos)) {
-            System.out.println("Player is standing on a repair kit!");
+            System.out.println("player is standing on a repair kit!");
         }
 
     }

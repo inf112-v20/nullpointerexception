@@ -2,8 +2,8 @@ package inf112.app.Board;
 
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import inf112.app.Game;
-import inf112.app.Player.Direction;
-import inf112.app.Player.Position;
+import inf112.app.player.Direction;
+import inf112.app.player.Position;
 
 import java.util.Map;
 
