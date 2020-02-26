@@ -1,12 +1,13 @@
 package inf112.app;
 
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class GameRunner extends Game {
 
-    public static int SCREEN_WIDTH = 900;
-    public static int SCREEN_HEIGHT = 900;
+    public static int SCREEN_WIDTH = 750;
+    public static int SCREEN_HEIGHT = 750;
     public SpriteBatch batch;
 
     @Override
