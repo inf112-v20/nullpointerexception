@@ -56,7 +56,6 @@ public class MenuScreen extends ScreenAdapter {
             if (Gdx.input.isTouched()) {
                 dispose();
                 gameRunner.setScreen(new Game());
-                
             }
         } else {
             gameRunner.batch.draw(startButton, x, y);
@@ -70,7 +69,6 @@ public class MenuScreen extends ScreenAdapter {
         startButton.dispose();
         startButtonActive.dispose();
         gameRunner.batch.dispose();
-        gameRunner.dispose();
         super.dispose();
     }
 }
