@@ -46,6 +46,12 @@ public class Player extends InputAdapter {
         Gdx.input.setInputProcessor(this);
     }
 
+    public Player() {
+        dir = Direction.SOUTH;
+        player = new Vector2();
+        pos = new Position((int) player.x, (int) player.y);
+    }
+
     /**
      * Refreshing the former players position to null
      * Implements the board-movement of a player
