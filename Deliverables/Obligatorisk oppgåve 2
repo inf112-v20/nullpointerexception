@@ -124,8 +124,9 @@ Oversikt brukerhistorier, akseptansekriterier og arbeidsoppgåver.
 
 Brukerhistorier gjeldende for denne innleveringen:
 1) Som en spiller vil jeg at vegg objekter skal fungere ordentlig slik at de hindrer meg i å gå gjennom dem.
-2) Som en spiller vil jeg at bane-objekter skal få en riktig funksjonalitet slik at de flytter meg mot den retningen de peker på.
-
+2) Som en spiller vil jeg at bane-objekter skal få en riktig funksjonalitet slik at de flytter meg mot den retningen de peker på. (Trykk Q mens player står på banen for å se funksjonaliteten)
+3) Som en spiller forventer jeg en "respawn" funksjonalitet som flytter meg tilbake til start-posisjonen etter å ha gått utover brettet/falt i et hull.
+4) Som en bruker vil jeg kunne se menyen som kan starte spillet ved en knapp.
 Framover så har vi prioritert oppgåvene ______
 
 
