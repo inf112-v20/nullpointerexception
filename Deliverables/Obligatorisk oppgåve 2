@@ -134,8 +134,16 @@ Akseptansekriterier:
 3) Spilleren blir flyttet på start posisjonen (0,0) etter å ha gått utover bretter/falt i et hull.
 4) En funksjonell menu med start knapp som kjører spillet.
 
-Framover så har vi prioritert oppgåvene ______
+Prioritert oppgave fremover:
+- Få til å teste brettet som er basert på .tmx filen.
+- Implementere funksjonaliteten til resten av brett objekter.
 
+Kravet vi foreløpig har prioritert er å lage et funksjonell brett som inneholder vegger, lasere, baner og repair-kits.
+Grunnen til det er at etter å ha blitt ferdig med brett, blir det enklere å implementere resten av spill funksjoner som baserer seg på brett-objekter.
+Endringer siden siste innlevering:
+- Lagt til vegg og bane objekter
+- Lagde en menu screen
+- Tester til Directions
 
 
 Deloppgave 3: Kode
