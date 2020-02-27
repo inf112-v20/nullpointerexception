@@ -22,7 +22,6 @@ public class MenuScreen extends ScreenAdapter {
     }
 
 
-
     /**
      * Rendering the start button and starting up the game if the button is clicked
      *
@@ -68,7 +67,6 @@ public class MenuScreen extends ScreenAdapter {
         background.dispose();
         startButton.dispose();
         startButtonActive.dispose();
-        gameRunner.batch.dispose();
         super.dispose();
     }
 }
