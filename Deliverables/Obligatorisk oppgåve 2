@@ -143,7 +143,7 @@ Grunnen til det er at etter å ha blitt ferdig med brett, blir det enklere å im
 Endringer siden siste innlevering:
 - Lagt til vegg og bane objekter
 - Lagde en menu screen
-- Tester til Directions
+- Lagt til tester til Directions og PlayerTest
 
 
 Deloppgave 3: Kode
