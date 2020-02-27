@@ -17,8 +17,6 @@ public class Game extends ScreenAdapter {
     private Board board;
     private Player player;
     private BoardObjects boardObjects;
-
-
     private OrthogonalTiledMapRenderer renderer;
 
 

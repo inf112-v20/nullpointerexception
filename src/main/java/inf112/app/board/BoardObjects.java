@@ -83,25 +83,58 @@ public class BoardObjects {
      * @return true or false
      */
     public boolean tileHasConveyor(Player player) {
-
         for (Direction dir : Direction.values()) {
             TiledMapTileLayer.Cell currentCell = board
                     .get("conveyor" + dir.getName())
                     .getCell(player.getPos().getX(), player.getPos().getY());
 
             if (currentCell != null) {
-                if (board.get("expressconveyor").getCell(player.getPos().getX(), player.getPos().getY()) != null) {
-                    game.movePlayer(game.getPlayerPos(), dir);
-                    System.out.println("express");
-                    if (game.outOfBoard(player.getPos().getNextPos(dir)))
-                        return false;
-                    hasTurn(player.getPos(), player.getDirection());
-                }
+                if (game.outOfBoard(player.getPos().getNextPos(dir)))
+                    return false;
+                Position pos = game.getPlayerPos();
                 game.movePlayer(game.getPlayerPos(), dir);
-                hasTurn(game.getPlayerPos(), player.getDirection());
+                hasTurn(player.getPos(), player.getDirection());
+/*
+                if (pos.getNextPos(dir) != game.getPlayerPos())
+                    hasTurn(game.getPlayerPos(), player.getDirection());
+*/
+                if (board.get("expressconveyor").getCell(player.getPos().getX(), player.getPos().getY()) != null) {
+                    tileHasExpressConveyor(player, dir);
+                    return !game.outOfBoard(player.getPos().getNextPos(dir));
+                }
                 return true;
             }
         }
         return false;
+    }
+
+    public Direction hasConveyor(Player player) {
+        for (Direction dir : Direction.values()) {
+            TiledMapTileLayer.Cell currentCell = board
+                    .get("conveyor" + dir.getName())
+                    .getCell(player.getPos().getX(), player.getPos().getY());
+            if (currentCell != null)
+                return dir;
+        }
+        return null;
+    }
+
+    public boolean tileHasExpressConveyor(Player player, Direction previousConveyorDirection) {
+        for (Direction dir : Direction.values()) {
+            TiledMapTileLayer.Cell currentCell = board
+                    .get("conveyor" + dir.getName())
+                    .getCell(player.getPos().getX(), player.getPos().getY());
+            if (currentCell != null) {
+                if (game.outOfBoard(player.getPos().getNextPos(dir)))
+                    return false;
+                game.movePlayer(player.getPos(), dir);
+
+                if (dir != previousConveyorDirection)
+                    hasTurn(player.getPos(), player.getDirection());
+                break;
+            }
+        }
+
+        return true;
     }
 }
