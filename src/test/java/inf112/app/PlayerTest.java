@@ -1,5 +1,6 @@
 package inf112.app;
 
+import inf112.app.player.Direction;
 import inf112.app.player.Player;
 import inf112.app.player.Position;
 import org.junit.Before;
@@ -30,6 +31,7 @@ public class PlayerTest {
 
     /**
      * Checks if the players checkpoint() works correctly
+     * checkpoint() sets the player to the (0,0) position
      */
     @Test
     public void checkpointPositionTest(){
@@ -39,5 +41,15 @@ public class PlayerTest {
         Position testPosition = new Position(0,0);
         assertEquals(player.getPos().getX(),testPosition.getX());
         assertEquals(player.getPos().getY(),testPosition.getY());
+    }
+
+    /**
+     * Checks if the players setDirection() works correctly
+     */
+    @Test
+    public void setPlayersDirectionTest(){
+        player.setDirection(Direction.NORTH);
+        Direction north = Direction.NORTH;
+        assertEquals(player.getDirection(),north);
     }
 }
