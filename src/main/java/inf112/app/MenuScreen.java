@@ -25,7 +25,7 @@ public class MenuScreen extends ScreenAdapter {
     /**
      * Rendering the start button and starting up the game if the button is clicked
      *
-     * @param v
+     * @param v The time in seconds since the last render
      */
     @Override
     public void render(float v) {
@@ -36,7 +36,7 @@ public class MenuScreen extends ScreenAdapter {
         gameRunner.batch.draw(background,0 ,0,GameRunner.SCREEN_WIDTH,GameRunner.SCREEN_HEIGHT);
         //X and Y pos where the image is being drawn
         int x = (GameRunner.SCREEN_WIDTH / 2) - (startButton.getWidth() / 2);
-        int y = GameRunner.SCREEN_HEIGHT / 2 -startButton.getHeight()/2;
+        int y = (GameRunner.SCREEN_HEIGHT / 2) - (startButton.getHeight() / 2);
 
         //Current mouse position on Y-axis
         int mousePosition_Y = Gdx.input.getY();
@@ -67,6 +67,5 @@ public class MenuScreen extends ScreenAdapter {
         background.dispose();
         startButton.dispose();
         startButtonActive.dispose();
-        super.dispose();
     }
 }
