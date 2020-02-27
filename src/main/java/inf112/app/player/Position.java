@@ -1,7 +1,7 @@
 package inf112.app.player;
 
 public class Position {
-
+    
     private int xCoordinate;
     private int yCoordinate;
 
