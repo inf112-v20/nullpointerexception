@@ -115,23 +115,23 @@ public class Game extends ScreenAdapter {
         updatePlayer();
     }
 
-    public void checkCurrentTile(Position pos) {
-        if (boardObjects.tileHasFlag(pos)) {
+    public void checkCurrentTile(Player player) {
+        if (boardObjects.tileHasFlag(player.getPos())) {
             System.out.println("player is standing on a flag!");
         }
-        if (boardObjects.tileHasHole(pos)) {
+        if (boardObjects.tileHasHole(player.getPos())) {
             System.out.println("player stepped in a hole!");
         }
-        if (boardObjects.tileHasConveyor(pos, player.getDirection())) {
+        if (boardObjects.tileHasConveyor(player)) {
             System.out.println("PLayer was moved by a conveyorbelt");
         }
-        if (boardObjects.tileHasTurnWheel(pos, player.getDirection())) {
+        if (boardObjects.tileHasTurnWheel(player.getPos(), player.getDirection())) {
             System.out.println("player was turned by a turnwheel");
         }
-        if (boardObjects.tileHasLaser(pos)) {
+        if (boardObjects.tileHasLaser(player.getPos())) {
             System.out.println("player is standing on a laser!");
         }
-        if (boardObjects.tileHasRepair(pos)) {
+        if (boardObjects.tileHasRepair(player.getPos())) {
             System.out.println("player is standing on a repair kit!");
         }
 

@@ -89,7 +89,7 @@ public class Player extends InputAdapter {
                     game.movePlayer(pos, dir);
                 break;
             case Input.Keys.Q:
-                game.checkCurrentTile(pos);
+                game.checkCurrentTile(this);
                 break;
             default:
         }
