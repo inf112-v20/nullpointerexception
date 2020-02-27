@@ -30,6 +30,12 @@ public class Board {
         boardHeight = board.getProperties().get("height", Integer.class);
     }
 
+    /**
+     * Constructor for testing certain methods
+     *
+     * @param width  testWidth
+     * @param height testHeight
+     */
     public Board(int width, int height) {
         boardWidth = width;
         boardHeight = height;

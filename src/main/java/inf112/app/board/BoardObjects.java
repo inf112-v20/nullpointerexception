@@ -3,6 +3,7 @@ package inf112.app.board;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import inf112.app.Game;
 import inf112.app.player.Direction;
+import inf112.app.player.Player;
 import inf112.app.player.Position;
 
 import java.util.Map;
@@ -50,7 +51,6 @@ public class BoardObjects {
         return false;
     }
 
-
     /**
      * Checks if the current tile has a laser.
      *
@@ -65,7 +65,6 @@ public class BoardObjects {
         return board.get("repair kit").getCell(pos.getX(), pos.getY()) != null;
     }
 
-
     private boolean hasTurn(Position pos, Direction playerDir) {
         if (board.get("leftTurn").getCell(pos.getX(), pos.getY()) != null) {
             game.turnPlayer(playerDir.turnLeft());
@@ -78,31 +77,28 @@ public class BoardObjects {
         return false;
     }
 
-
     /**
      * Checks if the current tile has a track.
      *
-     * @param pos       Position of the player
-     * @param playerDir direction of the player
      * @return true or false
      */
-    public boolean tileHasConveyor(Position pos, Direction playerDir) {
+    public boolean tileHasConveyor(Player player) {
 
         for (Direction dir : Direction.values()) {
             TiledMapTileLayer.Cell currentCell = board
                     .get("conveyor" + dir.getName())
-                    .getCell(pos.getX(), pos.getY());
+                    .getCell(player.getPos().getX(), player.getPos().getY());
 
             if (currentCell != null) {
-                if (board.get("expressconveyor").getCell(pos.getX(), pos.getY()) != null) {
+                if (board.get("expressconveyor").getCell(player.getPos().getX(), player.getPos().getY()) != null) {
                     game.movePlayer(game.getPlayerPos(), dir);
                     System.out.println("express");
-                    if (game.outOfBoard(pos.getNextPos(dir)))
+                    if (game.outOfBoard(player.getPos().getNextPos(dir)))
                         return false;
-                    hasTurn(pos, playerDir);
+                    hasTurn(player.getPos(), player.getDirection());
                 }
                 game.movePlayer(game.getPlayerPos(), dir);
-                hasTurn(pos, playerDir);
+                hasTurn(game.getPlayerPos(), player.getDirection());
                 return true;
             }
         }

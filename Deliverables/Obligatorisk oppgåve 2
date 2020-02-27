@@ -1,30 +1,124 @@
 Deloppgave 1: Prosjekt og prosjektstruktur
 
 Rollene i teamet fungerer greit så langt. Vi er enda litt tidlig til å kunne vurdere korleis det vill fungere framover. 
-Vi beheld fortsatt samme roller som tidlegare.
+Vi beheld fortsatt samme roller som tidlegare, og avventar eventuelle endringar ettersom prosjektet utfoldar seg.
+
+-----------Erfaringar i forhold til korleis teamet har fungert/Prosjekt metodikk ----------------------
 
 Det er vankelig å delegere utover så tidlig i prosjektet når vi fortsatt jobbar med grunnmuren.
 
 Gruppedynamikken fungerer bra og vi kjem godt overeins.
 
-Kommunikasjon mellom gruppa går over slack og git _______
+Kommunikasjon mellom gruppa går gjennom slack og git, dette har fungert greit så langt.
 
-Retrospekt
+Retrospekt -----------
 
 I kodebasen er den en ujevn bidragsforhold i commits. Vi jobbar enda med å sette opp ein bra grunnmur til prosjektet og er vanskelig
 dersom ein skal jobbe over i kvarandre under denne fasen. Vi har heller valgt å delegere rundt ansvar på forskjellige områder no i 
 starten, men vill komme oss vidare til eit jamnare bidragsforhold etterkvart. Vi har heller ikkje komt langt nok til at alle rollene
 er blitt utnytta til det dei er satte opp som. Vi har då prioritert å gi desse medlemmane andre oppgåver som feks. koding.
 
-REFEREATTTAT 
+Referat sida sist oblig:
 
-Forbedringspunkt_____
+4. Referat
+
+Oppmøte:
+
+Michal
+
+Nikolai
+
+Lasse
+
+Vegard(Hadde eksamen, møtte opp i andre time).
+
+Diskutert:
+
+Korleis skal vi implementere veggar?
+
+Diskutert feedback frå første oblig.
+
+Plan vidare:
+
+Få satt opp veggane på ein hensiktsmessig måte.
+
+Jobba med playerklassen slik at det skal bli mulig å rotere player eventuelt.
+
+Legge til muligheit for å falle utanfor brettet.
+
+
+5. Referat
+
+Oppmøte:
+
+Michal
+
+Nikolai
+
+Lasse
+
+Vegard
+
+Henriette
+
+Diskutert:
+
+Diskutert diverse angåande obligatorisk oppgåve 2.
+
+Lagt til en del kort til project sin TODO.
+
+Jobba med:
+
+Fiksa bugs.
+
+Plan vidare:
+
+Legge til testar til diverse, primært Board og Game.
+
+
+Referat 6. Seminar
+
+Oppmøte:
+
+Michal
+
+Nikolai
+
+Lasse
+
+Vegard
+
+Henriette
+
+Diskutert:
+
+Kva som skal inn i Oblig 2.
+
+Korleis vi skal få til diverse testar.
+
+Jobba med:
+
+Bugfixing.
+
+Skriving oblig 2.
+
+Code of Conduct.
+
+Plan vidare:
+
+Skriving av Oblig 2.
+
+
+
+
+Forbedringspunkt_____ Frå retrospekt
+---- Tenker vi eventuelt kan ha med jamnare fordeling av commits elns her, og/eller testar innanfor prosjektet? ---------
 
 
 
 Deloppgave 2: krav
 
-KRAVVVVVVVVVVVVVVVVV
+-------------- KRAVVVVVVVVVVVVVVVVV -------------
 
 Oversikt brukerhistorier, akseptansekriterier og arbeidsoppgåver.
 

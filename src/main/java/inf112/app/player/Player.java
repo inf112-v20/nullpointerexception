@@ -46,6 +46,12 @@ public class Player extends InputAdapter {
         Gdx.input.setInputProcessor(this);
     }
 
+    public Player() {
+        dir = Direction.SOUTH;
+        player = new Vector2();
+        pos = new Position((int) player.x, (int) player.y);
+    }
+
     /**
      * Refreshing the former players position to null
      * Implements the board-movement of a player
@@ -83,11 +89,11 @@ public class Player extends InputAdapter {
                     game.movePlayer(pos, dir);
                 break;
             case Input.Keys.Q:
-                game.checkCurrentTile(pos);
+                game.checkCurrentTile(this);
                 break;
             default:
         }
-
+        updateState();
         return super.keyDown(keycode);
     }
 
@@ -104,18 +110,18 @@ public class Player extends InputAdapter {
      *
      * @return the new player state
      */
-    public TiledMapTileLayer.Cell setPlayerToDefault() {
+    public TiledMapTileLayer.Cell setImage() {
         return playerCell;
     }
 
     /**
      * Checks which imagine to show to the screen depending on player state
      */
-    public void updatePlayerState() {
+    public void updateState() {
         playerCell.setRotation(dir.getID());
     }
 
-    public Position getPlayerPos() {
+    public Position getPos() {
         return pos;
     }
 

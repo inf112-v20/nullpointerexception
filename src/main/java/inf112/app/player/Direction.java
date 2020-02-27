@@ -19,9 +19,7 @@ public enum Direction {
             return "E";
         if (this == SOUTH)
             return "S";
-        if (this == WEST)
-            return "W";
-        return "";
+        return "W";
     }
 
     public Direction reverseDirection() {
@@ -31,10 +29,7 @@ public enum Direction {
             return WEST;
         if (this == SOUTH)
             return NORTH;
-        if (this == WEST)
-            return EAST;
-        return null;
-
+        return EAST;
     }
 
 
@@ -45,9 +40,7 @@ public enum Direction {
             return NORTH;
         if (this == SOUTH)
             return EAST;
-        if (this == WEST)
-            return SOUTH;
-        return null;
+        return SOUTH;
     }
 
     public Direction turnRight() {
@@ -57,9 +50,7 @@ public enum Direction {
             return SOUTH;
         if (this == SOUTH)
             return WEST;
-        if (this == WEST)
-            return NORTH;
-        return null;
+        return NORTH;
     }
 
     /**
