@@ -47,7 +47,7 @@ public class Game extends ScreenAdapter {
     public void updatePlayer() {
         board.getBoardLayers()
                 .get("player")
-                .setCell(player.getPlayerPos().getX(), player.getPlayerPos().getY(), player.setPlayerToDefault());
+                .setCell(player.getPos().getX(), player.getPos().getY(), player.setImage());
     }
 
     /**
@@ -58,7 +58,6 @@ public class Game extends ScreenAdapter {
     public void render(float v) {
         Gdx.gl.glClearColor(1, 1, 1, 1);
         Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT);
-
 
         renderer.render();
     }
@@ -83,7 +82,7 @@ public class Game extends ScreenAdapter {
     }
 
     public boolean canMove(Position newPos, Direction direction) {
-        return !boardObjects.tileHasWall(player.getPlayerPos(), newPos, direction);
+        return !boardObjects.tileHasWall(player.getPos(), newPos, direction);
     }
 
     public Position movePlayer(Position pos, Direction dir) {
@@ -96,17 +95,18 @@ public class Game extends ScreenAdapter {
         else
             player.setPos(pos.getNextPos(dir));
         updatePlayer();
-        player.updatePlayerState();
+        player.updateState();
 
-        return player.getPlayerPos();
+        return player.getPos();
     }
 
     public Position getPlayerPos() {
-        return player.getPlayerPos();
+        return player.getPos();
     }
 
     public void turnPlayer(Direction dir) {
         player.setDirection(dir);
+        player.updateState();
     }
 
     public void resetPlayer(Position pos) {

@@ -93,7 +93,7 @@ public class Player extends InputAdapter {
                 break;
             default:
         }
-
+        updateState();
         return super.keyDown(keycode);
     }
 
@@ -110,18 +110,18 @@ public class Player extends InputAdapter {
      *
      * @return the new player state
      */
-    public TiledMapTileLayer.Cell setPlayerToDefault() {
+    public TiledMapTileLayer.Cell setImage() {
         return playerCell;
     }
 
     /**
      * Checks which imagine to show to the screen depending on player state
      */
-    public void updatePlayerState() {
+    public void updateState() {
         playerCell.setRotation(dir.getID());
     }
 
-    public Position getPlayerPos() {
+    public Position getPos() {
         return pos;
     }
 
