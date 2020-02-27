@@ -127,6 +127,13 @@ Brukerhistorier gjeldende for denne innleveringen:
 2) Som en spiller vil jeg at bane-objekter skal få en riktig funksjonalitet slik at de flytter meg mot den retningen de peker på. (Trykk Q mens player står på banen for å se funksjonaliteten)
 3) Som en spiller forventer jeg en "respawn" funksjonalitet som flytter meg tilbake til start-posisjonen etter å ha gått utover brettet/falt i et hull.
 4) Som en bruker vil jeg kunne se menyen som kan starte spillet ved en knapp.
+
+Akseptansekriterier:
+1) Det er umulig å gå gjennom vegg-objekter.
+2) Spilleren blir flyttet mot riktig retning etter å ha trykket "Q" på bane-objekter.
+3) Spilleren blir flyttet på start posisjonen (0,0) etter å ha gått utover bretter/falt i et hull.
+4) En funksjonell menu med start knapp som kjører spillet.
+
 Framover så har vi prioritert oppgåvene ______
 
 
