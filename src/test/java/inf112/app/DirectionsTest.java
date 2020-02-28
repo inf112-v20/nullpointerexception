@@ -4,19 +4,17 @@ import inf112.app.player.Direction;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
+
 
 public class DirectionsTest {
     private Direction dirN;
     private Direction dirS;
     private Direction dirE;
     private Direction dirW;
-    private Direction dirNone;
+
 
     /**
      * Testing Direction enum
-     *
-     * @param
      */
 
     public DirectionsTest() {
@@ -28,8 +26,6 @@ public class DirectionsTest {
 
     /**
      * Testing getName for all directions
-     *
-     * @param
      */
     @Test
     public void checkDirectionWest() {
@@ -53,8 +49,6 @@ public class DirectionsTest {
 
     /**
      * Testing reverseDirection for all directions
-     *
-     * @param
      */
 
     @Test
@@ -79,8 +73,6 @@ public class DirectionsTest {
 
     /**
      * Testing turnLeft for all directions
-     *
-     * @param
      */
     @Test
     public void checkDirectionTurnLeftNORTH() {
@@ -104,8 +96,6 @@ public class DirectionsTest {
 
     /**
      * Testing turnRight for all directions
-     *
-     * @param
      */
     @Test
     public void checkDirectionTurnRightNORTH() {

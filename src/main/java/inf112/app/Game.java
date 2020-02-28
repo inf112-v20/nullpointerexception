@@ -83,9 +83,23 @@ public class Game extends ScreenAdapter {
         return newPos.getY() < 0 || newPos.getY() >= board.getBoardHeight();
     }
 
+    /**
+     * Checks if the player is blocked by something or can move
+     * @param newPos
+     * @param direction
+     * @return
+     */
+
     public boolean canMove(Position newPos, Direction direction) {
         return !boardObjects.tileHasWall(player.getPlayerPos(), newPos, direction);
     }
+
+    /**
+     * moves player in the direction given if the player is not blocked. Resets player if player is out of board
+     * @param pos
+     * @param dir
+     * @return
+     */
 
     public Position movePlayer(Position pos, Direction dir) {
         board.getBoardLayers().get("player").setCell(pos.getX(), pos.getY(), null);
@@ -115,6 +129,10 @@ public class Game extends ScreenAdapter {
         updatePlayer();
     }
 
+    /**
+     * checking the current tile for board objects
+     * @param pos
+     */
     public void checkCurrentTile(Position pos) {
         if (boardObjects.tileHasFlag(pos)) {
             System.out.println("player is standing on a flag!");
