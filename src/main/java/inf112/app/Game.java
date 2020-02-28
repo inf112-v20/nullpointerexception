@@ -42,6 +42,9 @@ public class Game extends ScreenAdapter {
         renderer.setView(camera);
     }
 
+    /**
+     * Puts the player imagine in a cell. Updates everytime a player moves or changes direction
+     */
     public void updatePlayer() {
         board.getBoardLayers()
                 .get("player")
@@ -73,16 +76,32 @@ public class Game extends ScreenAdapter {
             System.out.println("player moved out of the board");
             return true;
         }
-
+        if (newPos.getY() < 0 || newPos.getY() >= board.getBoardHeight()) {
+            System.out.println("player moved out of the board");
+            return true;
+        }
         //if ((board.getBoardLayers().get("hole").getCell(newPos.getX(), newPos.getX()) != null)) {return true;}
-
-        return newPos.getY() < 0 || newPos.getY() >= board.getBoardHeight();
+        return false;
     }
 
+    /**
+     * Checks if the player is blocked by something or can move
+     *
+     * @param newPos    the position the player will have if he moves
+     * @param direction direction of the player
+     * @return true if player can move
+     */
     public boolean canMove(Position newPos, Direction direction) {
         return !boardObjects.tileHasWall(player.getPos(), newPos, direction);
     }
 
+    /**
+     * Moves player in the direction given if the player is not blocked. Resets player if player is out of board
+     *
+     * @param pos position of the player
+     * @param dir direction to move towards
+     * @return the new position of the player
+     */
     public Position movePlayer(Position pos, Direction dir) {
         board.getBoardLayers().get("player").setCell(pos.getX(), pos.getY(), null);
 
@@ -115,6 +134,7 @@ public class Game extends ScreenAdapter {
 
     public void checkCurrentTile(Player player) {
         if (boardObjects.tileHasFlag(player.getPos())) {
+
             System.out.println("player is standing on a flag!");
         }
         if (boardObjects.tileHasHole(player.getPos())) {
@@ -132,6 +152,5 @@ public class Game extends ScreenAdapter {
         if (boardObjects.tileHasRepair(player.getPos())) {
             System.out.println("player is standing on a repair kit!");
         }
-
     }
 }
