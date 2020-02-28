@@ -15,15 +15,31 @@ public class Position {
         yCoordinate = pos.getY();
     }
 
+    /**
+     * Returns the x coordinate
+     *
+     * @return int value
+     */
     public int getX() {
         return xCoordinate;
     }
 
+    /**
+     * Returns the y coordinate
+     *
+     * @return int value
+     */
     public int getY() {
         return yCoordinate;
     }
 
 
+    /**
+     * Returns the next position on a grid in a certain direction
+     *
+     * @param dir direction of the next pos
+     * @return new position
+     */
     public Position getNextPos(Direction dir) {
         switch (dir) {
             case NORTH:
