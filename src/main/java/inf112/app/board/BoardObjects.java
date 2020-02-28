@@ -126,8 +126,9 @@ public class BoardObjects {
                 // Moves the player along the conveyor
                 Position pos = game.getPlayerPos();
                 game.movePlayer(game.getPlayerPos(), dir);
-                hasTurn(player.getPos(), player.getDirection());
-
+                if (conveyorDirectionIsDifferent(player.getPos(), dir)) {
+                    hasTurn(player.getPos(), player.getDirection());
+                }
                 // Checks if the player is on an express conveyor
                 if (board.get("expressconveyor").getCell(player.getPos().getX(), player.getPos().getY()) != null) {
                     tileHasExpressConveyor(player, dir);
@@ -137,6 +138,19 @@ public class BoardObjects {
             }
         }
         return false;
+    }
+
+    private boolean conveyorDirectionIsDifferent(Position pos, Direction currentDir) {
+        for (Direction dir : Direction.values()) { // Checks which direction the conveyor is facing
+            TiledMapTileLayer.Cell currentCell = board
+                    .get("conveyor" + dir.getName())
+                    .getCell(pos.getX(), pos.getY());
+            if (currentCell != null) {
+                if (currentDir == dir)
+                    return false;
+            }
+        }
+        return true;
     }
 
 
@@ -160,8 +174,10 @@ public class BoardObjects {
                 }
                 game.movePlayer(player.getPos(), dir);
 
-                if (dir != previousConveyorDirection)
+                if (conveyorDirectionIsDifferent(player.getPos(), dir)) {
                     hasTurn(player.getPos(), player.getDirection());
+                }
+
                 break;
             }
         }
