@@ -18,6 +18,13 @@ public class BoardObjects {
         this.game = game;
     }
 
+    /**
+     * Returns true if the tile has a wall.
+     * @param playerPos
+     * @param newPos
+     * @param dir
+     * @return
+     */
     public boolean tileHasWall(Position playerPos, Position newPos, Direction dir) {
         if (board.get("wall" + dir.getName())
                 .getCell(playerPos.getX(), playerPos.getY()) != null)
@@ -27,10 +34,21 @@ public class BoardObjects {
                 .getCell(newPos.getX(), newPos.getY()) != null;
     }
 
+    /**
+     * Returns true if the tile has a flag.
+     * @param pos
+     * @return
+     */
     public boolean tileHasFlag(Position pos) {
         return board.get("flag").getCell(pos.getX(), pos.getY()) != null;
     }
 
+    /**
+     * Returns true if the tile has a wheel.
+     * @param pos
+     * @param dir
+     * @return
+     */
     public boolean tileHasTurnWheel(Position pos, Direction dir) {
         if (board.get("turnwheel").getCell(pos.getX(), pos.getY()) != null) {
             TiledMapTileLayer.Cell currentCell = board.get("turnwheel").getCell(pos.getX(), pos.getY());
@@ -43,6 +61,11 @@ public class BoardObjects {
         return false;
     }
 
+    /**
+     * Returns true if the tile is a hole.
+     * @param pos
+     * @return
+     */
     public boolean tileHasHole(Position pos) {
         if (board.get("hole").getCell(pos.getX(), pos.getY()) != null) {
             game.resetPlayer(pos);
@@ -65,6 +88,12 @@ public class BoardObjects {
         return board.get("repair kit").getCell(pos.getX(), pos.getY()) != null;
     }
 
+    /**
+     * Returns True if the player is supposed to turn.
+     * @param pos
+     * @param playerDir
+     * @return
+     */
     private boolean hasTurn(Position pos, Direction playerDir) {
         if (board.get("leftTurn").getCell(pos.getX(), pos.getY()) != null) {
             game.turnPlayer(playerDir.turnLeft());
@@ -78,9 +107,9 @@ public class BoardObjects {
     }
 
     /**
-     * Checks if the current tile has a track.
-     *
-     * @return true or false
+     * Returns true if the tile has a Conveyor belt
+     * @param player
+     * @return
      */
     public boolean tileHasConveyor(Player player) {
         for (Direction dir : Direction.values()) {
@@ -107,7 +136,7 @@ public class BoardObjects {
         }
         return false;
     }
-
+/*
     public Direction hasConveyor(Player player) {
         for (Direction dir : Direction.values()) {
             TiledMapTileLayer.Cell currentCell = board
@@ -118,7 +147,14 @@ public class BoardObjects {
         }
         return null;
     }
+*/
 
+    /**
+     * Returns true if the tile has an express conveyor.
+     * @param player
+     * @param previousConveyorDirection
+     * @return
+     */
     public boolean tileHasExpressConveyor(Player player, Direction previousConveyorDirection) {
         for (Direction dir : Direction.values()) {
             TiledMapTileLayer.Cell currentCell = board
