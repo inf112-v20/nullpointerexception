@@ -71,6 +71,12 @@ public class Game extends ScreenAdapter {
         renderer.dispose();
     }
 
+    /**
+     * Checks if the position the player wants to move to is valid
+     *
+     * @param newPos the position player wants to move to
+     * @return boolean true or false
+     */
     public boolean outOfBoard(Position newPos) {
         if (newPos.getX() < 0 || newPos.getX() >= board.getBoardWidth()) {
             System.out.println("player moved out of the board");
@@ -127,7 +133,7 @@ public class Game extends ScreenAdapter {
 
     /**
      * Sets a new player direction
-     * @param dir
+     * @param dir direction
      */
     public void turnPlayer(Direction dir) {
         player.setDirection(dir);
@@ -145,7 +151,7 @@ public class Game extends ScreenAdapter {
 
     /**
      * Checks what objects is on the player tile.
-     * @param player
+     * @param player player object
      */
     public void checkCurrentTile(Player player) {
         if (boardObjects.tileHasFlag(player.getPos())) {
