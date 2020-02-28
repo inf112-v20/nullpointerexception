@@ -134,7 +134,6 @@ public class Game extends ScreenAdapter {
 
     public void checkCurrentTile(Player player) {
         if (boardObjects.tileHasFlag(player.getPos())) {
-
             System.out.println("player is standing on a flag!");
         }
         if (boardObjects.tileHasHole(player.getPos())) {

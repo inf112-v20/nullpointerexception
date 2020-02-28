@@ -1,7 +1,5 @@
 package inf112.app.player;
 
-import static inf112.app.player.Direction.*;
-
 public class Position {
 
     private int xCoordinate;
@@ -25,15 +23,22 @@ public class Position {
         return yCoordinate;
     }
 
+
     public Position getNextPos(Direction dir) {
-        if (dir == NORTH)
-            return new Position(xCoordinate, yCoordinate + 1);
-        if (dir == EAST)
-            return new Position(xCoordinate + 1, yCoordinate);
-        if (dir == SOUTH)
-            return new Position(xCoordinate, yCoordinate - 1);
-        return new Position(xCoordinate, yCoordinate + 1);
+        switch (dir) {
+            case NORTH:
+                return new Position(xCoordinate, yCoordinate + 1);
+            case EAST:
+                return new Position(xCoordinate + 1, yCoordinate);
+            case SOUTH:
+                return new Position(xCoordinate, yCoordinate - 1);
+            case WEST:
+                return new Position(xCoordinate - 1, yCoordinate);
+            default:
+                throw new IllegalStateException("Unexpected value: " + dir);
+        }
     }
+
 
     /**
      * Compares two objects
