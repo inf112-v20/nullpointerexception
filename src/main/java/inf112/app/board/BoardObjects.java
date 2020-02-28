@@ -140,6 +140,13 @@ public class BoardObjects {
         return false;
     }
 
+    /**
+     * Checks if the next conveyor tile is moving in the same direction as the last
+     *
+     * @param pos position of the next conveyor tile
+     * @param currentDir the current drection of the conveyor
+     * @return boolean
+     */
     private boolean conveyorDirectionIsDifferent(Position pos, Direction currentDir) {
         for (Direction dir : Direction.values()) { // Checks which direction the conveyor is facing
             TiledMapTileLayer.Cell currentCell = board
