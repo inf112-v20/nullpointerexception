@@ -18,6 +18,14 @@ public class BoardObjects {
         this.game = game;
     }
 
+    /**
+     * Checks if a certain tile has a wall or are blocking the player from moving
+     *
+     * @param playerPos the current position of the player
+     * @param newPos    the position the player has if he moves
+     * @param dir       direction of the player
+     * @return true if there is a wall, false if not
+     */
     public boolean tileHasWall(Position playerPos, Position newPos, Direction dir) {
         if (board.get("wall" + dir.getName())
                 .getCell(playerPos.getX(), playerPos.getY()) != null)
@@ -27,10 +35,23 @@ public class BoardObjects {
                 .getCell(newPos.getX(), newPos.getY()) != null;
     }
 
+    /**
+     * Checks if the current tile has a flag
+     *
+     * @param pos Position of the player
+     * @return true or false
+     */
     public boolean tileHasFlag(Position pos) {
         return board.get("flag").getCell(pos.getX(), pos.getY()) != null;
     }
 
+    /**
+     * Checks if the current tile has a turn wheel
+     *
+     * @param pos Position of the player
+     * @param dir Direction of the player
+     * @return true or false
+     */
     public boolean tileHasTurnWheel(Position pos, Direction dir) {
         if (board.get("turnwheel").getCell(pos.getX(), pos.getY()) != null) {
             TiledMapTileLayer.Cell currentCell = board.get("turnwheel").getCell(pos.getX(), pos.getY());
@@ -43,6 +64,12 @@ public class BoardObjects {
         return false;
     }
 
+    /**
+     * Checks if the current tile has a hole
+     *
+     * @param pos Position of the player
+     * @return true or false
+     */
     public boolean tileHasHole(Position pos) {
         if (board.get("hole").getCell(pos.getX(), pos.getY()) != null) {
             game.resetPlayer(pos);
@@ -61,21 +88,25 @@ public class BoardObjects {
         return board.get("laser").getCell(pos.getX(), pos.getY()) != null;
     }
 
+    /**
+     * Checks if the current tile has a repair kit
+     *
+     * @param pos position of the player
+     * @return true or false
+     */
     public boolean tileHasRepair(Position pos) {
         return board.get("repair kit").getCell(pos.getX(), pos.getY()) != null;
     }
 
     private boolean hasTurn(Position pos, Direction playerDir) {
         if (board.get("leftTurn").getCell(pos.getX(), pos.getY()) != null) {
-            game.turnPlayer(playerDir.turnLeft());
+            //game.turnPlayer(playerDir.turnLeft());
             return true;
         }
-        if (board.get("rightTurn").getCell(pos.getX(), pos.getY()) != null) {
-            game.turnPlayer(playerDir.turnRight());
-            return true;
-        }
-        return false;
+        //game.turnPlayer(playerDir.turnRight());
+        return board.get("rightTurn").getCell(pos.getX(), pos.getY()) != null;
     }
+
 
     /**
      * Checks if the current tile has a track.
@@ -119,6 +150,13 @@ public class BoardObjects {
         return null;
     }
 
+    /**
+     * Checks if the player is standing on an express type conveyor and moves the player accordingly
+     *
+     * @param player                    the current player which is being moved
+     * @param previousConveyorDirection the direction of the player
+     * @return true or false
+     */
     public boolean tileHasExpressConveyor(Player player, Direction previousConveyorDirection) {
         for (Direction dir : Direction.values()) {
             TiledMapTileLayer.Cell currentCell = board
@@ -134,7 +172,6 @@ public class BoardObjects {
                 break;
             }
         }
-
         return true;
     }
 }
