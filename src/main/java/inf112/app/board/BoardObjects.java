@@ -69,7 +69,7 @@ public class BoardObjects {
      */
     public boolean tileHasHole(Position pos) {
         if (board.get("hole").getCell(pos.getX(), pos.getY()) != null) {
-            game.resetPlayer(pos);
+            game.resetPlayer();
             return true;
         }
         return false;
@@ -119,9 +119,10 @@ public class BoardObjects {
                     .getCell(player.getPos().getX(), player.getPos().getY());
 
             if (currentCell != null) {  // If the conveyor moves the player out of the board, method returns
-                if (game.outOfBoard(player.getPos().getNextPos(dir)))
+                if (game.outOfBoard(player.getPos().getNextPos(dir))) {
+                    game.resetPlayer();
                     return false;
-
+            }
                 // Moves the player along the conveyor
                 Position pos = game.getPlayerPos();
                 game.movePlayer(game.getPlayerPos(), dir);
@@ -153,8 +154,10 @@ public class BoardObjects {
                     .getCell(player.getPos().getX(), player.getPos().getY());
 
             if (currentCell != null) { // If the conveyor moves the player out of the board, method returns
-                if (game.outOfBoard(player.getPos().getNextPos(dir)))
+                if (game.outOfBoard(player.getPos().getNextPos(dir))) {
+                    game.resetPlayer();
                     return false;
+                }
                 game.movePlayer(player.getPos(), dir);
 
                 if (dir != previousConveyorDirection)

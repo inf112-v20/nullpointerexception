@@ -108,7 +108,7 @@ public class Game extends ScreenAdapter {
         if (!canMove(pos.getNextPos(dir), dir)) {
             System.out.println("Something is blocking");
         } else if (outOfBoard(pos.getNextPos(dir)))
-            resetPlayer(pos);
+            resetPlayer();
         else
             player.setPos(pos.getNextPos(dir));
         updatePlayer();
@@ -126,8 +126,8 @@ public class Game extends ScreenAdapter {
         player.updateState();
     }
 
-    public void resetPlayer(Position pos) {
-        board.getBoardLayers().get("player").setCell(pos.getX(), pos.getY(), null);
+    public void resetPlayer() {
+        board.getBoardLayers().get("player").setCell(player.getPos().getX(), player.getPos().getY(), null);
         player.checkpoint();
         updatePlayer();
     }
