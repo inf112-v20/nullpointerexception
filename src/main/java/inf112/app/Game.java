@@ -117,21 +117,36 @@ public class Game extends ScreenAdapter {
         return player.getPos();
     }
 
+    /**
+     * Returns player position
+     * @return
+     */
     public Position getPlayerPos() {
         return player.getPos();
     }
 
+    /**
+     * Sets a new player direction
+     * @param dir
+     */
     public void turnPlayer(Direction dir) {
         player.setDirection(dir);
         player.updateState();
     }
 
+    /**
+     * sets the player to a new position
+     */
     public void resetPlayer() {
         board.getBoardLayers().get("player").setCell(player.getPos().getX(), player.getPos().getY(), null);
         player.checkpoint();
         updatePlayer();
     }
 
+    /**
+     * Checks what objects is on the player tile.
+     * @param player
+     */
     public void checkCurrentTile(Player player) {
         if (boardObjects.tileHasFlag(player.getPos())) {
             System.out.println("player is standing on a flag!");

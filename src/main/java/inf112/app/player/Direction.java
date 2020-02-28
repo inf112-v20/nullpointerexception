@@ -12,6 +12,10 @@ public enum Direction {
         this.id = id;
     }
 
+    /**
+     *
+     * @return direction as a string
+     */
     public String getName() {
         if (this == NORTH)
             return "N";
@@ -22,6 +26,10 @@ public enum Direction {
         return "W";
     }
 
+    /**
+     * Changes direction to the opposite direction
+     * @return new direction
+     */
     public Direction reverseDirection() {
         if (this == NORTH)
             return SOUTH;
@@ -32,7 +40,10 @@ public enum Direction {
         return EAST;
     }
 
-
+    /**
+     * turns the player left
+     * @return direction
+     */
     public Direction turnLeft() {
         if (this == NORTH)
             return WEST;
@@ -43,6 +54,10 @@ public enum Direction {
         return SOUTH;
     }
 
+    /**
+     * Turns the player right
+     * @return direction
+     */
     public Direction turnRight() {
         if (this == NORTH)
             return EAST;

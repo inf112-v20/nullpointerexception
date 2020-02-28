@@ -15,15 +15,27 @@ public class Position {
         yCoordinate = pos.getY();
     }
 
+    /**
+     *
+     * @return Players x coordinate
+     */
     public int getX() {
         return xCoordinate;
     }
 
+    /**
+     *
+     * @return players y coordinate
+     */
     public int getY() {
         return yCoordinate;
     }
 
-
+    /**
+     * given direction sets the new player position
+     * @param dir
+     * @return new position
+     */
     public Position getNextPos(Direction dir) {
         switch (dir) {
             case NORTH:
