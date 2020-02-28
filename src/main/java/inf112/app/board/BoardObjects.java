@@ -98,13 +98,24 @@ public class BoardObjects {
         return board.get("repair kit").getCell(pos.getX(), pos.getY()) != null;
     }
 
+    /**
+     * Turns the player if the board has a object that can turn him
+     *
+     * @param pos       player position
+     * @param playerDir player direction
+     * @return true if the player was turned, false if not
+     */
     private boolean hasTurn(Position pos, Direction playerDir) {
         if (board.get("leftTurn").getCell(pos.getX(), pos.getY()) != null) {
-            //game.turnPlayer(playerDir.turnLeft());
+            game.turnPlayer(playerDir.turnLeft());
             return true;
         }
-        //game.turnPlayer(playerDir.turnRight());
-        return board.get("rightTurn").getCell(pos.getX(), pos.getY()) != null;
+
+        if (board.get("rightTurn").getCell(pos.getX(), pos.getY()) != null) {
+            game.turnPlayer(playerDir.turnRight());
+            return true;
+        }
+        return false;
     }
 
 
@@ -114,21 +125,21 @@ public class BoardObjects {
      * @return true or false
      */
     public boolean tileHasConveyor(Player player) {
-        for (Direction dir : Direction.values()) {
+        for (Direction dir : Direction.values()) { // Checks which direction the conveyor is facing
             TiledMapTileLayer.Cell currentCell = board
                     .get("conveyor" + dir.getName())
                     .getCell(player.getPos().getX(), player.getPos().getY());
 
-            if (currentCell != null) {
+            if (currentCell != null) {  // If the conveyor moves the player out of the board, method returns
                 if (game.outOfBoard(player.getPos().getNextPos(dir)))
                     return false;
+
+                // Moves the player along the conveyor
                 Position pos = game.getPlayerPos();
                 game.movePlayer(game.getPlayerPos(), dir);
                 hasTurn(player.getPos(), player.getDirection());
-/*
-                if (pos.getNextPos(dir) != game.getPlayerPos())
-                    hasTurn(game.getPlayerPos(), player.getDirection());
-*/
+
+                // Checks if the player is on an express conveyor
                 if (board.get("expressconveyor").getCell(player.getPos().getX(), player.getPos().getY()) != null) {
                     tileHasExpressConveyor(player, dir);
                     return !game.outOfBoard(player.getPos().getNextPos(dir));
@@ -139,16 +150,6 @@ public class BoardObjects {
         return false;
     }
 
-    public Direction hasConveyor(Player player) {
-        for (Direction dir : Direction.values()) {
-            TiledMapTileLayer.Cell currentCell = board
-                    .get("conveyor" + dir.getName())
-                    .getCell(player.getPos().getX(), player.getPos().getY());
-            if (currentCell != null)
-                return dir;
-        }
-        return null;
-    }
 
     /**
      * Checks if the player is standing on an express type conveyor and moves the player accordingly
@@ -158,11 +159,12 @@ public class BoardObjects {
      * @return true or false
      */
     public boolean tileHasExpressConveyor(Player player, Direction previousConveyorDirection) {
-        for (Direction dir : Direction.values()) {
+        for (Direction dir : Direction.values()) { // Checks for a conveyor tile in all directions
             TiledMapTileLayer.Cell currentCell = board
                     .get("conveyor" + dir.getName())
                     .getCell(player.getPos().getX(), player.getPos().getY());
-            if (currentCell != null) {
+
+            if (currentCell != null) { // If the conveyor moves the player out of the board, method returns
                 if (game.outOfBoard(player.getPos().getNextPos(dir)))
                     return false;
                 game.movePlayer(player.getPos(), dir);
