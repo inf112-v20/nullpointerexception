@@ -24,10 +24,10 @@ public class Game extends ScreenAdapter {
      * Initializing a board, camera, renderer and player in addition to creating the needed TiledMap layers.
      */
     public Game() {
-        //String boardName1 = "Risky_Exchange.tmx";
-        String boardName2 = "Whirlwind Tour.tmx";
+        //String boardName = "boards/Risky_Exchange.tmx";
+        String boardName = "boards/Whirlwind Tour.tmx";
 
-        board = new Board(boardName2);
+        board = new Board(boardName);
         boardObjects = new BoardObjects(board.getBoardLayers(), this);
         player = new Player(this);
         updatePlayer();

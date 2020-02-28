@@ -16,9 +16,9 @@ public class MenuScreen extends ScreenAdapter {
 
     public MenuScreen(GameRunner gameRunner) {
         this.gameRunner = gameRunner;
-        startButton = new Texture("start_game.png");
-        startButtonActive = new Texture("start_game_active.png");
-        background = new Texture("roborally_background.jpg");
+        startButton = new Texture("menu/start_game.png");
+        startButtonActive = new Texture("menu/start_game_active.png");
+        background = new Texture("menu/roborally_background.jpg");
     }
 
 
