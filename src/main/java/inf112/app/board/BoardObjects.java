@@ -20,10 +20,11 @@ public class BoardObjects {
 
     /**
      * Returns true if the tile has a wall.
-     * @param playerPos
-     * @param newPos
-     * @param dir
-     * @return
+     *
+     * @param playerPos position of the player
+     * @param newPos the position the player would have if he moves
+     * @param dir direction of the player
+     * @return true or false depending on if there is a wall or not
      */
     public boolean tileHasWall(Position playerPos, Position newPos, Direction dir) {
         if (board.get("wall" + dir.getName())
@@ -36,8 +37,8 @@ public class BoardObjects {
 
     /**
      * Returns true if the tile has a flag.
-     * @param pos
-     * @return
+     * @param pos position of the player
+     * @return true or false
      */
     public boolean tileHasFlag(Position pos) {
         return board.get("flag").getCell(pos.getX(), pos.getY()) != null;
@@ -45,9 +46,9 @@ public class BoardObjects {
 
     /**
      * Returns true if the tile has a wheel.
-     * @param pos
-     * @param dir
-     * @return
+     * @param pos position of the player
+     * @param dir direction of the player
+     * @return true or false
      */
     public boolean tileHasTurnWheel(Position pos, Direction dir) {
         if (board.get("turnwheel").getCell(pos.getX(), pos.getY()) != null) {
@@ -63,8 +64,8 @@ public class BoardObjects {
 
     /**
      * Returns true if the tile is a hole.
-     * @param pos
-     * @return
+     * @param pos position of the player
+     * @return true or false
      */
     public boolean tileHasHole(Position pos) {
         if (board.get("hole").getCell(pos.getX(), pos.getY()) != null) {
@@ -90,9 +91,9 @@ public class BoardObjects {
 
     /**
      * Returns True if the player is supposed to turn.
-     * @param pos
-     * @param playerDir
-     * @return
+     * @param pos position of the player
+     * @param playerDir direction of the player
+     * @return true or false depending on if there is a turn tile or not
      */
     private boolean hasTurn(Position pos, Direction playerDir) {
         if (board.get("leftTurn").getCell(pos.getX(), pos.getY()) != null) {
@@ -108,8 +109,8 @@ public class BoardObjects {
 
     /**
      * Returns true if the tile has a Conveyor belt
-     * @param player
-     * @return
+     * @param player the player object that is being moved
+     * @return true or false depending on tile
      */
     public boolean tileHasConveyor(Player player) {
         for (Direction dir : Direction.values()) { // Checks which direction the conveyor is facing
@@ -140,9 +141,10 @@ public class BoardObjects {
 
     /**
      * Returns true if the tile has an express conveyor.
-     * @param player
-     * @param previousConveyorDirection
-     * @return
+     *
+     * @param player player object that is being moved
+     * @param previousConveyorDirection the direction of the conveyor that just moved the player
+     * @return true or false depending on tile
      */
     public boolean tileHasExpressConveyor(Player player, Direction previousConveyorDirection) {
         for (Direction dir : Direction.values()) { // Checks for a conveyor tile in all directions
