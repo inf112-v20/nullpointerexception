@@ -46,6 +46,9 @@ public class Player extends InputAdapter {
         Gdx.input.setInputProcessor(this);
     }
 
+    /**
+     * Constructor mainly for testing purposes
+     */
     public Player() {
         dir = Direction.SOUTH;
         player = new Vector2();
@@ -97,10 +100,20 @@ public class Player extends InputAdapter {
         return super.keyDown(keycode);
     }
 
+    /**
+     * Changes the position of the player to a new position
+     *
+     * @param newPos the new position
+     */
     public void setPos(Position newPos) {
         pos = new Position(newPos);
     }
 
+    /**
+     * Changes the position of the player to a predetermined position
+     *
+     * @return the new position
+     */
     public Position checkpoint() {
         return pos = new Position(0, 0);
     }
@@ -121,15 +134,30 @@ public class Player extends InputAdapter {
         playerCell.setRotation(dir.getID());
     }
 
+    /**
+     * Gets the current position of the player
+     *
+     * @return position
+     */
     public Position getPos() {
         return pos;
     }
 
+    /**
+     * Gets the current direction of the player
+     *
+     * @return direction
+     */
     public Direction getDirection() {
         return dir;
     }
 
-    public void setDirection(Direction turn) {
-        dir = turn;
+    /**
+     * Changes the direction of the player to a new direction
+     *
+     * @param dir direction
+     */
+    public void setDirection(Direction dir) {
+        this.dir = dir;
     }
 }
