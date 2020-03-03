@@ -1,5 +1,6 @@
 package inf112.app;
 
+import inf112.app.board.Board;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -19,7 +20,6 @@ public class BoardTest {
     public void checksBoardHeight() {
         assertEquals(board.getBoardHeight(), 6);
     }
-
 
     @Test
     public void checksBoardWidth() {

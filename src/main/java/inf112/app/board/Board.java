@@ -1,4 +1,4 @@
-package inf112.app;
+package inf112.app.board;
 
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
@@ -9,15 +9,15 @@ import java.util.Map;
 
 public class Board {
     // Default pixels per tile
-    public static final float TILE_SIZE = 300;
+
     private int boardWidth;
     private int boardHeight;
 
     private TiledMap board;
     private Map<String, TiledMapTileLayer> boardLayers;
 
-    public Board() {
-        board = new TmxMapLoader().load("assets/Risky_Exchange.tmx");
+    public Board(String boardName) {
+        board = new TmxMapLoader().load(boardName);
         //board = new TmxMapLoader().load("assets/Test_Board.tmx");
         boardLayers = new HashMap<>();
 
@@ -30,6 +30,12 @@ public class Board {
         boardHeight = board.getProperties().get("height", Integer.class);
     }
 
+    /**
+     * Constructor for testing certain methods
+     *
+     * @param width  testWidth
+     * @param height testHeight
+     */
     public Board(int width, int height) {
         boardWidth = width;
         boardHeight = height;

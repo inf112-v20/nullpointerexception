@@ -1,18 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Diagram>
   <ID>JAVA</ID>
-  <OriginalElement>inf112.skeleton.app</OriginalElement>
+  <OriginalElement>inf112.app</OriginalElement>
   <nodes>
-    <node x="254.0" y="394.0">inf112.skeleton.app.Main</node>
-    <node x="217.0" y="0.0">inf112.skeleton.app.Player</node>
-    <node x="0.0" y="394.0">inf112.skeleton.app.AppTest</node>
-    <node x="213.0" y="252.0">inf112.skeleton.app.BoardTest</node>
-    <node x="0.0" y="252.0">inf112.skeleton.app.Board</node>
-    <node x="0.0" y="0.0">inf112.skeleton.app.Game</node>
+    <node x="262.0" y="578.0">inf112.app.BoardTest</node>
+    <node x="679.0" y="578.0">inf112.app.Main</node>
+    <node x="0.0" y="370.0">inf112.app.Game</node>
+    <node x="565.0" y="0.0">inf112.app.Board.BoardObjects</node>
+    <node x="0.0" y="103.0">inf112.app.Board.Tiles.IConveyor</node>
+    <node x="0.0" y="742.0">inf112.app.GameRunner</node>
+    <node x="299.0" y="370.0">inf112.app.Player.Directions</node>
+    <node x="95.5" y="0.0">inf112.app.Board.Tiles.ITile</node>
+    <node x="165.0" y="114.0">inf112.app.Board.Tiles.Turnwheel</node>
+    <node x="321.0" y="0.0">inf112.app.Player.Player</node>
+    <node x="0.0" y="578.0">inf112.app.Player.Position</node>
+    <node x="493.0" y="578.0">inf112.app.MenuScreen</node>
+    <node x="0.0" y="228.0">inf112.app.Board.Tiles.Conveyor</node>
+    <node x="560.0" y="370.0">inf112.app.Board.Board</node>
   </nodes>
   <notes />
-  <edges />
-  <settings layout="Hierarchic Group" zoom="1.0" x="219.0" y="234.5" />
+  <edges>
+    <edge source="inf112.app.Board.Tiles.Conveyor" target="inf112.app.Board.Tiles.IConveyor">
+      <point x="0.0" y="-48.5" />
+      <point x="0.0" y="37.5" />
+    </edge>
+    <edge source="inf112.app.Board.Tiles.IConveyor" target="inf112.app.Board.Tiles.ITile">
+      <point x="0.0" y="-37.5" />
+      <point x="72.5" y="78.0" />
+      <point x="121.0" y="78.0" />
+      <point x="-25.5" y="26.5" />
+    </edge>
+    <edge source="inf112.app.Board.Tiles.Turnwheel" target="inf112.app.Board.Tiles.ITile">
+      <point x="0.0" y="-26.5" />
+      <point x="220.5" y="78.0" />
+      <point x="172.0" y="78.0" />
+      <point x="25.5" y="26.5" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="0.697713801862828" x="483.0" y="570.5" />
   <SelectedNodes />
   <Categories>
     <Category>Methods</Category>

@@ -12,6 +12,7 @@ public class GameRunner extends Game {
     @Override
     public void create() {
         batch = new SpriteBatch();
+        //this.setScreen(new inf112.app.Game());
         this.setScreen(new MenuScreen(this));
     }
 
