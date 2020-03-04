@@ -6,7 +6,7 @@ import java.util.Random;
 
 public class Deck {
     private ArrayList<Card> deck;
-    private ArrayList<Integer> priority;
+    private ArrayList<Integer> priority; // to keep track of used priorities
 
     public Deck() {
         priority = new ArrayList<>();
@@ -15,18 +15,28 @@ public class Deck {
         deck = shuffleDeck();
 
     }
+
+    /**
+     * Creates a new shuffled deck.
+     * @return ArrayList
+     */
     private ArrayList<Card> shuffleDeck() {
         Random ran = new Random();
-        ArrayList<Card> temp = new ArrayList<>();
+        ArrayList<Card> shuffledDeck = new ArrayList<>();
         for (Card card: deck) {
-            temp.add(ran.nextInt(Math.max(1, temp.size())), card);
+            shuffledDeck.add(ran.nextInt(Math.max(1, shuffledDeck.size())), card);
         }
-        return temp;
+        return shuffledDeck;
     }
 
     public ArrayList<Card> getDeck() {
         return deck;
     }
+
+    /**
+     * Creates a unique random priority between 100 and 990
+     * @return int
+     */
     private Integer assignPriority() {
         Random random = new Random();
         int prior = random.nextInt(99);
@@ -36,12 +46,17 @@ public class Deck {
         priority.add(prior);
         return prior * 10;
     }
-    private void makeDeck(int[] temp) {
+
+    /**
+     * Creates a new deck of Cards
+     * @param numbers array with the different numbers of Cards
+     */
+    private void makeDeck(int[] numbers) {
         CardDirection[] directions = new CardDirection[]{
                 CardDirection.Move1, CardDirection.Move2, CardDirection.Move3, CardDirection.Backup,
                 CardDirection.TURNRIGHT, CardDirection.TURNLEFT, CardDirection.TURN180};
         for (int i = 0; i < 7; i++) {
-            for (int j = 0; j < temp[i]; j++) {
+            for (int j = 0; j < numbers[i]; j++) {
                 deck.add(new Card(assignPriority(), directions[i]));
             }
         }
