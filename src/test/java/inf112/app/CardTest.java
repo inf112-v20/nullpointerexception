@@ -22,22 +22,17 @@ public class CardTest {
     }
     @Test
     public void getDeckTest() {
-        assertEquals(8, deck.getDeck().size());
+        assertEquals(84, deck.getDeck().size());
     }
     @Test
     public void ShuffleTest() {
         int idx = 0;
         int count = 1;
-        /*
-        for (Card card: deck.getDeck()) {
-            System.out.println(card.getDir());
-        }
-        */
         while (idx < deck.getDeck().size() && deck.getDeck().get(idx).getDir().equals(
                 deck.getDeck().get(idx + 1).getDir())) {
             count ++;
             idx ++;
         }
-        assertNotEquals(4, count);
+        assertNotEquals(5, count);
     }
 }
