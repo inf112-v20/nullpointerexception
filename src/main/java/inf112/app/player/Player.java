@@ -12,7 +12,7 @@ import inf112.app.Game;
 
 
 
-public class Player extends InputAdapter {
+public class Player {
 
     //Vector holds players position
     private Vector2 player;
@@ -43,7 +43,6 @@ public class Player extends InputAdapter {
         player = new Vector2();
         pos = new Position((int) player.x, (int) player.y);
 
-        Gdx.input.setInputProcessor(this);
     }
 
     /**
@@ -55,50 +54,6 @@ public class Player extends InputAdapter {
         pos = new Position((int) player.x, (int) player.y);
     }
 
-    /**
-     * Refreshing the former players position to null
-     * Implements the board-movement of a player
-     * Prints out the current position
-     *
-     * @param keycode - an integer representation of different possible inputs
-     * @return true/false
-     */
-    @Override
-    public boolean keyUp(int keycode) {
-
-        switch (keycode) {
-            case Input.Keys.RIGHT:
-                if (dir != Direction.EAST)
-                    dir = Direction.EAST;
-                else
-                    game.movePlayer(pos, dir);
-                break;
-            case Input.Keys.LEFT:
-                if (dir != Direction.WEST)
-                    dir = Direction.WEST;
-                else
-                    game.movePlayer(pos, dir);
-                break;
-            case Input.Keys.UP:
-                if (dir != Direction.NORTH)
-                    dir = Direction.NORTH;
-                else
-                    game.movePlayer(pos, dir);
-                break;
-            case Input.Keys.DOWN:
-                if (dir != Direction.SOUTH)
-                    dir = Direction.SOUTH;
-                else
-                    game.movePlayer(pos, dir);
-                break;
-            case Input.Keys.Q:
-                game.checkCurrentTile(this);
-                break;
-            default:
-        }
-        updateState();
-        return super.keyDown(keycode);
-    }
 
     /**
      * Changes the position of the player to a new position

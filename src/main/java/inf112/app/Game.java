@@ -1,7 +1,6 @@
 package inf112.app;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.ScreenAdapter;
+import com.badlogic.gdx.*;
 import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
@@ -11,7 +10,7 @@ import inf112.app.player.Direction;
 import inf112.app.player.Player;
 import inf112.app.player.Position;
 
-public class Game extends ScreenAdapter {
+public class Game extends InputAdapter implements Screen {
     public static final float TILE_SIZE = 300;
 
     private Board board;
@@ -40,6 +39,55 @@ public class Game extends ScreenAdapter {
 
         renderer = new OrthogonalTiledMapRenderer(board.getBoard());
         renderer.setView(camera);
+
+        Gdx.input.setInputProcessor(this);
+
+    }
+
+
+    /**
+     * Refreshing the former players position to null
+     * Implements the board-movement of a player
+     * Prints out the current position
+     *
+     * @param keycode - an integer representation of different possible inputs
+     * @return true/false
+     */
+    @Override
+    public boolean keyUp(int keycode) {
+
+        switch (keycode) {
+            case Input.Keys.RIGHT:
+                if (player.getDirection() != Direction.EAST)
+                    player.setDirection(Direction.EAST);
+                else
+                    movePlayer(player.getPos(), player.getDirection());
+                break;
+            case Input.Keys.LEFT:
+                if (player.getDirection() != Direction.WEST)
+                    player.setDirection(Direction.WEST);
+                else
+                    movePlayer(player.getPos(), player.getDirection());
+                break;
+            case Input.Keys.UP:
+                if (player.getDirection() != Direction.NORTH)
+                    player.setDirection(Direction.NORTH);
+                else
+                    movePlayer(player.getPos(), player.getDirection());
+                break;
+            case Input.Keys.DOWN:
+                if (player.getDirection() != Direction.SOUTH)
+                    player.setDirection(Direction.SOUTH);
+                else
+                    movePlayer(player.getPos(), player.getDirection());
+                break;
+            case Input.Keys.Q:
+                checkCurrentTile(player);
+                break;
+            default:
+        }
+        player.updateState();
+        return super.keyDown(keycode);
     }
 
     /**
@@ -49,6 +97,11 @@ public class Game extends ScreenAdapter {
         board.getBoardLayers()
                 .get("player")
                 .setCell(player.getPos().getX(), player.getPos().getY(), player.setImage());
+    }
+
+    @Override
+    public void show() {
+
     }
 
     /**
@@ -61,6 +114,26 @@ public class Game extends ScreenAdapter {
         Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT);
 
         renderer.render();
+    }
+
+    @Override
+    public void resize(int i, int i1) {
+
+    }
+
+    @Override
+    public void pause() {
+
+    }
+
+    @Override
+    public void resume() {
+
+    }
+
+    @Override
+    public void hide() {
+
     }
 
     /**
@@ -125,7 +198,7 @@ public class Game extends ScreenAdapter {
 
     /**
      * Returns player position
-     * @return
+     * @return position of the player
      */
     public Position getPlayerPos() {
         return player.getPos();
