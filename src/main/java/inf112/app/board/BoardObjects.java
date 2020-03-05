@@ -5,6 +5,7 @@ import inf112.app.Game;
 import inf112.app.player.Direction;
 import inf112.app.player.Player;
 import inf112.app.player.Position;
+import javafx.geometry.Pos;
 
 import java.util.Map;
 
@@ -159,7 +160,6 @@ public class BoardObjects {
         return true;
     }
 
-
     /**
      * Returns true if the tile has an express conveyor.
      *
@@ -183,10 +183,42 @@ public class BoardObjects {
                 if (conveyorDirectionIsDifferent(player.getPos(), dir)) {
                     hasTurn(player.getPos(), player.getDirection());
                 }
-
                 break;
             }
         }
         return true;
+    }
+
+    public boolean hasConveyor(Position pos) {
+        for (Direction dir : Direction.values()) { // Checks for a conveyor tile in all directions
+            TiledMapTileLayer.Cell currentCell = board
+                    .get("conveyor" + dir.getName())
+                    .getCell(pos.getX(), pos.getY());
+            if (currentCell != null)
+                return true;
+        }
+        return false;
+    }
+
+    public Direction conveyorDirection(Position pos) {
+        for (Direction dir : Direction.values()) { // Checks for a conveyor tile in all directions
+            TiledMapTileLayer.Cell currentCell = board
+                    .get("conveyor" + dir.getName())
+                    .getCell(pos.getX(), pos.getY());
+            if (currentCell != null)
+                return dir;
+        }
+        return null;
+    }
+
+    public boolean hasExpressConveyor(Position pos) {
+        for (Direction dir : Direction.values()) { // Checks for a conveyor tile in all directions
+            TiledMapTileLayer.Cell currentCell = board
+                    .get("expressconveyor" + dir.getName())
+                    .getCell(pos.getX(), pos.getY());
+            if (currentCell != null)
+                return true;
+        }
+        return false;
     }
 }

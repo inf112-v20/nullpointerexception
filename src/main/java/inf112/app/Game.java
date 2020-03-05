@@ -101,7 +101,6 @@ public class Game extends InputAdapter implements Screen {
 
     @Override
     public void show() {
-
     }
 
     /**
@@ -118,22 +117,18 @@ public class Game extends InputAdapter implements Screen {
 
     @Override
     public void resize(int i, int i1) {
-
     }
 
     @Override
     public void pause() {
-
     }
 
     @Override
     public void resume() {
-
     }
 
     @Override
     public void hide() {
-
     }
 
     /**
@@ -245,5 +240,9 @@ public class Game extends InputAdapter implements Screen {
         if (boardObjects.tileHasRepair(player.getPos())) {
             System.out.println("player is standing on a repair kit!");
         }
+    }
+
+    private void conveyor() {
+
     }
 }
