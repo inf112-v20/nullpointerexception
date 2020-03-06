@@ -1,4 +1,4 @@
-package inf112.app;
+package inf112.app.screens;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -14,8 +14,8 @@ public class GameRunner extends Game {
 
         batch = new SpriteBatch();
         //this.setScreen(new inf112.app.Game());
-        this.setScreen(new GameScreen());
-        //this.setScreen(new MenuScreen(this));
+        //this.setScreen(new GameScreen());
+        this.setScreen(new MenuScreen(this));
     }
 
 }

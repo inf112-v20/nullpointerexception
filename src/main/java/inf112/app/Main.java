@@ -2,6 +2,7 @@ package inf112.app;
 
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
+import inf112.app.screens.GameRunner;
 
 
 public class Main {
