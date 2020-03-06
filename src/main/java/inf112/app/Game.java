@@ -3,23 +3,18 @@ package inf112.app;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
-import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.GL30;
-import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import inf112.app.board.Board;
 import inf112.app.board.BoardObjects;
 import inf112.app.player.Direction;
 import inf112.app.player.Player;
 import inf112.app.player.Position;
 
-public class Game extends InputAdapter implements Screen {
+public class Game extends InputAdapter {
     public static final float TILE_SIZE = 300;
 
     private Board board;
     private Player player;
     private BoardObjects boardObjects;
-    private OrthogonalTiledMapRenderer renderer;
 
 
     /**
@@ -34,16 +29,8 @@ public class Game extends InputAdapter implements Screen {
         player = new Player(this);
         updatePlayer();
 
-        OrthographicCamera camera = new OrthographicCamera();
-        camera.setToOrtho(false,
-                board.getBoardWidth() * TILE_SIZE,
-                board.getBoardHeight() * TILE_SIZE);
-        camera.update();
-
-        renderer = new OrthogonalTiledMapRenderer(board.getBoard());
-        renderer.setView(camera);
-
         Gdx.input.setInputProcessor(this);
+
 
     }
 
@@ -102,45 +89,6 @@ public class Game extends InputAdapter implements Screen {
                 .setCell(player.getPos().getX(), player.getPos().getY(), player.setImage());
     }
 
-    @Override
-    public void show() {
-    }
-
-    /**
-     * A loop method which renders the changes on the screen
-     * Shows the player default/winning/dying state on the board
-     */
-    @Override
-    public void render(float v) {
-        Gdx.gl.glClearColor(1, 1, 1, 1);
-        Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT);
-
-        renderer.render();
-    }
-
-    @Override
-    public void resize(int i, int i1) {
-    }
-
-    @Override
-    public void pause() {
-    }
-
-    @Override
-    public void resume() {
-    }
-
-    @Override
-    public void hide() {
-    }
-
-    /**
-     * Called when the Application is destroyed. Preceded by a call to pause().
-     */
-    @Override
-    public void dispose() {
-        renderer.dispose();
-    }
 
     /**
      * Checks if the position the player wants to move to is valid
@@ -157,7 +105,6 @@ public class Game extends InputAdapter implements Screen {
             System.out.println("player moved out of the board");
             return true;
         }
-        //if ((board.getBoardLayers().get("hole").getCell(newPos.getX(), newPos.getX()) != null)) {return true;}
         return false;
     }
 
@@ -295,5 +242,9 @@ public class Game extends InputAdapter implements Screen {
             else
                 turnPlayer(player.getDirection().turnRight());
         }
+    }
+
+    public Board getBoard() {
+        return board;
     }
 }
