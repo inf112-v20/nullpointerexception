@@ -225,12 +225,13 @@ public class Game extends InputAdapter implements Screen {
      * @param player player object
      */
     public void checkCurrentTile(Player player) {
-        if (boardObjects.tileHasFlag(player.getPos())) {
-            System.out.println("player is standing on a flag!");
-        }
         if (boardObjects.tileHasHole(player.getPos())) {
             resetPlayer();
             System.out.println("player stepped in a hole!");
+            return;
+        }
+        if (boardObjects.tileHasFlag(player.getPos())) {
+            System.out.println("player is standing on a flag!");
         }
         if (boardObjects.hasConveyor(player.getPos())) {
             conveyor();
@@ -272,9 +273,15 @@ public class Game extends InputAdapter implements Screen {
      * @param oldDirection the previous direction of the conveyor
      */
     private void conveyorTurn(Direction oldDirection) {
+        if (!boardObjects.hasConveyor(player.getPos()))
+            return;
+
         Direction conveyorDir = boardObjects.conveyorDirection(player.getPos());
 
-        if (conveyorDir != oldDirection) {
+        if (boardObjects.tileHasFlag(player.getPos()))
+            return;
+
+        if (!conveyorDir.equals(oldDirection)) {
             if (oldDirection.turnLeft().equals(conveyorDir))
                 turnPlayer(player.getDirection().turnLeft());
             else
