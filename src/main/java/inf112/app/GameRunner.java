@@ -5,8 +5,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class GameRunner extends Game {
 
-    public static int SCREEN_WIDTH = 750;
-    public static int SCREEN_HEIGHT = 750;
+    public static int SCREEN_WIDTH = 900;
+    public static int SCREEN_HEIGHT = 900;
     public SpriteBatch batch;
 
     @Override
