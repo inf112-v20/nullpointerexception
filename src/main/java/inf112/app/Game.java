@@ -234,6 +234,9 @@ public class Game extends InputAdapter implements Screen {
         }
         if (boardObjects.hasConveyor(player.getPos())) {
             conveyor();
+            if (boardObjects.hasExpressConveyor(player.getPos())) {
+                conveyor();
+            }
             System.out.println("PLayer was moved by a conveyorbelt");
         }
         if (boardObjects.tileHasTurnWheel(player.getPos(), player.getDirection())) {
@@ -260,26 +263,8 @@ public class Game extends InputAdapter implements Screen {
 
         movePlayer(player.getPos(), conveyorDir);
         conveyorTurn(conveyorDir);
-
-        if (boardObjects.hasExpressConveyor(player.getPos())) {
-            conveyorExpress();
-        }
-
     }
 
-    /**
-     * Moves the player one additional time if the player is on an express type conveyor
-     */
-    private void conveyorExpress() {
-        Direction conveyorDir = boardObjects.conveyorDirection(player.getPos());
-
-        if (outOfBoard(getPlayerPos().getNextPos(conveyorDir))) {
-            resetPlayer();
-            return;
-        }
-        movePlayer(player.getPos(), conveyorDir);
-        conveyorTurn(conveyorDir);
-    }
 
     /**
      * If the conveyor moves a player it also turns the player if he is moved into a turn
@@ -290,7 +275,7 @@ public class Game extends InputAdapter implements Screen {
         Direction conveyorDir = boardObjects.conveyorDirection(player.getPos());
 
         if (conveyorDir != oldDirection) {
-            if (oldDirection.turnLeft() == conveyorDir)
+            if (oldDirection.turnLeft().equals(conveyorDir))
                 turnPlayer(player.getDirection().turnLeft());
             else
                 turnPlayer(player.getDirection().turnRight());
