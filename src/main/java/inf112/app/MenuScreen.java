@@ -3,7 +3,9 @@ package inf112.app;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.GL30;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.math.Vector3;
 
 
 public class MenuScreen extends ScreenAdapter {
@@ -12,13 +14,19 @@ public class MenuScreen extends ScreenAdapter {
     private Texture startButton;
     private Texture startButtonActive;
     private Texture background;
-
+    private Texture exitButton;
+    private Texture exitButtonActive;
+    private OrthographicCamera camera;
 
     public MenuScreen(GameRunner gameRunner) {
         this.gameRunner = gameRunner;
+        camera = new OrthographicCamera();
+        camera.setToOrtho(false, GameRunner.SCREEN_WIDTH,GameRunner.SCREEN_HEIGHT);
         startButton = new Texture("menu/start_game.png");
         startButtonActive = new Texture("menu/start_game_active.png");
         background = new Texture("menu/roborally_background.jpg");
+        exitButton  = new Texture("menu/exit.png");
+        exitButtonActive = new Texture("menu/exit_active.png");
     }
 
 
@@ -31,33 +39,53 @@ public class MenuScreen extends ScreenAdapter {
     public void render(float v) {
         Gdx.gl.glClearColor(1, 1, 1, 1);
         Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT);
+        gameRunner.batch.setProjectionMatrix(camera.combined);
         gameRunner.batch.begin();
 
         gameRunner.batch.draw(background,0 ,0,GameRunner.SCREEN_WIDTH,GameRunner.SCREEN_HEIGHT);
         //X and Y pos where the image is being drawn
-        int x = (GameRunner.SCREEN_WIDTH / 2) - (startButton.getWidth() / 2);
-        int y = (GameRunner.SCREEN_HEIGHT / 2) - (startButton.getHeight() / 2);
+        int xStartBtn = (GameRunner.SCREEN_WIDTH / 2) - (startButton.getWidth() / 2);
+        int yStartBtn = (GameRunner.SCREEN_HEIGHT / 2) - (startButton.getHeight() / 2);
+        int xExitBtn = (GameRunner.SCREEN_WIDTH / 2) - (exitButton.getWidth() / 2);
+        int yExitBtn = (GameRunner.SCREEN_HEIGHT / 2 - (2*startButton.getHeight())) - (exitButton.getHeight() / 2);
 
         //Current mouse position on Y-axis
         int mousePosition_Y = Gdx.input.getY();
         //Current mouse position on X-axis
         int mousePosition_X = Gdx.input.getX();
 
-        //Scaling mouse position when the resolution changes
-        int scaleX = (mousePosition_X * GameRunner.SCREEN_WIDTH) / Gdx.graphics.getWidth();
-        int scaleY = (mousePosition_Y * GameRunner.SCREEN_HEIGHT) / Gdx.graphics.getHeight();
+        /**
+         * Vector point of a current mouse position
+         * unprojecting the mouse position so that it matches the worlds coordinates.
+         * (Default mouse position at Y-axis in Gdx.input is the opposite of our worlds Y-axis coords, thats why
+         * we need to unproject it)
+         */
+        Vector3 input = new Vector3(mousePosition_X, mousePosition_Y, 0);
+        camera.unproject(input);
 
         //If mouse hovers over the button and its being clicked, start the game
-        if (scaleX < x + startButton.getWidth() && scaleX > x
-                && scaleY < y + startButton.getHeight() && scaleY > y) {
-            gameRunner.batch.draw(startButtonActive, x, y);
+        if (input.x < xStartBtn + startButton.getWidth() && input.x > xStartBtn
+                && input.y < yStartBtn + startButton.getHeight() && input.y > yStartBtn) {
+            gameRunner.batch.draw(startButtonActive, xStartBtn, yStartBtn);
+            gameRunner.batch.draw(exitButton, xExitBtn, yExitBtn);
             //If mouse is clicked - start the game
             if (Gdx.input.isTouched()) {
                 dispose();
                 gameRunner.setScreen(new Game());
             }
-        } else {
-            gameRunner.batch.draw(startButton, x, y);
+        }
+        else if(input.x < xExitBtn + exitButton.getWidth() && input.x > xExitBtn
+                && input.y < yExitBtn + exitButton.getHeight() && input.y > yExitBtn){
+            gameRunner.batch.draw(exitButtonActive, xExitBtn, yExitBtn);
+            gameRunner.batch.draw(startButton, xStartBtn, yStartBtn);
+            if (Gdx.input.isTouched()) {
+                dispose();
+                System.exit(0);
+            }
+        }
+        else {
+            gameRunner.batch.draw(startButton, xStartBtn, yStartBtn);
+            gameRunner.batch.draw(exitButton, xExitBtn, yExitBtn);
         }
         gameRunner.batch.end();
     }
@@ -67,5 +95,7 @@ public class MenuScreen extends ScreenAdapter {
         background.dispose();
         startButton.dispose();
         startButtonActive.dispose();
+        exitButton.dispose();
+        exitButtonActive.dispose();
     }
 }
