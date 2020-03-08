@@ -1,7 +1,6 @@
 package inf112.app;
 
 import inf112.app.player.Direction;
-import inf112.app.player.Player;
 import inf112.app.player.Position;
 import org.junit.Before;
 import org.junit.Test;
@@ -10,10 +9,10 @@ import static org.junit.Assert.assertEquals;
 
 public class PositionTest {
 
-    Position pos;
-    int x;
-    int y;
-    Direction dirN;
+    private Position pos;
+    private int x;
+    private int y;
+    private Direction dirN;
 
     @Before
     public void init() {
