@@ -18,6 +18,7 @@ public class Game extends ScreenAdapter {
     private Player player;
     private BoardObjects boardObjects;
     private OrthogonalTiledMapRenderer renderer;
+    private int turn;
 
 
     /**
@@ -26,7 +27,7 @@ public class Game extends ScreenAdapter {
     public Game() {
         //String boardName = "boards/Risky_Exchange.tmx";
         String boardName = "boards/Whirlwind Tour.tmx";
-
+        turn = 0;
         board = new Board(boardName);
         boardObjects = new BoardObjects(board.getBoardLayers(), this);
         player = new Player(this);
@@ -122,7 +123,26 @@ public class Game extends ScreenAdapter {
 
         return player.getPos();
     }
+    public void movePlayer2(Position pos, Direction dir) {
+        Card card = player.getCard(turn);
+        switch (card.getDir()) {
+            case Move1:
+                movePlayer(pos, dir);
+            case Move2:
+                movePlayer(pos, dir);
+                movePlayer(player.getPos(), dir);
+            case Move3:
+                movePlayer(pos, dir);
+                movePlayer(player.getPos(), dir);
+                movePlayer(player.getPos(), dir);
+            case Backup:
+                movePlayer(player.getPos(), dir.reverseDirection());
+            case TURN180:
+                player.updateState();
 
+        }
+
+    }
     /**
      * Returns player position
      * @return
