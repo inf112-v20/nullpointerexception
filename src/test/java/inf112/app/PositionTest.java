@@ -1,7 +1,6 @@
 package inf112.app;
 
 import inf112.app.player.Direction;
-import inf112.app.player.Player;
 import inf112.app.player.Position;
 import org.junit.Before;
 import org.junit.Test;

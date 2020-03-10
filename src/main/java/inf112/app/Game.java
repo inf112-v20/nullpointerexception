@@ -155,6 +155,7 @@ public class Game extends ScreenAdapter {
         }
     }
     public void movePlayer2(Direction dir, Position pos, CardDirection cardDir) {
+        board.getBoardLayers().get("player").setCell(pos.getX(), pos.getY(), null);
         switch (cardDir) {
             case BACKUP:
                 if (!canMove(pos.getNextPos(dir.reverseDirection()), dir.reverseDirection())) {
@@ -183,7 +184,7 @@ public class Game extends ScreenAdapter {
         }
         updatePlayer();
         player.updateState();
-        turn =  (turn + 1) % 5;
+        turn = (turn + 1) % 5;
 
 
     }

@@ -99,6 +99,7 @@ public class Player extends InputAdapter {
                 break;
             case Input.Keys.SPACE:
                 game.tryToMove();
+                break;
                 //game.movePlayer2();
             default:
         }

@@ -124,7 +124,7 @@ public class BoardObjects {
                     return false;
             }
                 // Moves the player along the conveyor
-                Position pos = game.getPlayerPos();
+                //Position pos = game.getPlayerPos();
                 game.movePlayer(game.getPlayerPos(), dir);
                 if (conveyorDirectionIsDifferent(player.getPos(), dir)) {
                     hasTurn(player.getPos(), player.getDirection());
@@ -153,7 +153,7 @@ public class BoardObjects {
                     .get("conveyor" + dir.getName())
                     .getCell(pos.getX(), pos.getY());
             if (currentCell != null) {
-                if (currentDir == dir)
+                if (currentDir.equals(dir))
                     return false;
             }
         }
