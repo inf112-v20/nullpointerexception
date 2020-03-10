@@ -172,15 +172,19 @@ public class Game extends InputAdapter {
      * @param player player object
      */
     public void checkCurrentTile(Player player) {
-        if (boardObjects.tileHasFlag(player.getPos())) {
-            System.out.println("player is standing on a flag!");
-        }
         if (boardObjects.tileHasHole(player.getPos())) {
             resetPlayer();
             System.out.println("player stepped in a hole!");
+            return;
+        }
+        if (boardObjects.tileHasFlag(player.getPos())) {
+            System.out.println("player is standing on a flag!");
         }
         if (boardObjects.hasConveyor(player.getPos())) {
             conveyor();
+            if (boardObjects.hasExpressConveyor(player.getPos())) {
+                conveyor();
+            }
             System.out.println("PLayer was moved by a conveyorbelt");
         }
         if (boardObjects.tileHasTurnWheel(player.getPos(), player.getDirection())) {
@@ -207,26 +211,8 @@ public class Game extends InputAdapter {
 
         movePlayer(player.getPos(), conveyorDir);
         conveyorTurn(conveyorDir);
-
-        if (boardObjects.hasExpressConveyor(player.getPos())) {
-            conveyorExpress();
-        }
-
     }
 
-    /**
-     * Moves the player one additional time if the player is on an express type conveyor
-     */
-    private void conveyorExpress() {
-        Direction conveyorDir = boardObjects.conveyorDirection(player.getPos());
-
-        if (outOfBoard(getPlayerPos().getNextPos(conveyorDir))) {
-            resetPlayer();
-            return;
-        }
-        movePlayer(player.getPos(), conveyorDir);
-        conveyorTurn(conveyorDir);
-    }
 
     /**
      * If the conveyor moves a player it also turns the player if he is moved into a turn
@@ -234,10 +220,16 @@ public class Game extends InputAdapter {
      * @param oldDirection the previous direction of the conveyor
      */
     private void conveyorTurn(Direction oldDirection) {
+        if (!boardObjects.hasConveyor(player.getPos()))
+            return;
+
         Direction conveyorDir = boardObjects.conveyorDirection(player.getPos());
 
-        if (conveyorDir != oldDirection) {
-            if (oldDirection.turnLeft() == conveyorDir)
+        if (boardObjects.tileHasFlag(player.getPos()))
+            return;
+
+        if (!conveyorDir.equals(oldDirection)) {
+            if (oldDirection.turnLeft().equals(conveyorDir))
                 turnPlayer(player.getDirection().turnLeft());
             else
                 turnPlayer(player.getDirection().turnRight());
