@@ -17,11 +17,6 @@ public class MenuScreen extends ScreenAdapter {
     private Button exitButton;
     private Button exitButtonActive;
     private OrthographicCamera camera;
-    //X and Y pos where the image is being drawn
-    int xStartBtn;
-    int yStartBtn;
-    int xExitBtn;
-    int yExitBtn;
 
     public MenuScreen(GameRunner gameRunner) {
         this.gameRunner = gameRunner;
@@ -32,10 +27,11 @@ public class MenuScreen extends ScreenAdapter {
         startButtonActive = new Button("menu/start_game_active.png");
         exitButton  = new Button("menu/exit.png");
         exitButtonActive = new Button("menu/exit_active.png");
-        xStartBtn = (GameRunner.SCREEN_WIDTH / 2) - (startButton.getButtonTexture().getWidth() / 2);
-        yStartBtn = (GameRunner.SCREEN_HEIGHT / 2) - (startButton.getButtonTexture().getHeight() / 2);
-        xExitBtn = (GameRunner.SCREEN_WIDTH / 2) - (exitButton.getButtonTexture().getWidth() / 2);
-        yExitBtn = (GameRunner.SCREEN_HEIGHT / 2 - (2*startButton.getButtonTexture().getHeight())) - (exitButton.getButtonTexture().getHeight() / 2);
+        //X and Y pos where the image is being drawn
+        int xStartBtn = (GameRunner.SCREEN_WIDTH / 2) - (startButton.getButtonTexture().getWidth() / 2);
+        int yStartBtn = (GameRunner.SCREEN_HEIGHT / 2) - (startButton.getButtonTexture().getHeight() / 2);
+        int xExitBtn = (GameRunner.SCREEN_WIDTH / 2) - (exitButton.getButtonTexture().getWidth() / 2);
+        int yExitBtn = (GameRunner.SCREEN_HEIGHT / 2 - (2*startButton.getButtonTexture().getHeight())) - (exitButton.getButtonTexture().getHeight() / 2);
         startButton.setButtonX(xStartBtn);
         startButton.setButtonY(yStartBtn);
         exitButton.setButtonX(xExitBtn);
