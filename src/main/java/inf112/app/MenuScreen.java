@@ -17,6 +17,11 @@ public class MenuScreen extends ScreenAdapter {
     private Texture exitButton;
     private Texture exitButtonActive;
     private OrthographicCamera camera;
+    //X and Y pos where the image is being drawn
+    int xStartBtn;
+    int yStartBtn;
+    int xExitBtn;
+    int yExitBtn;
 
     public MenuScreen(GameRunner gameRunner) {
         this.gameRunner = gameRunner;
@@ -27,6 +32,10 @@ public class MenuScreen extends ScreenAdapter {
         background = new Texture("menu/roborally_background.jpg");
         exitButton  = new Texture("menu/exit.png");
         exitButtonActive = new Texture("menu/exit_active.png");
+        xStartBtn = (GameRunner.SCREEN_WIDTH / 2) - (startButton.getWidth() / 2);
+        yStartBtn = (GameRunner.SCREEN_HEIGHT / 2) - (startButton.getHeight() / 2);
+        xExitBtn = (GameRunner.SCREEN_WIDTH / 2) - (exitButton.getWidth() / 2);
+        yExitBtn = (GameRunner.SCREEN_HEIGHT / 2 - (2*startButton.getHeight())) - (exitButton.getHeight() / 2);
     }
 
 
@@ -43,11 +52,6 @@ public class MenuScreen extends ScreenAdapter {
         gameRunner.batch.begin();
 
         gameRunner.batch.draw(background,0 ,0,GameRunner.SCREEN_WIDTH,GameRunner.SCREEN_HEIGHT);
-        //X and Y pos where the image is being drawn
-        int xStartBtn = (GameRunner.SCREEN_WIDTH / 2) - (startButton.getWidth() / 2);
-        int yStartBtn = (GameRunner.SCREEN_HEIGHT / 2) - (startButton.getHeight() / 2);
-        int xExitBtn = (GameRunner.SCREEN_WIDTH / 2) - (exitButton.getWidth() / 2);
-        int yExitBtn = (GameRunner.SCREEN_HEIGHT / 2 - (2*startButton.getHeight())) - (exitButton.getHeight() / 2);
 
         //Current mouse position on Y-axis
         int mousePosition_Y = Gdx.input.getY();
@@ -64,8 +68,7 @@ public class MenuScreen extends ScreenAdapter {
         camera.unproject(input);
 
         //If mouse hovers over the button and its being clicked, start the game
-        if (input.x < xStartBtn + startButton.getWidth() && input.x > xStartBtn
-                && input.y < yStartBtn + startButton.getHeight() && input.y > yStartBtn) {
+        if (buttonIsHovered(startButton,input)) {
             gameRunner.batch.draw(startButtonActive, xStartBtn, yStartBtn);
             gameRunner.batch.draw(exitButton, xExitBtn, yExitBtn);
             //If mouse is clicked - start the game
@@ -74,10 +77,10 @@ public class MenuScreen extends ScreenAdapter {
                 gameRunner.setScreen(new Game());
             }
         }
-        else if(input.x < xExitBtn + exitButton.getWidth() && input.x > xExitBtn
-                && input.y < yExitBtn + exitButton.getHeight() && input.y > yExitBtn){
+        else if(buttonIsHovered(exitButton,input)){
             gameRunner.batch.draw(exitButtonActive, xExitBtn, yExitBtn);
             gameRunner.batch.draw(startButton, xStartBtn, yStartBtn);
+            //If mouse is clicked - close the game
             if (Gdx.input.isTouched()) {
                 dispose();
                 System.exit(0);
@@ -89,6 +92,31 @@ public class MenuScreen extends ScreenAdapter {
         }
         gameRunner.batch.end();
     }
+
+    /**
+     * Checks if the button is hovered over by the mouse cursor
+     * @param button
+     * @param input
+     * @return true or false
+     */
+    private boolean buttonIsHovered(Texture button, Vector3 input){
+        if(button == startButton) {
+            if (input.x < xStartBtn + startButton.getWidth() && input.x > xStartBtn
+                    && input.y < yStartBtn + startButton.getHeight() && input.y > yStartBtn) {
+                return true;
+            }
+            return false;
+        }
+        if(button == exitButton){
+            if(input.x < xExitBtn + exitButton.getWidth() && input.x > xExitBtn
+                    && input.y < yExitBtn + exitButton.getHeight() && input.y > yExitBtn){
+                return true;
+            }
+            return false;
+        }
+        return false;
+    }
+
 
     @Override
     public void dispose() {
