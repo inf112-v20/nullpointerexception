@@ -53,12 +53,17 @@ public class Deck {
      */
     private void makeDeck(int[] numbers) {
         CardDirection[] directions = new CardDirection[]{
-                CardDirection.Move1, CardDirection.Move2, CardDirection.Move3, CardDirection.Backup,
+                CardDirection.MOVE1, CardDirection.MOVE2, CardDirection.MOVE3, CardDirection.BACKUP,
                 CardDirection.TURNRIGHT, CardDirection.TURNLEFT, CardDirection.TURN180};
         for (int i = 0; i < 7; i++) {
             for (int j = 0; j < numbers[i]; j++) {
                 deck.add(new Card(assignPriority(), directions[i]));
             }
         }
+    }
+    public Card dealCard() {
+        Card card = deck.get(0);
+        deck.remove(0);
+        return card;
     }
 }

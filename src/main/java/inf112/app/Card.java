@@ -4,11 +4,14 @@ package inf112.app;
 public class Card {
     private int priority;
     private CardDirection dir;
+    private int steps;
 
 
     public Card(int priority, CardDirection dir) {
         this.priority = priority;
         this.dir = dir;
+        setSteps();
+
     }
 
     /**
@@ -26,4 +29,24 @@ public class Card {
     public CardDirection getDir() {
         return dir;
     }
+
+    private void setSteps() {
+        switch (getDir()) {
+            case MOVE1:
+                steps = 1;
+                break;
+            case MOVE2:
+                steps = 2;
+                break;
+            case MOVE3:
+                steps = 3;
+                break;
+            default:
+                steps = 0;
+                break;
+
+        }
+
+    }
+    public int getSteps() { return steps; }
 }

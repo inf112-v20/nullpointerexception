@@ -8,13 +8,13 @@ public class CardTest {
     Card card;
     Deck deck;
     public CardTest() {
-        card = new Card(100, CardDirection.Move1);
+        card = new Card(100, CardDirection.MOVE1);
         deck = new Deck();
     }
 
     @Test
     public void getDirTest() {
-        assertEquals(CardDirection.Move1, card.getDir());
+        assertEquals(CardDirection.MOVE1, card.getDir());
     }
     @Test
     public void getPriorityTest() {

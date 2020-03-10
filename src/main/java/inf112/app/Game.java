@@ -11,6 +11,8 @@ import inf112.app.player.Direction;
 import inf112.app.player.Player;
 import inf112.app.player.Position;
 
+import java.util.IllegalFormatException;
+
 public class Game extends ScreenAdapter {
     public static final float TILE_SIZE = 300;
 
@@ -19,6 +21,7 @@ public class Game extends ScreenAdapter {
     private BoardObjects boardObjects;
     private OrthogonalTiledMapRenderer renderer;
     private int turn;
+    private Deck deck;
 
 
     /**
@@ -27,11 +30,15 @@ public class Game extends ScreenAdapter {
     public Game() {
         //String boardName = "boards/Risky_Exchange.tmx";
         String boardName = "boards/Whirlwind Tour.tmx";
+        Deck deck = new Deck();
         turn = 0;
         board = new Board(boardName);
         boardObjects = new BoardObjects(board.getBoardLayers(), this);
         player = new Player(this);
         updatePlayer();
+        for (int i = 0; i < 5; i++) {
+            player.setHand(deck.dealCard());
+        }
 
         OrthographicCamera camera = new OrthographicCamera();
         camera.setToOrtho(false,
@@ -41,6 +48,7 @@ public class Game extends ScreenAdapter {
 
         renderer = new OrthogonalTiledMapRenderer(board.getBoard());
         renderer.setView(camera);
+
     }
 
     /**
@@ -110,6 +118,7 @@ public class Game extends ScreenAdapter {
      * @return the new position of the player
      */
     public Position movePlayer(Position pos, Direction dir) {
+        System.out.println("actual " + dir);
         board.getBoardLayers().get("player").setCell(pos.getX(), pos.getY(), null);
 
         if (!canMove(pos.getNextPos(dir), dir)) {
@@ -123,24 +132,59 @@ public class Game extends ScreenAdapter {
 
         return player.getPos();
     }
-    public void movePlayer2(Position pos, Direction dir) {
-        Card card = player.getCard(turn);
-        switch (card.getDir()) {
-            case Move1:
-                movePlayer(pos, dir);
-            case Move2:
-                movePlayer(pos, dir);
-                movePlayer(player.getPos(), dir);
-            case Move3:
-                movePlayer(pos, dir);
-                movePlayer(player.getPos(), dir);
-                movePlayer(player.getPos(), dir);
-            case Backup:
-                movePlayer(player.getPos(), dir.reverseDirection());
+
+    public void tryToMove() {
+        Card card = new Card(100, CardDirection.BACKUP);
+        Position pos = player.getPos();
+        Direction dir = player.getDirection();
+        if (card.getSteps() == 0) {
+            movePlayer2(dir, pos, card.getDir());
+        } else {
+            for (int i = 0; i < card.getSteps(); i++) {
+                pos = player.getPos();
+                dir = player.getDirection();
+                if (!canMove(pos.getNextPos(dir), dir)) {
+                    System.out.println("Something is blocking!");
+                } else if (outOfBoard(pos.getNextPos(dir))) {
+                    resetPlayer();
+                    System.out.println("Player moved out of the board!");
+                }
+                else
+                    movePlayer(pos, dir);
+            }
+        }
+    }
+    public void movePlayer2(Direction dir, Position pos, CardDirection cardDir) {
+        switch (cardDir) {
+            case BACKUP:
+                if (!canMove(pos.getNextPos(dir.reverseDirection()), dir.reverseDirection())) {
+                    System.out.println("Something is blocking!");
+                } else if (outOfBoard(pos.getNextPos(dir.reverseDirection()))) {
+                    resetPlayer();
+                    System.out.println("Player moved out of the board!");
+                }
+                else
+                    player.setPos(pos.getNextPos(dir.reverseDirection()));
+                break;
             case TURN180:
-                player.updateState();
+                turnPlayer(dir.reverseDirection());
+                break;
+            case TURNLEFT:
+                turnPlayer(dir.turnLeft());
+                break;
+            case TURNRIGHT:
+                turnPlayer(dir.turnRight());
+                break;
+            default:
+                player.setPos(pos.getNextPos(dir));
+                break;
+
 
         }
+        updatePlayer();
+        player.updateState();
+        turn =  (turn + 1) % 5;
+
 
     }
     /**

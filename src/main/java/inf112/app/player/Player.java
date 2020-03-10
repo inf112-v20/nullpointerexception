@@ -69,7 +69,6 @@ public class Player extends InputAdapter {
      */
     @Override
     public boolean keyUp(int keycode) {
-        System.out.println("hello");
         switch (keycode) {
             case Input.Keys.RIGHT:
                 if (dir != Direction.EAST)
@@ -98,6 +97,9 @@ public class Player extends InputAdapter {
             case Input.Keys.Q:
                 game.checkCurrentTile(this);
                 break;
+            case Input.Keys.SPACE:
+                game.tryToMove();
+                //game.movePlayer2();
             default:
         }
         updateState();
