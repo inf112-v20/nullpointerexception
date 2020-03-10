@@ -11,11 +11,11 @@ import com.badlogic.gdx.math.Vector3;
 public class MenuScreen extends ScreenAdapter {
 
     private GameRunner gameRunner;
-    private Texture startButton;
-    private Texture startButtonActive;
     private Texture background;
-    private Texture exitButton;
-    private Texture exitButtonActive;
+    private Button startButton;
+    private Button startButtonActive;
+    private Button exitButton;
+    private Button exitButtonActive;
     private OrthographicCamera camera;
     //X and Y pos where the image is being drawn
     int xStartBtn;
@@ -27,15 +27,19 @@ public class MenuScreen extends ScreenAdapter {
         this.gameRunner = gameRunner;
         camera = new OrthographicCamera();
         camera.setToOrtho(false, GameRunner.SCREEN_WIDTH,GameRunner.SCREEN_HEIGHT);
-        startButton = new Texture("menu/start_game.png");
-        startButtonActive = new Texture("menu/start_game_active.png");
         background = new Texture("menu/roborally_background.jpg");
-        exitButton  = new Texture("menu/exit.png");
-        exitButtonActive = new Texture("menu/exit_active.png");
-        xStartBtn = (GameRunner.SCREEN_WIDTH / 2) - (startButton.getWidth() / 2);
-        yStartBtn = (GameRunner.SCREEN_HEIGHT / 2) - (startButton.getHeight() / 2);
-        xExitBtn = (GameRunner.SCREEN_WIDTH / 2) - (exitButton.getWidth() / 2);
-        yExitBtn = (GameRunner.SCREEN_HEIGHT / 2 - (2*startButton.getHeight())) - (exitButton.getHeight() / 2);
+        startButton = new Button("menu/start_game.png");
+        startButtonActive = new Button("menu/start_game_active.png");
+        exitButton  = new Button("menu/exit.png");
+        exitButtonActive = new Button("menu/exit_active.png");
+        xStartBtn = (GameRunner.SCREEN_WIDTH / 2) - (startButton.getButtonTexture().getWidth() / 2);
+        yStartBtn = (GameRunner.SCREEN_HEIGHT / 2) - (startButton.getButtonTexture().getHeight() / 2);
+        xExitBtn = (GameRunner.SCREEN_WIDTH / 2) - (exitButton.getButtonTexture().getWidth() / 2);
+        yExitBtn = (GameRunner.SCREEN_HEIGHT / 2 - (2*startButton.getButtonTexture().getHeight())) - (exitButton.getButtonTexture().getHeight() / 2);
+        startButton.setButtonX(xStartBtn);
+        startButton.setButtonY(yStartBtn);
+        exitButton.setButtonX(xExitBtn);
+        exitButton.setButtonY(yExitBtn);
     }
 
 
@@ -69,8 +73,8 @@ public class MenuScreen extends ScreenAdapter {
 
         //If mouse hovers over the button and its being clicked, start the game
         if (buttonIsHovered(startButton,input)) {
-            gameRunner.batch.draw(startButtonActive, xStartBtn, yStartBtn);
-            gameRunner.batch.draw(exitButton, xExitBtn, yExitBtn);
+            gameRunner.batch.draw(startButtonActive.getButtonTexture(), startButton.getButtonX(), startButton.getButtonY());
+            gameRunner.batch.draw(exitButton.getButtonTexture(), exitButton.getButtonX(), exitButton.getButtonY());
             //If mouse is clicked - start the game
             if (Gdx.input.isTouched()) {
                 dispose();
@@ -78,8 +82,8 @@ public class MenuScreen extends ScreenAdapter {
             }
         }
         else if(buttonIsHovered(exitButton,input)){
-            gameRunner.batch.draw(exitButtonActive, xExitBtn, yExitBtn);
-            gameRunner.batch.draw(startButton, xStartBtn, yStartBtn);
+            gameRunner.batch.draw(exitButtonActive.getButtonTexture(), exitButton.getButtonX(), exitButton.getButtonY());
+            gameRunner.batch.draw(startButton.getButtonTexture(), startButton.getButtonX(), startButton.getButtonY());
             //If mouse is clicked - close the game
             if (Gdx.input.isTouched()) {
                 dispose();
@@ -87,8 +91,8 @@ public class MenuScreen extends ScreenAdapter {
             }
         }
         else {
-            gameRunner.batch.draw(startButton, xStartBtn, yStartBtn);
-            gameRunner.batch.draw(exitButton, xExitBtn, yExitBtn);
+            gameRunner.batch.draw(startButton.getButtonTexture(), startButton.getButtonX(), startButton.getButtonY());
+            gameRunner.batch.draw(exitButton.getButtonTexture(), exitButton.getButtonX(), exitButton.getButtonY());
         }
         gameRunner.batch.end();
     }
@@ -99,20 +103,10 @@ public class MenuScreen extends ScreenAdapter {
      * @param input
      * @return true or false
      */
-    private boolean buttonIsHovered(Texture button, Vector3 input){
-        if(button == startButton) {
-            if (input.x < xStartBtn + startButton.getWidth() && input.x > xStartBtn
-                    && input.y < yStartBtn + startButton.getHeight() && input.y > yStartBtn) {
-                return true;
-            }
-            return false;
-        }
-        if(button == exitButton){
-            if(input.x < xExitBtn + exitButton.getWidth() && input.x > xExitBtn
-                    && input.y < yExitBtn + exitButton.getHeight() && input.y > yExitBtn){
-                return true;
-            }
-            return false;
+    private boolean buttonIsHovered(Button button, Vector3 input){
+        if (input.x < button.getButtonX() + button.getButtonTexture().getWidth() && input.x > button.getButtonX()
+                && input.y < button.getButtonY() + button.getButtonTexture().getHeight() && input.y > button.getButtonY()) {
+            return true;
         }
         return false;
     }
@@ -121,9 +115,9 @@ public class MenuScreen extends ScreenAdapter {
     @Override
     public void dispose() {
         background.dispose();
-        startButton.dispose();
-        startButtonActive.dispose();
-        exitButton.dispose();
-        exitButtonActive.dispose();
+        startButton.getButtonTexture().dispose();
+        startButtonActive.getButtonTexture().dispose();
+        exitButton.getButtonTexture().dispose();
+        exitButtonActive.getButtonTexture().dispose();
     }
 }
