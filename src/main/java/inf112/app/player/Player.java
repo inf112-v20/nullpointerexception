@@ -23,6 +23,8 @@ public class Player extends InputAdapter {
     private Direction dir;
     private Game game;
     private ArrayList<Card> hand;
+    private int healthScore;
+    private int lives;
 
     /**
      * Initializing default/dying/winning cells of a player.
@@ -35,6 +37,8 @@ public class Player extends InputAdapter {
 
         this.game = game;
         dir = Direction.SOUTH;
+        healthScore = 9;
+        lives = 3;
         this.hand = new ArrayList<>();
 
         Texture robotTextures = new Texture("assets/robot.png");
@@ -100,12 +104,37 @@ public class Player extends InputAdapter {
             case Input.Keys.SPACE:
                 game.tryToMove();
                 break;
-                //game.movePlayer2();
+            //game.movePlayer2();
             default:
         }
         updateState();
         return super.keyDown(keycode);
     }
+
+    /**
+     * subtracts healthscore and lives if healtscore is less than 1. Also sets the player to dead when there are no more lives.
+     */
+    public void looseHealthScore() {
+        if (this.healthScore <= 1) {
+            if (this.lives < 1) {
+                //updateState(); to dead
+            } else {
+                this.lives -= 1;
+            }
+        } else {
+            this.healthScore -= 1;
+        }
+    }
+
+    /**
+     * Lets a player gain healthscore if it isn´t already at it´s maximum.
+     */
+    public void gainHealthScore() {
+        if (this.healthScore < 9) {
+            this.healthScore += 1;//Usikker på om dette er riktig regel
+        }
+    }
+
 
     /**
      * Changes the position of the player to a new position
@@ -178,4 +207,5 @@ public class Player extends InputAdapter {
      * @return Card
      */
     public Card getCard(int index) { return hand.get(index); }
+
 }
