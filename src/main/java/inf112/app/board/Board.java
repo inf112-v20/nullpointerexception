@@ -21,6 +21,7 @@ public class Board {
         //board = new TmxMapLoader().load("assets/Test_Board.tmx");
         boardLayers = new HashMap<>();
 
+
         // Stores all the layers in the input map/board
         for (int i = 0; i < board.getLayers().size(); i++) {
             boardLayers.put(board.getLayers().get(i).getName(), (TiledMapTileLayer) board.getLayers().get(i));
