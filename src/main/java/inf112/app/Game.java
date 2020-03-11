@@ -1,16 +1,11 @@
 package inf112.app;
 
-import com.badlogic.gdx.*;
-import com.badlogic.gdx.graphics.GL30;
-import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.ScreenAdapter;
 import inf112.app.board.Board;
 import inf112.app.board.BoardObjects;
 import inf112.app.player.Direction;
 import inf112.app.player.Player;
 import inf112.app.player.Position;
-
-import java.util.IllegalFormatException;
 
 public class Game extends ScreenAdapter {
     public static final float TILE_SIZE = 300;
@@ -113,9 +108,11 @@ public class Game extends ScreenAdapter {
                 dir = player.getDirection();
                 if (!canMove(pos.getNextPos(dir), dir)) {
                     System.out.println("Something is blocking!");
+                    break;
                 } else if (outOfBoard(pos.getNextPos(dir))) {
                     resetPlayer();
                     System.out.println("Player moved out of the board!");
+                    break;
                 }
                 else
                     movePlayer(pos, dir);
