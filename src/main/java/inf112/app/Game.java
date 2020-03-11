@@ -1,9 +1,6 @@
 package inf112.app;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
-import com.badlogic.gdx.InputAdapter;
-import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.*;
 import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
@@ -13,13 +10,17 @@ import inf112.app.player.Direction;
 import inf112.app.player.Player;
 import inf112.app.player.Position;
 
-public class Game extends InputAdapter implements Screen {
+import java.util.IllegalFormatException;
+
+public class Game extends ScreenAdapter {
     public static final float TILE_SIZE = 300;
 
     private Board board;
     private Player player;
     private BoardObjects boardObjects;
     private OrthogonalTiledMapRenderer renderer;
+    private int turn;
+    private Deck deck;
 
 
     /**
@@ -28,11 +29,15 @@ public class Game extends InputAdapter implements Screen {
     public Game() {
         //String boardName = "boards/Risky_Exchange.tmx";
         String boardName = "boards/Whirlwind Tour.tmx";
-
+        Deck deck = new Deck();
+        turn = 0;
         board = new Board(boardName);
         boardObjects = new BoardObjects(board.getBoardLayers(), this);
         player = new Player(this);
         updatePlayer();
+        for (int i = 0; i < 5; i++) {
+            player.setHand(deck.dealCard());
+        }
 
         OrthographicCamera camera = new OrthographicCamera();
         camera.setToOrtho(false,
@@ -43,54 +48,6 @@ public class Game extends InputAdapter implements Screen {
         renderer = new OrthogonalTiledMapRenderer(board.getBoard());
         renderer.setView(camera);
 
-        Gdx.input.setInputProcessor(this);
-
-    }
-
-
-    /**
-     * Refreshing the former players position to null
-     * Implements the board-movement of a player
-     * Prints out the current position
-     *
-     * @param keycode - an integer representation of different possible inputs
-     * @return true/false
-     */
-    @Override
-    public boolean keyUp(int keycode) {
-
-        switch (keycode) {
-            case Input.Keys.RIGHT:
-                if (player.getDirection() != Direction.EAST)
-                    player.setDirection(Direction.EAST);
-                else
-                    movePlayer(player.getPos(), player.getDirection());
-                break;
-            case Input.Keys.LEFT:
-                if (player.getDirection() != Direction.WEST)
-                    player.setDirection(Direction.WEST);
-                else
-                    movePlayer(player.getPos(), player.getDirection());
-                break;
-            case Input.Keys.UP:
-                if (player.getDirection() != Direction.NORTH)
-                    player.setDirection(Direction.NORTH);
-                else
-                    movePlayer(player.getPos(), player.getDirection());
-                break;
-            case Input.Keys.DOWN:
-                if (player.getDirection() != Direction.SOUTH)
-                    player.setDirection(Direction.SOUTH);
-                else
-                    movePlayer(player.getPos(), player.getDirection());
-                break;
-            case Input.Keys.Q:
-                checkCurrentTile(player);
-                break;
-            default:
-        }
-        player.updateState();
-        return super.keyDown(keycode);
     }
 
     /**
@@ -194,6 +151,61 @@ public class Game extends InputAdapter implements Screen {
         return player.getPos();
     }
 
+    public void tryToMove() {
+        Card card = new Card(100, CardDirection.BACKUP);
+        Position pos = player.getPos();
+        Direction dir = player.getDirection();
+        if (card.getSteps() == 0) {
+            movePlayer2(dir, pos, card.getDir());
+        } else {
+            for (int i = 0; i < card.getSteps(); i++) {
+                pos = player.getPos();
+                dir = player.getDirection();
+                if (!canMove(pos.getNextPos(dir), dir)) {
+                    System.out.println("Something is blocking!");
+                } else if (outOfBoard(pos.getNextPos(dir))) {
+                    resetPlayer();
+                    System.out.println("Player moved out of the board!");
+                }
+                else
+                    movePlayer(pos, dir);
+            }
+        }
+    }
+    public void movePlayer2(Direction dir, Position pos, CardDirection cardDir) {
+        board.getBoardLayers().get("player").setCell(pos.getX(), pos.getY(), null);
+        switch (cardDir) {
+            case BACKUP:
+                if (!canMove(pos.getNextPos(dir.reverseDirection()), dir.reverseDirection())) {
+                    System.out.println("Something is blocking!");
+                } else if (outOfBoard(pos.getNextPos(dir.reverseDirection()))) {
+                    resetPlayer();
+                    System.out.println("Player moved out of the board!");
+                }
+                else
+                    player.setPos(pos.getNextPos(dir.reverseDirection()));
+                break;
+            case TURN180:
+                turnPlayer(dir.reverseDirection());
+                break;
+            case TURNLEFT:
+                turnPlayer(dir.turnLeft());
+                break;
+            case TURNRIGHT:
+                turnPlayer(dir.turnRight());
+                break;
+            default:
+                player.setPos(pos.getNextPos(dir));
+                break;
+
+
+        }
+        updatePlayer();
+        player.updateState();
+        turn = (turn + 1) % 5;
+
+
+    }
     /**
      * Returns player position
      * @return position of the player

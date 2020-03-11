@@ -8,11 +8,13 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.tiles.StaticTiledMapTile;
 import com.badlogic.gdx.math.Vector2;
+import inf112.app.Card;
 import inf112.app.Game;
 
+import java.util.ArrayList;
 
 
-public class Player {
+public class Player extends InputAdapter {
 
     //Vector holds players position
     private Vector2 player;
@@ -20,6 +22,7 @@ public class Player {
     private Position pos;
     private Direction dir;
     private Game game;
+    private ArrayList<Card> hand;
 
     /**
      * Initializing default/dying/winning cells of a player.
@@ -32,6 +35,7 @@ public class Player {
 
         this.game = game;
         dir = Direction.SOUTH;
+        this.hand = new ArrayList<>();
 
         Texture robotTextures = new Texture("assets/robot.png");
         TextureRegion[][] robotTexture = TextureRegion.split(robotTextures,
@@ -43,6 +47,7 @@ public class Player {
         player = new Vector2();
         pos = new Position((int) player.x, (int) player.y);
 
+        Gdx.input.setInputProcessor(this);
     }
 
     /**
@@ -54,6 +59,53 @@ public class Player {
         pos = new Position((int) player.x, (int) player.y);
     }
 
+    /**
+     * Refreshing the former players position to null
+     * Implements the board-movement of a player
+     * Prints out the current position
+     *
+     * @param keycode - an integer representation of different possible inputs
+     * @return true/false
+     */
+    @Override
+    public boolean keyUp(int keycode) {
+        switch (keycode) {
+            case Input.Keys.RIGHT:
+                if (dir != Direction.EAST)
+                    dir = Direction.EAST;
+                else
+                    game.movePlayer(pos, dir);
+                break;
+            case Input.Keys.LEFT:
+                if (dir != Direction.WEST)
+                    dir = Direction.WEST;
+                else
+                    game.movePlayer(pos, dir);
+                break;
+            case Input.Keys.UP:
+                if (dir != Direction.NORTH)
+                    dir = Direction.NORTH;
+                else
+                    game.movePlayer(pos, dir);
+                break;
+            case Input.Keys.DOWN:
+                if (dir != Direction.SOUTH)
+                    dir = Direction.SOUTH;
+                else
+                    game.movePlayer(pos, dir);
+                break;
+            case Input.Keys.Q:
+                game.checkCurrentTile(this);
+                break;
+            case Input.Keys.SPACE:
+                game.tryToMove();
+                break;
+                //game.movePlayer2();
+            default:
+        }
+        updateState();
+        return super.keyDown(keycode);
+    }
 
     /**
      * Changes the position of the player to a new position
@@ -78,9 +130,7 @@ public class Player {
      *
      * @return the new player state
      */
-    public TiledMapTileLayer.Cell setImage() {
-        return playerCell;
-    }
+    public TiledMapTileLayer.Cell setImage() { return playerCell; }
 
     /**
      * Checks which imagine to show to the screen depending on player state
@@ -115,4 +165,17 @@ public class Player {
     public void setDirection(Direction dir) {
         this.dir = dir;
     }
+
+    /**
+     * Adds a card to the hand.
+     * @param card
+     */
+    public void setHand(Card card) { hand.add(card); }
+
+    /**
+     * Returns a card in hand given index
+     * @param index int
+     * @return Card
+     */
+    public Card getCard(int index) { return hand.get(index); }
 }
