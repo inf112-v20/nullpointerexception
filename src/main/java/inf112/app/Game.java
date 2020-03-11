@@ -18,7 +18,6 @@ public class Game extends ScreenAdapter {
     private Board board;
     private Player player;
     private BoardObjects boardObjects;
-    private OrthogonalTiledMapRenderer renderer;
     private int turn;
     private Deck deck;
 
@@ -39,15 +38,6 @@ public class Game extends ScreenAdapter {
             player.setHand(deck.dealCard());
         }
 
-        OrthographicCamera camera = new OrthographicCamera();
-        camera.setToOrtho(false,
-                board.getBoardWidth() * TILE_SIZE,
-                board.getBoardHeight() * TILE_SIZE);
-        camera.update();
-
-        renderer = new OrthogonalTiledMapRenderer(board.getBoard());
-        renderer.setView(camera);
-
     }
 
     /**
@@ -59,45 +49,6 @@ public class Game extends ScreenAdapter {
                 .setCell(player.getPos().getX(), player.getPos().getY(), player.setImage());
     }
 
-    @Override
-    public void show() {
-    }
-
-    /**
-     * A loop method which renders the changes on the screen
-     * Shows the player default/winning/dying state on the board
-     */
-    @Override
-    public void render(float v) {
-        Gdx.gl.glClearColor(1, 1, 1, 1);
-        Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT);
-
-        renderer.render();
-    }
-
-    @Override
-    public void resize(int i, int i1) {
-    }
-
-    @Override
-    public void pause() {
-    }
-
-    @Override
-    public void resume() {
-    }
-
-    @Override
-    public void hide() {
-    }
-
-    /**
-     * Called when the Application is destroyed. Preceded by a call to pause().
-     */
-    @Override
-    public void dispose() {
-        renderer.dispose();
-    }
 
     /**
      * Checks if the position the player wants to move to is valid
@@ -114,7 +65,6 @@ public class Game extends ScreenAdapter {
             System.out.println("player moved out of the board");
             return true;
         }
-        //if ((board.getBoardLayers().get("hole").getCell(newPos.getX(), newPos.getX()) != null)) {return true;}
         return false;
     }
 
@@ -299,5 +249,9 @@ public class Game extends ScreenAdapter {
             else
                 turnPlayer(player.getDirection().turnRight());
         }
+    }
+
+    public Board getBoard() {
+        return board;
     }
 }
