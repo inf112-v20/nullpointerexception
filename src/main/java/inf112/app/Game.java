@@ -118,7 +118,6 @@ public class Game extends ScreenAdapter {
      * @return the new position of the player
      */
     public Position movePlayer(Position pos, Direction dir) {
-        System.out.println("actual " + dir);
         board.getBoardLayers().get("player").setCell(pos.getX(), pos.getY(), null);
 
         if (!canMove(pos.getNextPos(dir), dir)) {

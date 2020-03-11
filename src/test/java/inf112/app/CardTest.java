@@ -5,8 +5,9 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 
 public class CardTest {
-    Card card;
-    Deck deck;
+    private Card card;
+    private Deck deck;
+
     public CardTest() {
         card = new Card(100, CardDirection.MOVE1);
         deck = new Deck();

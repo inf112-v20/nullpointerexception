@@ -152,9 +152,8 @@ public class BoardObjects {
             TiledMapTileLayer.Cell currentCell = board
                     .get("conveyor" + dir.getName())
                     .getCell(pos.getX(), pos.getY());
-            if (currentCell != null) {
-                if (currentDir.equals(dir))
-                    return false;
+            if (currentCell != null && currentDir.equals(dir)) {
+                return false;
             }
         }
         return true;
