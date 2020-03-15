@@ -10,14 +10,12 @@ import static org.junit.Assert.assertEquals;
 public class PositionTest {
 
     private Position pos;
-    private int x;
-    private int y;
     private Direction dirN;
 
     @Before
     public void init() {
-        x = 1;
-        y = 2;
+        int x = 1;
+        int y = 2;
         dirN = Direction.NORTH;
         pos = new Position(x, y);
     }
@@ -37,7 +35,4 @@ public class PositionTest {
         Position northPos = new Position(1, 3);
         assertEquals(pos.getNextPos(dirN), northPos);
     }
-
-
-
 }

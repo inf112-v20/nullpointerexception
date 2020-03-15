@@ -14,7 +14,6 @@ public class Game extends ScreenAdapter {
     private Player player;
     private BoardObjects boardObjects;
     private int turn;
-    private Deck deck;
 
 
     /**

@@ -133,13 +133,6 @@ public class BoardObjects {
      * @return boolean true or false
      */
     public boolean hasExpressConveyor(Position pos) {
-        for (Direction dir : Direction.values()) { // Checks for a conveyor tile in all directions
-            TiledMapTileLayer.Cell currentCell = board
-                    .get("expressconveyor")
-                    .getCell(pos.getX(), pos.getY());
-            if (currentCell != null)
-                return true;
-        }
-        return false;
+        return board.get("expressconveyor").getCell(pos.getX(), pos.getY()) != null;
     }
 }
