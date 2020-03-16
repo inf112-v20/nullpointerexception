@@ -5,7 +5,7 @@ import inf112.app.board.BoardObjects;
 import inf112.app.player.Direction;
 import inf112.app.player.Player;
 import inf112.app.player.Position;
-import inf112.app.Input;
+
 public class Game {
     public static final float TILE_SIZE = 300;
 
@@ -125,14 +125,7 @@ public class Game {
         board.getBoardLayers().get("player").setCell(pos.getX(), pos.getY(), null);
         switch (cardDir) {
             case BACKUP:
-                if (!canMove(pos.getNextPos(dir.reverseDirection()), dir.reverseDirection())) {
-                    System.out.println("Something is blocking!");
-                } else if (outOfBoard(pos.getNextPos(dir.reverseDirection()))) {
-                    resetPlayer();
-                    System.out.println("Player moved out of the board!");
-                }
-                else
-                    player.setPos(pos.getNextPos(dir.reverseDirection()));
+                player.setSpawnPoint(pos);
                 break;
             case TURN180:
                 turnPlayer(dir.reverseDirection());
@@ -176,8 +169,8 @@ public class Game {
      * sets the player to a new position
      */
     public void resetPlayer() {
-        board.getBoardLayers().get("player").setCell(player.getPos().getX(), player.getPos().getY(), null);
-        player.checkpoint();
+        board.getBoardLayers().get("player").setCell(player.getSpawnPoint().getX(), player.getSpawnPoint().getY(), null);
+        player.setSpawnPoint(player.getSpawnPoint());
         updatePlayer();
     }
 

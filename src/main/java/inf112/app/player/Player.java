@@ -22,7 +22,7 @@ public class Player {
     private ArrayList<Card> hand;
     private int healthScore;
     private int lives;
-
+    private Position spawnPoint;
     /**
      * Initializing default/dying/winning cells of a player.
      * Texture region splits the player texture into 3 different textures and puts them in a 2-dimensional array.
@@ -47,6 +47,7 @@ public class Player {
 
         player = new Vector2();
         pos = new Position((int) player.x, (int) player.y);
+        spawnPoint = pos;
 
     }
 
@@ -166,4 +167,11 @@ public class Player {
      */
     public Card getCard(int index) { return hand.get(index); }
 
+    public void setSpawnPoint(Position spawnPoint) {
+        this.spawnPoint = spawnPoint;
+        this.pos = spawnPoint;
+    }
+
+    public Position getSpawnPoint() { return spawnPoint; }
 }
+

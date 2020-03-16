@@ -4,11 +4,10 @@ import com.badlogic.gdx.InputAdapter;
 import inf112.app.player.Direction;
 import inf112.app.player.Position;
 import inf112.app.player.Player;
-import inf112.app.Game;
 
 public class Input extends InputAdapter {
-    Player player;
-    Game game;
+    private Player player;
+    private Game game;
     public Input(Player player, Game game) {
         Gdx.input.setInputProcessor(this);
         this.player = player;
@@ -19,6 +18,7 @@ public class Input extends InputAdapter {
     public boolean keyUp(int keycode) {
         Direction dir = player.getDirection();
         Position pos = player.getPos();
+        System.out.println(player.getSpawnPoint().getX() + player.getSpawnPoint().getY());
         switch (keycode) {
             case com.badlogic.gdx.Input.Keys.RIGHT:
                 if (dir != Direction.EAST)
