@@ -1,8 +1,5 @@
 package inf112.app.player;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
-import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
@@ -14,7 +11,7 @@ import inf112.app.Game;
 import java.util.ArrayList;
 
 
-public class Player extends InputAdapter {
+public class Player {
 
     //Vector holds players position
     private Vector2 player;
@@ -51,7 +48,6 @@ public class Player extends InputAdapter {
         player = new Vector2();
         pos = new Position((int) player.x, (int) player.y);
 
-        Gdx.input.setInputProcessor(this);
     }
 
     /**
@@ -71,45 +67,7 @@ public class Player extends InputAdapter {
      * @param keycode - an integer representation of different possible inputs
      * @return true/false
      */
-    @Override
-    public boolean keyUp(int keycode) {
-        switch (keycode) {
-            case Input.Keys.RIGHT:
-                if (dir != Direction.EAST)
-                    dir = Direction.EAST;
-                else
-                    game.movePlayer(pos, dir);
-                break;
-            case Input.Keys.LEFT:
-                if (dir != Direction.WEST)
-                    dir = Direction.WEST;
-                else
-                    game.movePlayer(pos, dir);
-                break;
-            case Input.Keys.UP:
-                if (dir != Direction.NORTH)
-                    dir = Direction.NORTH;
-                else
-                    game.movePlayer(pos, dir);
-                break;
-            case Input.Keys.DOWN:
-                if (dir != Direction.SOUTH)
-                    dir = Direction.SOUTH;
-                else
-                    game.movePlayer(pos, dir);
-                break;
-            case Input.Keys.Q:
-                game.checkCurrentTile(this);
-                break;
-            case Input.Keys.SPACE:
-                game.tryToMove();
-                break;
-            //game.movePlayer2();
-            default:
-        }
-        updateState();
-        return super.keyDown(keycode);
-    }
+
 
     /**
      * subtracts healthscore and lives if healtscore is less than 1. Also sets the player to dead when there are no more lives.

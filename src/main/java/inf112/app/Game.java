@@ -1,13 +1,15 @@
 package inf112.app;
 
-import com.badlogic.gdx.ScreenAdapter;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
+import com.badlogic.gdx.InputAdapter;
 import inf112.app.board.Board;
 import inf112.app.board.BoardObjects;
 import inf112.app.player.Direction;
 import inf112.app.player.Player;
 import inf112.app.player.Position;
 
-public class Game extends ScreenAdapter {
+public class Game extends InputAdapter {
     public static final float TILE_SIZE = 300;
 
     private Board board;
@@ -31,6 +33,8 @@ public class Game extends ScreenAdapter {
         for (int i = 0; i < 5; i++) {
             player.setHand(deck.dealCard());
         }
+        Gdx.input.setInputProcessor(this);
+
 
     }
 
@@ -251,5 +255,45 @@ public class Game extends ScreenAdapter {
 
     public Board getBoard() {
         return board;
+    }
+    @Override
+    public boolean keyUp(int keycode) {
+        Direction dir = player.getDirection();
+        Position pos = player.getPos();
+        switch (keycode) {
+            case Input.Keys.RIGHT:
+                if (dir != Direction.EAST)
+                    player.setDirection(Direction.EAST);
+                else
+                    movePlayer(pos, dir);
+                break;
+            case Input.Keys.LEFT:
+                if (dir != Direction.WEST)
+                    player.setDirection(Direction.WEST);
+                else
+                    movePlayer(pos, dir);
+                break;
+            case Input.Keys.UP:
+                if (dir != Direction.NORTH)
+                    player.setDirection(Direction.NORTH);
+                else
+                    movePlayer(pos, dir);
+                break;
+            case Input.Keys.DOWN:
+                if (dir != Direction.SOUTH)
+                    player.setDirection(Direction.SOUTH);
+                else
+                    movePlayer(pos, dir);
+                break;
+            case Input.Keys.Q:
+                checkCurrentTile(player);
+                break;
+            case Input.Keys.SPACE:
+                tryToMove();
+                break;
+            default:
+        }
+        player.updateState();
+        return super.keyDown(keycode);
     }
 }
