@@ -18,7 +18,6 @@ public class Input extends InputAdapter {
     public boolean keyUp(int keycode) {
         Direction dir = player.getDirection();
         Position pos = player.getPos();
-        System.out.println(player.getSpawnPoint().getX() + player.getSpawnPoint().getY());
         switch (keycode) {
             case com.badlogic.gdx.Input.Keys.RIGHT:
                 if (dir != Direction.EAST)
