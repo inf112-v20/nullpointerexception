@@ -115,12 +115,12 @@ public class Game {
                     resetPlayer();
                     System.out.println("Player moved out of the board!");
                     break;
-                }
-                else
+                } else
                     movePlayer(pos, dir);
             }
         }
     }
+
     public void movePlayer2(Direction dir, Position pos, CardDirection cardDir) {
         board.getBoardLayers().get("player").setCell(pos.getX(), pos.getY(), null);
         switch (cardDir) {
@@ -148,8 +148,10 @@ public class Game {
 
 
     }
+
     /**
      * Returns player position
+     *
      * @return position of the player
      */
     public Position getPlayerPos() {
@@ -158,6 +160,7 @@ public class Game {
 
     /**
      * Sets a new player direction
+     *
      * @param dir direction
      */
     public void turnPlayer(Direction dir) {
@@ -176,6 +179,7 @@ public class Game {
 
     /**
      * Checks what objects is on the player tile.
+     *
      * @param player player object
      */
     public void checkCurrentTile(Player player) {

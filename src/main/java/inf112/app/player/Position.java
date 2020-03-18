@@ -16,7 +16,6 @@ public class Position {
     }
 
     /**
-     *
      * @return Players x coordinate
      */
     public int getX() {
@@ -24,7 +23,6 @@ public class Position {
     }
 
     /**
-     *
      * @return players y coordinate
      */
     public int getY() {
@@ -33,6 +31,7 @@ public class Position {
 
     /**
      * given direction sets the new player position
+     *
      * @param dir
      * @return new position
      */

@@ -21,8 +21,8 @@ public class BoardObjects {
      * Returns true if the tile has a wall.
      *
      * @param playerPos position of the player
-     * @param newPos the position the player would have if he moves
-     * @param dir direction of the player
+     * @param newPos    the position the player would have if he moves
+     * @param dir       direction of the player
      * @return true or false depending on if there is a wall or not
      */
     public boolean tileHasWall(Position playerPos, Position newPos, Direction dir) {
@@ -36,6 +36,7 @@ public class BoardObjects {
 
     /**
      * Returns true if the tile has a flag.
+     *
      * @param pos position of the player
      * @return true or false
      */
@@ -45,6 +46,7 @@ public class BoardObjects {
 
     /**
      * Returns true if the tile has a wheel.
+     *
      * @param pos position of the player
      * @param dir direction of the player
      * @return true or false
@@ -63,6 +65,7 @@ public class BoardObjects {
 
     /**
      * Returns true if the tile is a hole.
+     *
      * @param pos position of the player
      * @return true or false
      */

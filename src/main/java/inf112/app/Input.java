@@ -1,13 +1,15 @@
 package inf112.app;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputAdapter;
 import inf112.app.player.Direction;
-import inf112.app.player.Position;
 import inf112.app.player.Player;
+import inf112.app.player.Position;
 
 public class Input extends InputAdapter {
     private Player player;
     private Game game;
+
     public Input(Player player, Game game) {
         Gdx.input.setInputProcessor(this);
         this.player = player;

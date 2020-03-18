@@ -15,7 +15,6 @@ public class Card {
     }
 
     /**
-     *
      * @return priority
      */
     public int getPriority() {
@@ -23,7 +22,6 @@ public class Card {
     }
 
     /**
-     *
      * @return dir
      */
     public CardDirection getDir() {
@@ -48,5 +46,8 @@ public class Card {
         }
 
     }
-    public int getSteps() { return steps; }
+
+    public int getSteps() {
+        return steps;
+    }
 }

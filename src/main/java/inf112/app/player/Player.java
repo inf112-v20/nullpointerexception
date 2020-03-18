@@ -23,6 +23,7 @@ public class Player {
     private int healthScore;
     private int lives;
     private Position spawnPoint;
+
     /**
      * Initializing default/dying/winning cells of a player.
      * Texture region splits the player texture into 3 different textures and puts them in a 2-dimensional array.
@@ -118,7 +119,9 @@ public class Player {
      *
      * @return the new player state
      */
-    public TiledMapTileLayer.Cell setImage() { return playerCell; }
+    public TiledMapTileLayer.Cell setImage() {
+        return playerCell;
+    }
 
     /**
      * Checks which imagine to show to the screen depending on player state
@@ -156,22 +159,30 @@ public class Player {
 
     /**
      * Adds a card to the hand.
+     *
      * @param card
      */
-    public void setHand(Card card) { hand.add(card); }
+    public void setHand(Card card) {
+        hand.add(card);
+    }
 
     /**
      * Returns a card in hand given index
+     *
      * @param index int
      * @return Card
      */
-    public Card getCard(int index) { return hand.get(index); }
+    public Card getCard(int index) {
+        return hand.get(index);
+    }
 
     public void setSpawnPoint(Position spawnPoint) {
         this.spawnPoint = spawnPoint;
         this.pos = spawnPoint;
     }
 
-    public Position getSpawnPoint() { return spawnPoint; }
+    public Position getSpawnPoint() {
+        return spawnPoint;
+    }
 }
 

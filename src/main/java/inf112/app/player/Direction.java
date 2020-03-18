@@ -13,7 +13,6 @@ public enum Direction {
     }
 
     /**
-     *
      * @return direction as a string
      */
     public String getName() {
@@ -28,6 +27,7 @@ public enum Direction {
 
     /**
      * Changes direction to the opposite direction
+     *
      * @return new direction
      */
     public Direction reverseDirection() {
@@ -42,6 +42,7 @@ public enum Direction {
 
     /**
      * turns the player left
+     *
      * @return direction
      */
     public Direction turnLeft() {
@@ -56,6 +57,7 @@ public enum Direction {
 
     /**
      * Turns the player right
+     *
      * @return direction
      */
     public Direction turnRight() {
@@ -76,7 +78,6 @@ public enum Direction {
     public int getID() {
         return this.id;
     }
-
 
 
 }
