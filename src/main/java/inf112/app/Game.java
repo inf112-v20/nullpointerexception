@@ -172,7 +172,7 @@ public class Game {
      * sets the player to a new position
      */
     public void resetPlayer() {
-        board.getBoardLayers().get("player").setCell(player.getSpawnPoint().getX(), player.getSpawnPoint().getY(), null);
+        board.getBoardLayers().get("player").setCell(player.getPos().getX(), player.getPos().getY(), null);
         player.setSpawnPoint(player.getSpawnPoint());
         updatePlayer();
     }
