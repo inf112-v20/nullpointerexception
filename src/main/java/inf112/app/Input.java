@@ -16,6 +16,14 @@ public class Input extends InputAdapter {
         this.game = game;
     }
 
+    /**
+     * Refreshing the former players position to null
+     * Implements the board-movement of a player
+     * Prints out the current position
+     *
+     * @param keycode - an integer representation of different possible inputs
+     * @return true/false
+     */
     @Override
     public boolean keyUp(int keycode) {
         Direction dir = player.getDirection();

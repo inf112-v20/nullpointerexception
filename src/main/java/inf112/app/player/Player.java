@@ -19,7 +19,6 @@ public class Player {
     private TiledMapTileLayer.Cell playerCell;
     private Position pos;
     private Direction dir;
-    private Game game;
     private ArrayList<Card> hand;
     private ArrayList<Card> initHand;
     private int healthScore;
@@ -31,13 +30,9 @@ public class Player {
      * Initializing default/dying/winning cells of a player.
      * Texture region splits the player texture into 3 different textures and puts them in a 2-dimensional array.
      * Initializing the inputProcessor for input-listening.
-     *
-     * @param game game object
      */
-    public Player(Game game) {
+    public Player() {
         this.initHand = new ArrayList<>();
-        this.game = game;
-        dir = Direction.SOUTH;
         healthScore = 9;
         lives = 3;
         this.hand = new ArrayList<>();
@@ -59,21 +54,11 @@ public class Player {
     /**
      * Constructor mainly for testing purposes
      */
-    public Player() {
-        dir = Direction.SOUTH;
+    public Player(Direction testdir) {
+        dir = testdir;
         player = new Vector2();
         pos = new Position((int) player.x, (int) player.y);
     }
-
-    /**
-     * Refreshing the former players position to null
-     * Implements the board-movement of a player
-     * Prints out the current position
-     *
-     * @param keycode - an integer representation of different possible inputs
-     * @return true/false
-     */
-
 
     /**
      * subtracts healthscore and lives if healtscore is less than 1. Also sets the player to dead when there are no more lives.

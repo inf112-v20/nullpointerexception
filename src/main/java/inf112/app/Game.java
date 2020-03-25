@@ -25,7 +25,7 @@ public class Game {
         turn = 0;
         board = new Board(boardName);
         boardObjects = new BoardObjects(board.getBoardLayers(), this);
-        player = new Player(this);
+        player = new Player();
         updatePlayer();
         for (int i = 0; i < 9; i++) {
             Card c = deck.dealCard();
@@ -74,8 +74,8 @@ public class Game {
      * @param direction direction of the player
      * @return true if player can move
      */
-    public boolean canMove(Position newPos, Direction direction) {
-        return !boardObjects.tileHasWall(player.getPos(), newPos, direction);
+    public boolean canNotMove(Position newPos, Direction direction) {
+        return boardObjects.tileHasWall(player.getPos(), newPos, direction);
     }
 
     /**
@@ -88,7 +88,7 @@ public class Game {
     public Position movePlayer(Position pos, Direction dir) {
         board.getBoardLayers().get("player").setCell(pos.getX(), pos.getY(), null);
 
-        if (!canMove(pos.getNextPos(dir), dir)) {
+        if (canNotMove(pos.getNextPos(dir), dir)) {
             System.out.println("Something is blocking");
         } else if (outOfBoard(pos.getNextPos(dir)))
             resetPlayer();
@@ -116,7 +116,7 @@ public class Game {
             for (int i = 0; i < card.getSteps(); i++) {
                 pos = player.getPos();
                 dir = player.getDirection();
-                if (!canMove(pos.getNextPos(dir), dir)) {
+                if (canNotMove(pos.getNextPos(dir), dir)) {
                     System.out.println("Something is blocking!");
                     break;
                 } else if (outOfBoard(pos.getNextPos(dir))) {
