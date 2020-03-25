@@ -56,12 +56,12 @@ public class Game {
     public boolean outOfBoard(Position newPos) {
         if (newPos.getX() < 0 || newPos.getX() >= board.getBoardWidth()) {
             System.out.println("player moved out of the board");
-            player.looseHealthScore();
+            player.looselife();
             return true;
         }
         if (newPos.getY() < 0 || newPos.getY() >= board.getBoardHeight()) {
             System.out.println("player moved out of the board");
-            player.looseHealthScore();
+            player.looselife();
             return true;
         }
         return false;

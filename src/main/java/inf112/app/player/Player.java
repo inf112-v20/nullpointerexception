@@ -74,22 +74,24 @@ public class Player {
      * @return true/false
      */
 
+    public int getHealthScore() {
+        return healthScore;
+    }
+
+    public int getLives(){
+        return lives;
+    }
 
     /**
      * subtracts healthscore and lives if healtscore is less than 1. Also sets the player to dead when there are no more lives.
      */
     public void looseHealthScore() {
         if (this.healthScore <= 1) {
-            if (this.lives < 1) {
-                //updateState(); to dead
-            } else {
-                this.lives -= 1;
-            }
+            looselife();
         } else {
             this.healthScore -= 1;
         }
     }
-
     /**
      * Lets a player gain healthscore if it isn´t already at it´s maximum.
      */
@@ -98,8 +100,14 @@ public class Player {
             this.healthScore += 1;//Usikker på om dette er riktig regel
         }
     }
-
-
+    public void looselife(){
+        if(this.lives < 1){
+            //updateState(); to dead.
+        }
+        else{
+            this.lives -= 1;
+        }
+    }
     /**
      * Changes the position of the player to a new position
      *
