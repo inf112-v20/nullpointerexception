@@ -110,7 +110,7 @@ kva som er gitt fra kunde, hvorfor har dette gjort ??
 
 ####Eventuelle bugs: 
 
-Skrive bugs får krava vi har utført
+Skrive bugs for krava vi har utført
 
 
 
