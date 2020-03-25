@@ -65,11 +65,7 @@ public class Player {
      */
     public void looseHealthScore() {
         if (this.healthScore <= 1) {
-            if (this.lives < 1) {
-                //updateState(); to dead
-            } else {
-                this.lives -= 1;
-            }
+            looselife();
         } else {
             this.healthScore -= 1;
         }
@@ -81,6 +77,16 @@ public class Player {
     public void gainHealthScore() {
         if (this.healthScore < 9) {
             this.healthScore += 1;//Usikker på om dette er riktig regel
+        }
+    }
+
+    public void looselife() {
+        if(this.lives < 1){
+            //updateState(); to dead.
+        }
+        else{
+            this.lives -= 1;
+            this.healthScore = 9;
         }
     }
 
@@ -126,6 +132,14 @@ public class Player {
      */
     public Position getPos() {
         return pos;
+    }
+
+    public int getHealthScore() {
+        return healthScore;
+    }
+
+    public int getLives(){
+        return lives;
     }
 
     /**
