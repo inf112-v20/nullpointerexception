@@ -39,6 +39,9 @@ public class Card {
             case MOVE3:
                 steps = 3;
                 break;
+            case BACKUP:
+                steps = 1;
+                break;
             default:
                 steps = 0;
                 break;
@@ -47,7 +50,9 @@ public class Card {
 
     }
 
-    public int getSteps() {
-        return steps;
+    public int getSteps() { return steps; }
+
+    public String toString() {
+        return dir.toString();
     }
 }

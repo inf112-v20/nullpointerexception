@@ -27,10 +27,12 @@ public class Game {
         boardObjects = new BoardObjects(board.getBoardLayers(), this);
         player = new Player(this);
         updatePlayer();
-        for (int i = 0; i < 5; i++) {
-            player.setHand(deck.dealCard());
+        for (int i = 0; i < 9; i++) {
+            Card c = deck.dealCard();
+            player.setInitHand(c);
         }
-        Input input = new Input(player, this);
+        player.setHand();
+        new Input(player, this);
 
 
     }
@@ -102,9 +104,15 @@ public class Game {
         Card card = new Card(100, CardDirection.BACKUP);
         Position pos = player.getPos();
         Direction dir = player.getDirection();
+
         if (card.getSteps() == 0) {
             movePlayer2(dir, pos, card.getDir());
-        } else {
+        } else if (card.getDir() == CardDirection.BACKUP) {
+            System.out.println(dir);
+            System.out.println(dir.reverseDirection());
+            movePlayer(pos, dir.reverseDirection());
+        }
+        else {
             for (int i = 0; i < card.getSteps(); i++) {
                 pos = player.getPos();
                 dir = player.getDirection();
@@ -124,9 +132,6 @@ public class Game {
     public void movePlayer2(Direction dir, Position pos, CardDirection cardDir) {
         board.getBoardLayers().get("player").setCell(pos.getX(), pos.getY(), null);
         switch (cardDir) {
-            case BACKUP:
-                player.setSpawnPoint(pos);
-                break;
             case TURN180:
                 turnPlayer(dir.reverseDirection());
                 break;
