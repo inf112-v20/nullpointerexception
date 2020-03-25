@@ -1,20 +1,18 @@
 package inf112.app;
 
-import com.badlogic.gdx.ScreenAdapter;
 import inf112.app.board.Board;
 import inf112.app.board.BoardObjects;
 import inf112.app.player.Direction;
 import inf112.app.player.Player;
 import inf112.app.player.Position;
 
-public class Game extends ScreenAdapter {
+public class Game {
     public static final float TILE_SIZE = 300;
 
     private Board board;
     private Player player;
     private BoardObjects boardObjects;
     private int turn;
-    private Deck deck;
 
 
     /**
@@ -29,9 +27,13 @@ public class Game extends ScreenAdapter {
         boardObjects = new BoardObjects(board.getBoardLayers(), this);
         player = new Player(this);
         updatePlayer();
-        for (int i = 0; i < 5; i++) {
-            player.setHand(deck.dealCard());
+        for (int i = 0; i < 9; i++) {
+            Card c = deck.dealCard();
+            player.setInitHand(c);
         }
+        player.setHand();
+        new Input(player, this);
+
 
     }
 
@@ -102,9 +104,15 @@ public class Game extends ScreenAdapter {
         Card card = new Card(100, CardDirection.BACKUP);
         Position pos = player.getPos();
         Direction dir = player.getDirection();
+
         if (card.getSteps() == 0) {
             movePlayer2(dir, pos, card.getDir());
-        } else {
+        } else if (card.getDir() == CardDirection.BACKUP) {
+            System.out.println(dir);
+            System.out.println(dir.reverseDirection());
+            movePlayer(pos, dir.reverseDirection());
+        }
+        else {
             for (int i = 0; i < card.getSteps(); i++) {
                 pos = player.getPos();
                 dir = player.getDirection();
@@ -115,25 +123,15 @@ public class Game extends ScreenAdapter {
                     resetPlayer();
                     System.out.println("Player moved out of the board!");
                     break;
-                }
-                else
+                } else
                     movePlayer(pos, dir);
             }
         }
     }
+
     public void movePlayer2(Direction dir, Position pos, CardDirection cardDir) {
         board.getBoardLayers().get("player").setCell(pos.getX(), pos.getY(), null);
         switch (cardDir) {
-            case BACKUP:
-                if (!canMove(pos.getNextPos(dir.reverseDirection()), dir.reverseDirection())) {
-                    System.out.println("Something is blocking!");
-                } else if (outOfBoard(pos.getNextPos(dir.reverseDirection()))) {
-                    resetPlayer();
-                    System.out.println("Player moved out of the board!");
-                }
-                else
-                    player.setPos(pos.getNextPos(dir.reverseDirection()));
-                break;
             case TURN180:
                 turnPlayer(dir.reverseDirection());
                 break;
@@ -155,8 +153,10 @@ public class Game extends ScreenAdapter {
 
 
     }
+
     /**
      * Returns player position
+     *
      * @return position of the player
      */
     public Position getPlayerPos() {
@@ -165,6 +165,7 @@ public class Game extends ScreenAdapter {
 
     /**
      * Sets a new player direction
+     *
      * @param dir direction
      */
     public void turnPlayer(Direction dir) {
@@ -177,12 +178,13 @@ public class Game extends ScreenAdapter {
      */
     public void resetPlayer() {
         board.getBoardLayers().get("player").setCell(player.getPos().getX(), player.getPos().getY(), null);
-        player.checkpoint();
+        player.setSpawnPoint(player.getSpawnPoint());
         updatePlayer();
     }
 
     /**
      * Checks what objects is on the player tile.
+     *
      * @param player player object
      */
     public void checkCurrentTile(Player player) {
@@ -253,4 +255,5 @@ public class Game extends ScreenAdapter {
     public Board getBoard() {
         return board;
     }
+
 }

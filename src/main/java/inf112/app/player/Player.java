@@ -1,8 +1,5 @@
 package inf112.app.player;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
-import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
@@ -12,9 +9,10 @@ import inf112.app.Card;
 import inf112.app.Game;
 
 import java.util.ArrayList;
+import java.util.Scanner;
 
 
-public class Player extends InputAdapter {
+public class Player {
 
     //Vector holds players position
     private Vector2 player;
@@ -23,8 +21,11 @@ public class Player extends InputAdapter {
     private Direction dir;
     private Game game;
     private ArrayList<Card> hand;
+    private ArrayList<Card> initHand;
     private int healthScore;
     private int lives;
+    private Position spawnPoint;
+    private Scanner scanner;
 
     /**
      * Initializing default/dying/winning cells of a player.
@@ -34,7 +35,7 @@ public class Player extends InputAdapter {
      * @param game game object
      */
     public Player(Game game) {
-
+        this.initHand = new ArrayList<>();
         this.game = game;
         dir = Direction.SOUTH;
         healthScore = 9;
@@ -50,8 +51,9 @@ public class Player extends InputAdapter {
 
         player = new Vector2();
         pos = new Position((int) player.x, (int) player.y);
+        spawnPoint = pos;
+        scanner = new Scanner(System.in);
 
-        Gdx.input.setInputProcessor(this);
     }
 
     /**
@@ -71,45 +73,7 @@ public class Player extends InputAdapter {
      * @param keycode - an integer representation of different possible inputs
      * @return true/false
      */
-    @Override
-    public boolean keyUp(int keycode) {
-        switch (keycode) {
-            case Input.Keys.RIGHT:
-                if (dir != Direction.EAST)
-                    dir = Direction.EAST;
-                else
-                    game.movePlayer(pos, dir);
-                break;
-            case Input.Keys.LEFT:
-                if (dir != Direction.WEST)
-                    dir = Direction.WEST;
-                else
-                    game.movePlayer(pos, dir);
-                break;
-            case Input.Keys.UP:
-                if (dir != Direction.NORTH)
-                    dir = Direction.NORTH;
-                else
-                    game.movePlayer(pos, dir);
-                break;
-            case Input.Keys.DOWN:
-                if (dir != Direction.SOUTH)
-                    dir = Direction.SOUTH;
-                else
-                    game.movePlayer(pos, dir);
-                break;
-            case Input.Keys.Q:
-                game.checkCurrentTile(this);
-                break;
-            case Input.Keys.SPACE:
-                game.tryToMove();
-                break;
-            //game.movePlayer2();
-            default:
-        }
-        updateState();
-        return super.keyDown(keycode);
-    }
+
 
     /**
      * subtracts healthscore and lives if healtscore is less than 1. Also sets the player to dead when there are no more lives.
@@ -159,7 +123,9 @@ public class Player extends InputAdapter {
      *
      * @return the new player state
      */
-    public TiledMapTileLayer.Cell setImage() { return playerCell; }
+    public TiledMapTileLayer.Cell setImage() {
+        return playerCell;
+    }
 
     /**
      * Checks which imagine to show to the screen depending on player state
@@ -196,16 +162,45 @@ public class Player extends InputAdapter {
     }
 
     /**
-     * Adds a card to the hand.
-     * @param card
+     * Adds a card to the hand from initial hand.
      */
-    public void setHand(Card card) { hand.add(card); }
+    public void setHand() {
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < initHand.size(); j++) {
+                System.out.println((j+1) + " " + initHand.get(j).toString());
+            }
+            System.out.println("Pick a card. Any card.");
+            int idx = scanner.nextInt() - 1;
+            while (initHand.size() <= idx || idx < 0) {
+                System.out.println("Out of range");
+                idx = scanner.nextInt() - 1;
+            }
+                System.out.println();
+            hand.add(initHand.get(idx));
+            initHand.remove(idx);
+        }
+    }
 
     /**
      * Returns a card in hand given index
+     *
      * @param index int
      * @return Card
      */
-    public Card getCard(int index) { return hand.get(index); }
+    public Card getCard(int index) {
+        return hand.get(index);
+    }
 
+    public void setSpawnPoint(Position spawnPoint) {
+        this.spawnPoint = spawnPoint;
+        this.pos = spawnPoint;
+    }
+
+    public Position getSpawnPoint() {
+        return spawnPoint;
+    }
+    public void setInitHand(Card card) {
+        initHand.add(card);
+    }
 }
+

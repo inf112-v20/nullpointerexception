@@ -21,8 +21,8 @@ public class BoardObjects {
      * Returns true if the tile has a wall.
      *
      * @param playerPos position of the player
-     * @param newPos the position the player would have if he moves
-     * @param dir direction of the player
+     * @param newPos    the position the player would have if he moves
+     * @param dir       direction of the player
      * @return true or false depending on if there is a wall or not
      */
     public boolean tileHasWall(Position playerPos, Position newPos, Direction dir) {
@@ -36,6 +36,7 @@ public class BoardObjects {
 
     /**
      * Returns true if the tile has a flag.
+     *
      * @param pos position of the player
      * @return true or false
      */
@@ -45,6 +46,7 @@ public class BoardObjects {
 
     /**
      * Returns true if the tile has a wheel.
+     *
      * @param pos position of the player
      * @param dir direction of the player
      * @return true or false
@@ -63,6 +65,7 @@ public class BoardObjects {
 
     /**
      * Returns true if the tile is a hole.
+     *
      * @param pos position of the player
      * @return true or false
      */
@@ -133,13 +136,6 @@ public class BoardObjects {
      * @return boolean true or false
      */
     public boolean hasExpressConveyor(Position pos) {
-        for (Direction dir : Direction.values()) { // Checks for a conveyor tile in all directions
-            TiledMapTileLayer.Cell currentCell = board
-                    .get("expressconveyor")
-                    .getCell(pos.getX(), pos.getY());
-            if (currentCell != null)
-                return true;
-        }
-        return false;
+        return board.get("expressconveyor").getCell(pos.getX(), pos.getY()) != null;
     }
 }

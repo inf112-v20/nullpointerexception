@@ -11,12 +11,10 @@ public class GameScreen extends ScreenAdapter {
 
     private static final int TILE_SIZE = 300;
     private OrthogonalTiledMapRenderer renderer;
-    private inf112.app.Game game;
 
     public GameScreen() {
-        this.game = new inf112.app.Game();
+        inf112.app.Game game = new inf112.app.Game();
         Board board = game.getBoard();
-
 
         OrthographicCamera camera = new OrthographicCamera();
         camera.setToOrtho(false,
@@ -26,8 +24,6 @@ public class GameScreen extends ScreenAdapter {
 
         renderer = new OrthogonalTiledMapRenderer(board.getBoard());
         renderer.setView(camera);
-
-
     }
 
     /**

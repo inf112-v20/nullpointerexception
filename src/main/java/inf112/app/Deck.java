@@ -1,6 +1,6 @@
 package inf112.app;
+
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 
 
@@ -11,19 +11,20 @@ public class Deck {
     public Deck() {
         priority = new ArrayList<>();
         deck = new ArrayList<>();
-        makeDeck(new int[] {18, 12, 6, 6, 18, 18, 6});
+        makeDeck(new int[]{18, 12, 6, 6, 18, 18, 6});
         deck = shuffleDeck();
 
     }
 
     /**
      * Creates a new shuffled deck.
+     *
      * @return ArrayList
      */
     private ArrayList<Card> shuffleDeck() {
         Random ran = new Random();
         ArrayList<Card> shuffledDeck = new ArrayList<>();
-        for (Card card: deck) {
+        for (Card card : deck) {
             shuffledDeck.add(ran.nextInt(Math.max(1, shuffledDeck.size())), card);
         }
         return shuffledDeck;
@@ -35,6 +36,7 @@ public class Deck {
 
     /**
      * Creates a unique random priority between 100 and 990
+     *
      * @return int
      */
     private Integer assignPriority() {
@@ -49,6 +51,7 @@ public class Deck {
 
     /**
      * Creates a new deck of Cards
+     *
      * @param numbers array with the different numbers of Cards
      */
     private void makeDeck(int[] numbers) {
@@ -61,6 +64,7 @@ public class Deck {
             }
         }
     }
+
     public Card dealCard() {
         Card card = deck.get(0);
         deck.remove(0);
