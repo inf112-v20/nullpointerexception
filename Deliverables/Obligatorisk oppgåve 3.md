@@ -11,8 +11,10 @@
 
 
 ####Retrospektiv for kva vi har klart til no.
+
 Siden siste innlevering har vi klart å legge til players liv/helsepoeng samt funksjonaliteten å ta skade/miste liv. I tillegg 
-har kortstokk blitt implementert og menyen har fått en "Exit" knapp som avslutter spillet. Viktig å nevne at spillet mangler fremdeles en grafisk representasjon av liv og kortstokk og det er noe vi har bestemt å fikse senere. 
+har kortstokk blitt implementert og menyen har fått en "Exit" knapp som avslutter spillet. Viktig å nevne at spillet mangler fremdeles en grafisk representasjon av liv og kortstokk og det er noe vi har bestemt å fikse senere. noe mer ???
+
 ####Forbedringspunk frå retrospekt:
 
 
