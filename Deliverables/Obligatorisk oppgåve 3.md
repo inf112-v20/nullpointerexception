@@ -17,7 +17,7 @@ har kortstokk blitt implementert og menyen har fått en "Exit" knapp som avslutt
 
 ####Forbedringspunk frå retrospekt:
 
-
+Vi synes måten vi har jobbet på hittil fungerer bra. Det er fremdeles en ujevn mengde av commits grunnet forskjellige arbeidsmetoder blant gruppemedlemmer. (noen pusher mange små endringer, og noen få store)
 
 ####Oppgåve prioritering framover:
 
@@ -25,6 +25,7 @@ har kortstokk blitt implementert og menyen har fått en "Exit" knapp som avslutt
 
 ####Gruppedynamikk og kommunikasjon
 
+Av åpenbare grunner har kommunikasjonen i gruppen blitt endret til remote hvor vi møtes på Discord en dag i uken for å diskutere endringene vi har gjort og planlegge fremtidige oppgaver. Resten av kommunikasjonen skjer på Slack. 
 
 ###Deloppgave 2: Krav
 
