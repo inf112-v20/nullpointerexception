@@ -11,8 +11,8 @@
 
 
 ####Retrospektiv for kva vi har klart til no.
-
-
+Siden siste innlevering har vi klart å legge til players liv/helsepoeng samt funksjonaliteten å ta skade/miste liv. I tillegg 
+har kortstokk blitt implementert og menyen har fått en "Exit" knapp som avslutter spillet. Viktig å nevne at spillet mangler fremdeles en grafisk representasjon av liv og kortstokk og det er noe vi har bestemt å fikse senere. 
 ####Forbedringspunk frå retrospekt:
 
 
@@ -34,77 +34,67 @@ Krav
 2.	En spiller trenger å ta skade	
 3.	En robot må bli flyttet av samlebånd 	
 4.	En spiller trenger kort 	
-5.	En spiller skal kunne skyte ut laser 	
-6.	En laser vegg skal kunne skyte ut laser
-7. En mulighet å avslutte spillet fra menyen.
+5.	En laser vegg skal kunne skyte ut laser
+6. En mulighet å avslutte spillet fra menyen.
 
 ####Brukerhistorier: ----------
 
 
 ####Krav 1 	
-Brukerhistorie	
+Brukerhistorie:	
 Som spiller trenger jeg liv for å kunne tape	
 
-Akseptansekrav 	
+Akseptansekrav: 	
 En spiller har en verdi for liv. 	
 
 Arbeidsoppgaver	
 Lage liv verdi i player klassen 	
 
 ####Krav 2	
-Brukerhistorie 	
+Brukerhistorie: 	
 En spiller trenger å ta skade for å kunne miste liv 	
 
-Akseptansekrav	
+Akseptansekrav:	
 En spiller har en verdi for helsescore	
 
-Arbeidsoppgaver	
+Arbeidsoppgaver:	
 Lage en verdi for helsescore i Player.	
 
 ####Krav 3	
-Brukerhistorie	
+Brukerhistorie:	
 En robot må kunne bli flyttet på av samlebånd for å 	
 oppfylle brettreglene	
 
-Akseptasekrav	
+Akseptasekrav:	
 
-Arbeidsoppgaver	
+Arbeidsoppgaver:	
 
 ####Krav 4	
-Brukerhistorie	
+Brukerhistorie:	
 En spiller trenger kort for å kunne programmere roboten	
 
 Akseptansekrav	
 
 Arbeidsoppgaver	
 
-####Krav 5	
-Brukerhistorie	
-En spiller skal kunne skyte ut lasere for å skade andre roboter	
 
-Akseptansekrav 	
-En spiller skyter ut laser når spilleren står i ro	
-
-Arbeidsoppgaver	
-
-
-####Krav 6 	
-Brukerhistorie	
+####Krav 5 	
+Brukerhistorie:	
 En laservegg skal kunne skyte ut laser for å skade roboter	
 
-Akseptansekrav	
+Akseptansekrav:	
 Spillere som blir truffet av laser mister healthScore	
 
-Arbeidsoppgaver	
+Arbeidsoppgaver:	
 
-####Krav 7
-Brukerhistorie	
+####Krav 6
+Brukerhistorie:	
 Som en bruker vil jeg at menyen skal ha en "exit" knapp slik at man kan avslutte spillet.
 
-Akseptansekrav	
+Akseptansekrav:	
 Menyen har en funksjonell exit knapp som avslutter spillet ved å trykke på den.	
 
-Arbeidsoppgaver	
+Arbeidsoppgaver:	
 Lage 2 nye "exit" knapp Textures, en med default farget og en når man peker på den med muspekeren. Avslutt spillet når "aktiv" knappen blir trykket på.
 
 ______-_-_ Eventuelle andre oppgåver som vi skal starte med som vi kan ha brukerhistorier etc?:!!!!!
