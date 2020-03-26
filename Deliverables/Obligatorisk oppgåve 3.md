@@ -35,7 +35,8 @@ Krav
 3.	En robot må bli flyttet av samlebånd 	
 4.	En spiller trenger kort 	
 5.	En spiller skal kunne skyte ut laser 	
-6.	En laser vegg skal kunne skyte ut laser 
+6.	En laser vegg skal kunne skyte ut laser
+7. En mulighet å avslutte spillet fra menyen.
 
 ####Brukerhistorier: ----------
 
@@ -96,6 +97,15 @@ Spillere som blir truffet av laser mister healthScore
 
 Arbeidsoppgaver	
 
+####Krav 7
+Brukerhistorie	
+Som en bruker vil jeg at menyen skal ha en "exit" knapp slik at man kan avslutte spillet.
+
+Akseptansekrav	
+Menyen har en funksjonell exit knapp som avslutter spillet ved å trykke på den.	
+
+Arbeidsoppgaver	
+Lage 2 nye "exit" knapp Textures, en med default farget og en når man peker på den med muspekeren. Avslutt spillet når "aktiv" knappen blir trykket på.
 
 ______-_-_ Eventuelle andre oppgåver som vi skal starte med som vi kan ha brukerhistorier etc?:!!!!!
 
