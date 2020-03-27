@@ -53,4 +53,16 @@ public class PlayerTest {
         Direction north = Direction.NORTH;
         assertEquals(player.getDirection(), north);
     }
+
+    @Test
+    public void handleDamageTest() {
+        player.handleDamage();
+        assertEquals(player.getHitPoints(), 8);
+    }
+
+    @Test
+    public void loseLifeTest() {
+        player.loseLife();
+        assertEquals(player.getLifeCount(), 2);
+    }
 }

@@ -33,15 +33,12 @@ public class Game {
         }
         for (int i = 0; i < 9; i++) {
             Card c = deck.dealCard();
-            player.setInitHand(c);
+            player.setDealtCards(c);
         }
         player.setHand();
-        deck.setDiscardPile(player.getInitHand());
+        deck.setDiscardPile(player.getDealtCards());
         player.setInitHand();
         new Input(player, this);
-        int a = 5;
-        a %= 10;
-        System.out.println(a);
     }
 
     /**
@@ -50,7 +47,7 @@ public class Game {
     public void updatePlayer() {
         board.getBoardLayers()
                 .get("player")
-                .setCell(player.getPos().getX(), player.getPos().getY(), player.setImage());
+                .setCell(player.getPos().getX(), player.getPos().getY(), player.setPlayerTexture());
     }
 
 
@@ -226,6 +223,7 @@ public class Game {
             player.repairHitPoints();
         }
         player.printStatus();
+        System.out.println();
     }
 
     /**

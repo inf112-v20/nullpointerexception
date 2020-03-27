@@ -9,7 +9,6 @@ import inf112.app.Card;
 import inf112.app.Game;
 
 import java.util.ArrayList;
-import java.util.Scanner;
 
 
 public class Player {
@@ -20,11 +19,10 @@ public class Player {
     private Position pos;
     private Direction dir;
     private ArrayList<Card> hand;
-    private ArrayList<Card> initHand;
+    private ArrayList<Card> dealtCards;
     private final int HIT_POINTS = 9;
     private final int LIFE_COUNT = 3;
     private Position spawnPoint;
-    private Scanner scanner;
     private int hitPoints;
     private int lifeCount;
     private boolean isDead;
@@ -35,7 +33,7 @@ public class Player {
      * Initializing the inputProcessor for input-listening.
      */
     public Player() {
-        this.initHand = new ArrayList<>();
+        dealtCards = new ArrayList<>();
         hitPoints = HIT_POINTS;
         lifeCount = LIFE_COUNT;
         hand = new ArrayList<>();
@@ -51,7 +49,6 @@ public class Player {
         player = new Vector2();
         pos = new Position((int) player.x, (int) player.y);
         spawnPoint = pos;
-        scanner = new Scanner(System.in);
 
     }
 
@@ -62,14 +59,16 @@ public class Player {
         dir = testdir;
         player = new Vector2();
         pos = new Position((int) player.x, (int) player.y);
+        hitPoints = HIT_POINTS;
+        lifeCount = LIFE_COUNT;
         isDead = false;
     }
 
     /**
-     * subtracts healthscore and lives if healtscore is less than 1. Also sets the player to dead when there are no more lives.
+     * Subtracts healthscore and lives if healtscore is less than 1. Also sets the player to dead when there are no more lives.
      */
     public void handleDamage() {
-        if (hitPoints > 0 && hitPoints < HIT_POINTS) {
+        if (hitPoints < 1) {
             loseLife();
         } else {
             System.out.println("Player lost one hit point.");
@@ -89,6 +88,9 @@ public class Player {
 
     }
 
+    /**
+     * Player loses a life and updates isDead if there are no more lives.
+     */
     public void loseLife() {
         if (lifeCount < 1)
             isDead = true;
@@ -99,7 +101,6 @@ public class Player {
         }
     }
 
-
     /**
      * Changes the position of the player to a new position
      *
@@ -107,6 +108,15 @@ public class Player {
      */
     public void setPos(Position newPos) {
         pos = new Position(newPos);
+    }
+
+    /**
+     * Returns whether or not the player is dead
+     *
+     * @return boolean
+     */
+    public boolean isDead() {
+        return isDead;
     }
 
     /**
@@ -123,9 +133,10 @@ public class Player {
      *
      * @return the new player state
      */
-    public TiledMapTileLayer.Cell setImage() {
+    public TiledMapTileLayer.Cell setPlayerTexture() {
         return playerCell;
     }
+
 
     /**
      * Checks which imagine to show to the screen depending on player state
@@ -174,14 +185,9 @@ public class Player {
      */
     public void setHand() {
         for (int i = 0; i < 5; i++) {
-            for (int j = 0; j < initHand.size(); j++) {
-                //System.out.println((j+1) + " " + initHand.get(j).toString());
-            }
-            System.out.println("Pick a card. Any card.");
             int idx = 1;
-
-            hand.add(initHand.get(idx));
-            initHand.remove(idx);
+            hand.add(dealtCards.get(idx));
+            dealtCards.remove(idx);
         }
     }
 
@@ -206,16 +212,23 @@ public class Player {
         return spawnPoint;
     }
 
-    public void setInitHand(Card card) {
-        initHand.add(card);
-    }
-
     public void setInitHand() {
-        initHand = new ArrayList<>();
+        dealtCards = new ArrayList<>();
     }
 
-    public ArrayList<Card> getInitHand() {
-        return initHand;
+    public ArrayList<Card> getDealtCards() {
+        return dealtCards;
+    }
+
+    public void setDealtCards(Card card) {
+        dealtCards.add(card);
+    }
+
+    public int getHitPoints() {
+        return hitPoints;
+    }
+
+    public int getLifeCount() {
+        return lifeCount;
     }
 }
-
