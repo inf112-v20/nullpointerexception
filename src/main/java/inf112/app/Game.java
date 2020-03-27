@@ -13,6 +13,7 @@ public class Game {
     private Player player;
     private BoardObjects boardObjects;
     private int turn;
+    public Deck deck;
 
 
     /**
@@ -21,20 +22,26 @@ public class Game {
     public Game() {
         //String boardName = "boards/Risky_Exchange.tmx";
         String boardName = "boards/Whirlwind Tour.tmx";
-        Deck deck = new Deck();
+        deck = new Deck();
         turn = 0;
         board = new Board(boardName);
         boardObjects = new BoardObjects(board.getBoardLayers(), this);
         player = new Player(this);
         updatePlayer();
+        if (deck.getDeck().size() < 9) {
+            deck.shuffleDiscardPile();
+        }
         for (int i = 0; i < 9; i++) {
             Card c = deck.dealCard();
             player.setInitHand(c);
         }
         player.setHand();
+        deck.setDiscardPile(player.getInitHand());
+        player.setInitHand();
         new Input(player, this);
-
-
+        int a = 5;
+        a %= 10;
+        System.out.println(a);
     }
 
     /**
@@ -102,6 +109,10 @@ public class Game {
 
     public void tryToMove() {
         Card card = new Card(100, CardDirection.BACKUP);
+        /*
+        Card card = player.getCard(0);
+        deck.setDiscardPile(card);
+        */
         Position pos = player.getPos();
         Direction dir = player.getDirection();
 
@@ -127,6 +138,7 @@ public class Game {
                     movePlayer(pos, dir);
             }
         }
+
     }
 
     public void movePlayer2(Direction dir, Position pos, CardDirection cardDir) {
@@ -149,7 +161,6 @@ public class Game {
         }
         updatePlayer();
         player.updateState();
-        turn = (turn + 1) % 5;
 
 
     }

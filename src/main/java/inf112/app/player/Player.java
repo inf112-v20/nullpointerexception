@@ -188,7 +188,9 @@ public class Player {
      * @return Card
      */
     public Card getCard(int index) {
-        return hand.get(index);
+        Card card = hand.get(index);
+        hand.remove(index);
+        return card;
     }
 
     public void setSpawnPoint(Position spawnPoint) {
@@ -199,8 +201,17 @@ public class Player {
     public Position getSpawnPoint() {
         return spawnPoint;
     }
+
     public void setInitHand(Card card) {
         initHand.add(card);
+    }
+
+    public void setInitHand() {
+        initHand = new ArrayList<>();
+    }
+
+    public ArrayList<Card> getInitHand() {
+        return initHand;
     }
 }
 
