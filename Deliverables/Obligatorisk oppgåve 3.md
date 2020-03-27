@@ -150,7 +150,7 @@ Bugfiksing.
 Nye players/skubbing av spelarar.
 
 
-####Retrospektiv for kva vi har klart til no samt forbedringspunkter videre:
+#### Retrospektiv for kva vi har klart til no samt forbedringspunkter videre:
 
 Siden siste innlevering har vi klart å legge til players liv/helsepoeng samt funksjonaliteten å ta skade/miste liv. I tillegg 
 har kortstokk blitt implementert og menyen har fått en "Exit" knapp som avslutter spillet. Viktig å nevne at spillet mangler fremdeles
@@ -167,17 +167,18 @@ Denne obligen obligen har vi fokusert meir på backendutvikling.
 Me har fortsatt beholdt alle dei originale rollene og har ikkje følt me trenger å gjera 
 nokon endringar angåande rollene me bestemte oss for.
 
-####Forbedringspunk frå retrospekt:
+#### Forbedringspunk frå retrospekt:
 
 Vi synes måten vi har jobbet på hittil fungerer bra. Det er fremdeles en ujevn mengde av commits grunnet forskjellige 
 arbeidsmetoder blant gruppemedlemmer. (noen pusher mange små endringer, og noen få store)
 
-####Oppgåve prioritering framover:
+#### Oppgåve prioritering framover:
 
-Fokusere på det grafiske grensesnittet.
+- Fokusere på det grafiske grensesnittet.
+- Få flere spillerne på kartet
+- Få til å bruke kort til å styre spillerne
 
-
-####Gruppedynamikk og kommunikasjon
+#### Gruppedynamikk og kommunikasjon
 
 Av åpenbare grunner har kommunikasjonen i gruppen blitt endret til remote hvor vi møtes på Discord en fast dag i uken, 
  og av og til andre dager for å hjelpa kvarandre eller diskutere 
@@ -188,14 +189,14 @@ ligg inne på discord har fungert veldig bra for oss og har fungert som ei bra e
 
 ####Kva krav har vi prioritert:
 
-####Krav	
+#### Krav	
     1.	En spiller trenger liv 	
     2.	En spiller trenger å ta skade	
     3.	En robot må bli flyttet av samlebånd 	
     4.	En spiller trenger kort 
     5.  En mulighet å avslutte spillet fra menyen.
 
-####Krav 1 	
+#### Krav 1 	
 Brukerhistorie:	
 Som spiller trenger jeg liv for å kunne tape	
 
@@ -205,7 +206,7 @@ En spiller har en verdi for liv.
 Arbeidsoppgaver:
 Lage liv verdi i player klassen 
 
-####Krav 2	
+#### Krav 2	
 Brukerhistorie: 	
 En spiller trenger å ta skade for å kunne miste liv 	
 
@@ -217,7 +218,7 @@ Arbeidsoppgaver:
 Lage en verdi for hit points i Player
 
 
-####Krav 3	
+#### Krav 3	
 Brukerhistorie:	
 En robot må kunne bli flyttet på av samlebånd for å 	
 oppfylle brettreglene	
@@ -228,7 +229,7 @@ Samlebånd flytter spilleren
 Arbeidsoppgaver:	
 Lage samlebånd funskjoner som flytter spelaren når den har ein spelar på seg.
 
-####Krav 4	
+#### Krav 4	
 Brukerhistorie:	
 En spiller trenger kort for å kunne programmere roboten	
 
@@ -240,7 +241,7 @@ Arbeidsoppgaver
 Lage kort typer som kan programmera roboten
 Lage funskjoner som tildeler kort til ein spiller
 
-####Krav 5
+#### Krav 5
 Brukerhistorie:	
 Som en bruker vil jeg at menyen skal ha en "exit" knapp slik at man kan avslutte spillet.
 
@@ -250,7 +251,7 @@ Menyen har en funksjonell exit knapp som avslutter spillet ved å trykke på den
 Arbeidsoppgaver:	
 Lage 2 nye "exit" knapp Textures, en med default farget og en når man peker på den med muspekeren. Avslutt spillet når "aktiv" knappen blir trykket på.
 
-####Hovudkrav: 
+#### Hovudkrav: 
 
 Ha ein enkel og interaktiv grensesnitt
 
