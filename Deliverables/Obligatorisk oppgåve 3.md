@@ -259,5 +259,5 @@ Hovedkrav som vi anser som en del av MVP:
 Skrive bugs for krava vi har utført
 
 
-MANUELLE TESTER: Guiden til manuelle tester og hvordan man bygger prosjektet ligger på README filen.
+MANUELLE TESTER: Guiden til manuelle tester ligger på README filen.
 
