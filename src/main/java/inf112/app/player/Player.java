@@ -21,10 +21,13 @@ public class Player {
     private Direction dir;
     private ArrayList<Card> hand;
     private ArrayList<Card> initHand;
-    private int healthScore;
-    private int lives;
+    private final int HIT_POINTS = 9;
+    private final int LIFE_COUNT = 3;
     private Position spawnPoint;
     private Scanner scanner;
+    private int hitPoints;
+    private int lifeCount;
+    private boolean isDead;
 
     /**
      * Initializing default/dying/winning cells of a player.
@@ -33,9 +36,10 @@ public class Player {
      */
     public Player() {
         this.initHand = new ArrayList<>();
-        healthScore = 9;
-        lives = 3;
-        this.hand = new ArrayList<>();
+        hitPoints = HIT_POINTS;
+        lifeCount = LIFE_COUNT;
+        hand = new ArrayList<>();
+        isDead = false;
 
         Texture robotTextures = new Texture("assets/robot.png");
         TextureRegion[][] robotTexture = TextureRegion.split(robotTextures,
@@ -58,35 +62,40 @@ public class Player {
         dir = testdir;
         player = new Vector2();
         pos = new Position((int) player.x, (int) player.y);
+        isDead = false;
     }
 
     /**
      * subtracts healthscore and lives if healtscore is less than 1. Also sets the player to dead when there are no more lives.
      */
-    public void looseHealthScore() {
-        if (this.healthScore <= 1) {
-            looselife();
+    public void handleDamage() {
+        if (hitPoints < 0) {
+            loseLife();
         } else {
-            this.healthScore -= 1;
+            System.out.println("Player lost one hit point.");
+            hitPoints -= 1;
         }
     }
 
     /**
      * Lets a player gain healthscore if it isn´t already at it´s maximum.
      */
-    public void gainHealthScore() {
-        if (this.healthScore < 9) {
-            this.healthScore += 1;//Usikker på om dette er riktig regel
+    public void repairHitPoints() {
+        if (hitPoints < 9) {
+            hitPoints += 1;
+            System.out.println("Player gained one hit point.");
         }
+        System.out.println("Player has max hit points.");
+
     }
 
-    public void looselife() {
-        if(this.lives < 1){
-            //updateState(); to dead.
-        }
-        else{
-            this.lives -= 1;
-            this.healthScore = 9;
+    public void loseLife() {
+        if (lifeCount < 1)
+            isDead = true;
+        else {
+            lifeCount -= 1;
+            hitPoints = HIT_POINTS;
+            System.out.println("Player lost a life.");
         }
     }
 
@@ -125,6 +134,10 @@ public class Player {
         playerCell.setRotation(dir.getID());
     }
 
+    public void printStatus() {
+        System.out.println("Current hit points")
+    }
+
     /**
      * Gets the current position of the player
      *
@@ -132,14 +145,6 @@ public class Player {
      */
     public Position getPos() {
         return pos;
-    }
-
-    public int getHealthScore() {
-        return healthScore;
-    }
-
-    public int getLives(){
-        return lives;
     }
 
     /**
@@ -166,15 +171,11 @@ public class Player {
     public void setHand() {
         for (int i = 0; i < 5; i++) {
             for (int j = 0; j < initHand.size(); j++) {
-                System.out.println((j+1) + " " + initHand.get(j).toString());
+                //System.out.println((j+1) + " " + initHand.get(j).toString());
             }
             System.out.println("Pick a card. Any card.");
-            int idx = scanner.nextInt() - 1;
-            while (initHand.size() <= idx || idx < 0) {
-                System.out.println("Out of range");
-                idx = scanner.nextInt() - 1;
-            }
-                System.out.println();
+            int idx = 1;
+
             hand.add(initHand.get(idx));
             initHand.remove(idx);
         }
