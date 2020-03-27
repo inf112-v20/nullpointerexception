@@ -153,13 +153,14 @@ Nye players/skubbing av spelarar.
 ####Retrospektiv for kva vi har klart til no samt forbedringspunkter videre:
 
 Siden siste innlevering har vi klart å legge til players liv/helsepoeng samt funksjonaliteten å ta skade/miste liv. I tillegg 
-har kortstokk blitt implementert og menyen har fått en "Exit" knapp som avslutter spillet. Viktig å nevne at spillet mangler fremdeles en grafisk representasjon av liv og kortstokk og det er noe vi har bestemt å fikse senere. noe mer ???
+har kortstokk blitt implementert og menyen har fått en "Exit" knapp som avslutter spillet. Viktig å nevne at spillet mangler fremdeles
+en grafisk representasjon av liv og kortstokk og det er noe vi har bestemt å fikse senere.
+Denne obligen obligen har vi fokusert meir på backendutvikling. 
 
 #### Forbedringspunkt
     1. Vi har lyst til å lage en bra UI som er lett å bruke.
-    2. 
-    3. 
-
+    2. Vi ønskjer å få flere spillere på brettet.
+    3. Vi ønskjer at det skal bli mulig å bruke kort til å styre spiller.
 
 
 #### Valg og liknande innanfor team.
@@ -183,13 +184,12 @@ ligg inne på discord har fungert veldig bra for oss og har fungert som ei bra e
 
 ####Kva krav har vi prioritert:
 
-Krav	
-1.	En spiller trenger liv 	
-2.	En spiller trenger å ta skade	
-3.	En robot må bli flyttet av samlebånd 	
-4.	En spiller trenger kort 	
-5.	En laser vegg skal kunne skyte ut laser
-6. En mulighet å avslutte spillet fra menyen.
+####Krav	
+    1.	En spiller trenger liv 	
+    2.	En spiller trenger å ta skade	
+    3.	En robot må bli flyttet av samlebånd 	
+    4.	En spiller trenger kort 
+    5.  En mulighet å avslutte spillet fra menyen.
 
 ####Krav 1 	
 Brukerhistorie:	
@@ -229,16 +229,7 @@ Akseptansekrav
 Arbeidsoppgaver	
 
 
-####Krav 5 	
-Brukerhistorie:	
-En laservegg skal kunne skyte ut laser for å skade roboter	
-
-Akseptansekrav:	
-Spillere som blir truffet av laser mister healthScore	
-
-Arbeidsoppgaver:	
-
-####Krav 6
+####Krav 5
 Brukerhistorie:	
 Som en bruker vil jeg at menyen skal ha en "exit" knapp slik at man kan avslutte spillet.
 
@@ -252,7 +243,7 @@ ______-_-_ Eventuelle andre oppgåver som vi skal starte med som vi kan ha bruke
 
 
 
-####Hovedkrav: -----
+####Hovedkrav: 
 
 Forklare kort kva hovedkrav som vi anser som en del av MVP og kvifor. Skriv dersom det er gjort endringar i rekkefølge utfra 
 kva som er gitt fra kunde, hvorfor har dette gjort ??
@@ -262,11 +253,6 @@ kva som er gitt fra kunde, hvorfor har dette gjort ??
 ####Eventuelle bugs: 
 
 Skrive bugs for krava vi har utført
-
-
-
-####
-
 
 
 ###Deloppgave 3: Produktleveranse og kodekvalitet
