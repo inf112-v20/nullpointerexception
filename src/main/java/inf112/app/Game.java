@@ -37,11 +37,8 @@ public class Game {
         }
         player.setHand();
         deck.setDiscardPile(player.getInitHand());
-        player.setInitHand();
+        player.reSetInitHand();
         new Input(player, this);
-        int a = 5;
-        a %= 10;
-        System.out.println(a);
     }
 
     /**
@@ -108,7 +105,7 @@ public class Game {
     }
 
     public void tryToMove() {
-        Card card = new Card(100, CardDirection.BACKUP);
+        Card card = new Card(100, CardType.BACKUP);
         /*
         Card card = player.getCard(0);
         deck.setDiscardPile(card);
@@ -117,8 +114,8 @@ public class Game {
         Direction dir = player.getDirection();
 
         if (card.getSteps() == 0) {
-            movePlayer2(dir, pos, card.getDir());
-        } else if (card.getDir() == CardDirection.BACKUP) {
+            movePlayer2(dir, pos, card.getType());
+        } else if (card.getType() == CardType.BACKUP) {
             System.out.println(dir);
             System.out.println(dir.reverseDirection());
             movePlayer(pos, dir.reverseDirection());
@@ -141,9 +138,9 @@ public class Game {
 
     }
 
-    public void movePlayer2(Direction dir, Position pos, CardDirection cardDir) {
+    public void movePlayer2(Direction dir, Position pos, CardType cardType) {
         board.getBoardLayers().get("player").setCell(pos.getX(), pos.getY(), null);
-        switch (cardDir) {
+        switch (cardType) {
             case TURN180:
                 turnPlayer(dir.reverseDirection());
                 break;

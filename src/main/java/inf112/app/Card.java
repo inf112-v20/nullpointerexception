@@ -3,13 +3,13 @@ package inf112.app;
 
 public class Card {
     private int priority;
-    private CardDirection dir;
+    private CardType type;
     private int steps;
 
 
-    public Card(int priority, CardDirection dir) {
+    public Card(int priority, CardType dir) {
         this.priority = priority;
-        this.dir = dir;
+        this.type = dir;
         setSteps();
 
     }
@@ -22,14 +22,14 @@ public class Card {
     }
 
     /**
-     * @return dir
+     * @return type The CardType of the card
      */
-    public CardDirection getDir() {
-        return dir;
+    public CardType getType() {
+        return type;
     }
 
     private void setSteps() {
-        switch (getDir()) {
+        switch (getType()) {
             case MOVE1:
                 steps = 1;
                 break;
@@ -50,9 +50,8 @@ public class Card {
 
     }
 
+    /**
+     * @return steps The number of tiles a card moves a player.
+     */
     public int getSteps() { return steps; }
-
-    public String toString() {
-        return dir.toString();
-    }
 }

@@ -9,7 +9,6 @@ import inf112.app.Card;
 import inf112.app.Game;
 
 import java.util.ArrayList;
-import java.util.Scanner;
 
 
 public class Player {
@@ -24,7 +23,6 @@ public class Player {
     private final int HIT_POINTS = 9;
     private final int LIFE_COUNT = 3;
     private Position spawnPoint;
-    private Scanner scanner;
     private int hitPoints;
     private int lifeCount;
     private boolean isDead;
@@ -51,7 +49,6 @@ public class Player {
         player = new Vector2();
         pos = new Position((int) player.x, (int) player.y);
         spawnPoint = pos;
-        scanner = new Scanner(System.in);
 
     }
 
@@ -202,20 +199,33 @@ public class Player {
         this.pos = spawnPoint;
     }
 
+    /**
+     * @return spawnPoint The spawn point of the player
+     */
     public Position getSpawnPoint() {
         return spawnPoint;
     }
 
-    public void setInitHand(Card card) {
-        initHand.add(card);
-    }
-
-    public void setInitHand() {
+    /**
+     * Resets the initHand
+     */
+    public void reSetInitHand() {
         initHand = new ArrayList<>();
     }
 
+    /**
+     * @return initHand An arraylist of cards from the initial hand.
+     */
     public ArrayList<Card> getInitHand() {
         return initHand;
+    }
+
+    /**
+     *
+     * @param card Adds a program card to the initial hand.
+     */
+    public void setInitHand(Card card) {
+        initHand.add(card);
     }
 }
 

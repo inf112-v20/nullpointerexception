@@ -61,9 +61,9 @@ public class Deck {
      * @param numbers array with the different numbers of Cards
      */
     private void makeDeck(int[] numbers) {
-        CardDirection[] directions = new CardDirection[]{
-                CardDirection.MOVE1, CardDirection.MOVE2, CardDirection.MOVE3, CardDirection.BACKUP,
-                CardDirection.TURNRIGHT, CardDirection.TURNLEFT, CardDirection.TURN180};
+        CardType[] directions = new CardType[]{
+                CardType.MOVE1, CardType.MOVE2, CardType.MOVE3, CardType.BACKUP,
+                CardType.TURNRIGHT, CardType.TURNLEFT, CardType.TURN180};
         for (int i = 0; i < 7; i++) {
             for (int j = 0; j < numbers[i]; j++) {
                 deck.add(new Card(assignPriority(), directions[i]));
