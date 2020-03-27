@@ -69,7 +69,7 @@ public class Player {
      * subtracts healthscore and lives if healtscore is less than 1. Also sets the player to dead when there are no more lives.
      */
     public void handleDamage() {
-        if (hitPoints < 0) {
+        if (hitPoints > 0 && hitPoints < HIT_POINTS) {
             loseLife();
         } else {
             System.out.println("Player lost one hit point.");
@@ -134,8 +134,12 @@ public class Player {
         playerCell.setRotation(dir.getID());
     }
 
+    /**
+     * Prints out player attributes
+     */
     public void printStatus() {
-        System.out.println("Current hit points")
+        System.out.println("Current hit points: " + hitPoints);
+        System.out.println("Current life count points: " + lifeCount);
     }
 
     /**

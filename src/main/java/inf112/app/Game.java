@@ -214,6 +214,7 @@ public class Game {
             System.out.println("player is standing on a repair kit!");
             player.repairHitPoints();
         }
+        player.printStatus();
     }
 
     /**
