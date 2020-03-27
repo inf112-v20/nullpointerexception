@@ -7,24 +7,24 @@ when the java version used is >8. This has no effect on function or performance,
 
 
 ## Buttons
-* Use arrow keys to move the player
-* Q to test the tile under you 
-* SPACE to test progam cards
+*   Use arrow keys to move the player
+*   Q to test the tile under you 
+*   SPACE to test progam cards
 
 ## Manual testing
-* Test hitpoints and life. If you press **Q** life and hitpoints are printed out in the console. If you're one 
+*   Test hitpoints and life. If you press **Q** life and hitpoints are printed out in the console. If you're one 
 tile away from a lazer while on a regular conveyor belt, or 2 on an express conveyor belt, you will lose one HP.
-* Test conveyor belts. Press **Q** on a conveyor belt to move.
-* Test program cards. Press **SPACE** to use a program card.
+*   Test conveyor belts. Press **Q** on a conveyor belt to move.
+*   Test program cards. Press **SPACE** to use a program card.
 
 ## Requirements
-* java
-* git
-* maven
+*   java
+*   git
+*   maven
 
 ### Build
-* git clone https://github.com/inf112-v20/nullpointerexception.git
-* Open in yor preferred IDE. Navigate to Main and run it.
+*   git clone https://github.com/inf112-v20/nullpointerexception.git
+*   Open in yor preferred IDE. Navigate to Main and run it.
 
 
 
