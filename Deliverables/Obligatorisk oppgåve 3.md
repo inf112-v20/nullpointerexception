@@ -145,6 +145,11 @@ Arbeid med hull
 
 Obligatorisk oppgåve 3.
 
+Bugfiksing.
+
+Nye players/skubbing av spelarar.
+
+
 ####Retrospektiv for kva vi har klart til no samt forbedringspunkter videre:
 
 Siden siste innlevering har vi klart å legge til players liv/helsepoeng samt funksjonaliteten å ta skade/miste liv. I tillegg 
@@ -200,7 +205,6 @@ En spiller har en verdi for liv.
 Arbeidsoppgaver:
 Lage liv verdi i player klassen 
 
-
 ####Krav 2	
 Brukerhistorie: 	
 En spiller trenger å ta skade for å kunne miste liv 	
@@ -235,7 +239,6 @@ Kunne bli tildelt kort
 Arbeidsoppgaver	
 Lage kort typer som kan programmera roboten
 Lage funskjoner som tildeler kort til ein spiller
-
 
 ####Krav 5
 Brukerhistorie:	

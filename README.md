@@ -5,8 +5,6 @@ Simple board with a moveable player
 Currently throws "WARNING: An illegal reflective access operation has occurred", 
 when the java version used is >8. This has no effect on function or performance, and is just a warning.
 
-## Board bugs
-Certain conveyor turns do not behave correctly
 
 ## Buttons
 * Use arrow keys to move the player
@@ -26,12 +24,10 @@ tile away from a lazer while on a regular conveyor belt, or 2 on an express conv
 
 ### Build
 * git clone https://github.com/inf112-v20/nullpointerexception.git
-* cd nullpointerexception
-* mvn clean install
+* Open in yor preferred IDE. Navigate to Main and run it.
 
-### Running procedure
-* cd target
-* java -jar roborally-0.2-alpha-jar-with-dependencies.jar
+
+
 
 
 
