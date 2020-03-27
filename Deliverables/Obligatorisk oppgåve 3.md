@@ -2,9 +2,9 @@
 
 ####Referat sida sist oblig: 
 
-Referat 7. Seminar
+####Referat 7. Seminar
 
-Oppmøte:
+##Oppmøte:
 
 Michal
 
@@ -16,7 +16,7 @@ Vegard
 
 Henriette
 
-Diskutert:
+##Diskutert:
 
 Korleis vi skal lage til grafisk design til kort.
 
@@ -26,22 +26,22 @@ Andre sine presentasjonar frå gårsdagen.
 
 Delegering av arbeid.
 
-Jobba med:
+##Jobba med:
 
 Lage liste med kort.
 
 Research.
 
-Plan vidare:
+##Plan vidare:
 
 Grafisk design til kort.
 
 Funksjonell kortstokk.
 
 
-Referat 8. Seminar
+####Referat 8. Seminar
 
-Oppmøte:
+##Oppmøte:
 
 Michal
 
@@ -53,19 +53,19 @@ Vegard
 
 Henriette
 
-Diskutert:
+##Diskutert:
 
 Tilbakemelding frå forrige oblig
 
 Arbeid sida sist seminar.
 
-Jobba med:
+##Jobba med:
 
 Merge alle sine branches ihop
 
 Referatskriving
 
-Plan vidare:
+##Plan vidare:
 
 Sjå gjennom brukerhistorier og akseptansekrav
 
@@ -74,9 +74,9 @@ Jobbe med laser frå spelarar og i backend.
 Jobbe med GUI
 
 
-9. Referat
+####9. Referat
 
-Oppmøte:
+##Oppmøte:
 
 Michal
 
@@ -88,19 +88,19 @@ Vegard
 
 Henriette
 
-Diskutert:
+##Diskutert:
 
 Obligatorisk oppgåve 3.
 
 Arbeid under Covid-19
 
-Jobba med:
+##Jobba med:
 
 Obligatorisk oppgåve 3.
 
 Diverse nye bugs.
 
-Plan vidare:
+##Plan vidare:
 
 Obligatorisk oppgåve 3.
 
@@ -109,9 +109,9 @@ Bugfiksing.
 Brukerhistorier
 
 
-10. Referat
+####10. Referat
 
-Oppmøte:
+##Oppmøte:
 
 Michal
 
@@ -123,7 +123,7 @@ Vegard
 
 Henriette
 
-Diskutert:
+##Diskutert:
 
 Obligatorisk oppgåve 3.
 
@@ -131,7 +131,7 @@ Fordeling av commits.
 
 Nye players/skubbing av andre spelarar
 
-Jobba med:
+##Jobba med:
 
 Obligatorisk oppgåve 3.
 
@@ -141,7 +141,7 @@ Spawn point.
 
 Arbeid med hull
 
-Plan vidare:
+##Plan vidare:
 
 Obligatorisk oppgåve 3.
 
@@ -156,10 +156,10 @@ Siden siste innlevering har vi klart å legge til players liv/helsepoeng samt fu
 har kortstokk blitt implementert og menyen har fått en "Exit" knapp som avslutter spillet. Viktig å nevne at spillet mangler fremdeles en grafisk representasjon av liv og kortstokk og det er noe vi har bestemt å fikse senere. noe mer ???
 
 #### Forbedringspunkt
+    1. Vi har lyst til å lage en bra UI som er lett å bruke.
+    2. 
+    3. 
 
-
-
-####Roller i teamet: 
 
 
 #### Valg og liknande innanfor team.
@@ -175,10 +175,11 @@ Vi synes måten vi har jobbet på hittil fungerer bra. Det er fremdeles en ujevn
 
 ####Gruppedynamikk og kommunikasjon
 
-Av åpenbare grunner har kommunikasjonen i gruppen blitt endret til remote hvor vi møtes på Discord en dag i uken for å diskutere endringene vi har gjort og planlegge fremtidige oppgaver. Resten av kommunikasjonen skjer på Slack. 
+Av åpenbare grunner har kommunikasjonen i gruppen blitt endret til remote hvor vi møtes på Discord en dag i uken for å diskutere 
+endringene vi har gjort og planlegge fremtidige oppgaver. Resten av kommunikasjonen skjer på Slack. Funksjonen med delt skjerm som 
+ligg inne på discord har fungert veldig bra for oss og har fungert som ei bra erstattning for når vi jobba i lag i seminar.
 
 ###Deloppgave 2: Krav
-
 
 ####Kva krav har vi prioritert:
 
@@ -189,9 +190,6 @@ Krav
 4.	En spiller trenger kort 	
 5.	En laser vegg skal kunne skyte ut laser
 6. En mulighet å avslutte spillet fra menyen.
-
-####Brukerhistorier: ----------
-
 
 ####Krav 1 	
 Brukerhistorie:	
