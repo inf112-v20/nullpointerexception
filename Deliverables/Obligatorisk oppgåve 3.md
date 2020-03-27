@@ -248,12 +248,16 @@ ______-_-_ Eventuelle andre oppgåver som vi skal starte med som vi kan ha bruke
 Forklare kort kva hovedkrav som vi anser som en del av MVP og kvifor. Skriv dersom det er gjort endringar i rekkefølge utfra 
 kva som er gitt fra kunde, hvorfor har dette gjort ??
 
-
+Hovedkrav som vi anser som en del av MVP:
+- Implementere en GUI for kort og helse.
+- Implementere players laser funksjonalitet.
+- Legge til en ny player på kartet.
+- Spillerne kan dytte hverandre.
 
 ####Eventuelle bugs: 
 
 Skrive bugs for krava vi har utført
 
 
-###Deloppgave 3: Produktleveranse og kodekvalitet
+MANUELLE TESTER: Guiden til manuelle tester ligger på README filen.
 
