@@ -1,19 +1,169 @@
 ###Deloppgave 1: Team og Prosjekt
 
-####Referat sida sist oblig: -----------------
+####Referat sida sist oblig: 
+
+Referat 7. Seminar
+
+Oppmøte:
+
+Michal
+
+Nikolai
+
+Lasse
+
+Vegard
+
+Henriette
+
+Diskutert:
+
+Korleis vi skal lage til grafisk design til kort.
+
+Kortstokk.
+
+Andre sine presentasjonar frå gårsdagen.
+
+Delegering av arbeid.
+
+Jobba med:
+
+Lage liste med kort.
+
+Research.
+
+Plan vidare:
+
+Grafisk design til kort.
+
+Funksjonell kortstokk.
+
+
+Referat 8. Seminar
+
+Oppmøte:
+
+Michal
+
+Nikolai
+
+Lasse
+
+Vegard
+
+Henriette
+
+Diskutert:
+
+Tilbakemelding frå forrige oblig
+
+Arbeid sida sist seminar.
+
+Jobba med:
+
+Merge alle sine branches ihop
+
+Referatskriving
+
+Plan vidare:
+
+Sjå gjennom brukerhistorier og akseptansekrav
+
+Jobbe med laser frå spelarar og i backend.
+
+Jobbe med GUI
+
+
+9. Referat
+
+Oppmøte:
+
+Michal
+
+Nikolai
+
+Lasse
+
+Vegard
+
+Henriette
+
+Diskutert:
+
+Obligatorisk oppgåve 3.
+
+Arbeid under Covid-19
+
+Jobba med:
+
+Obligatorisk oppgåve 3.
+
+Diverse nye bugs.
+
+Plan vidare:
+
+Obligatorisk oppgåve 3.
+
+Bugfiksing.
+
+Brukerhistorier
+
+
+10. Referat
+
+Oppmøte:
+
+Michal
+
+Nikolai
+
+Lasse
+
+Vegard
+
+Henriette
+
+Diskutert:
+
+Obligatorisk oppgåve 3.
+
+Fordeling av commits.
+
+Nye players/skubbing av andre spelarar
+
+Jobba med:
+
+Obligatorisk oppgåve 3.
+
+Diverse bugs.
+
+Spawn point.
+
+Arbeid med hull
+
+Plan vidare:
+
+Obligatorisk oppgåve 3.
+
+Bugfiksing.
+
+Nye players/skubbing av spelarar.
+
+
+####Retrospektiv for kva vi har klart til no samt forbedringspunkter videre:
+
+Siden siste innlevering har vi klart å legge til players liv/helsepoeng samt funksjonaliteten å ta skade/miste liv. I tillegg 
+har kortstokk blitt implementert og menyen har fått en "Exit" knapp som avslutter spillet. Viktig å nevne at spillet mangler fremdeles en grafisk representasjon av liv og kortstokk og det er noe vi har bestemt å fikse senere. noe mer ???
+
+#### Forbedringspunkt
 
 
 
-####Roller i teamet: ------------
+####Roller i teamet: 
 
 
 #### Valg og liknande innanfor team.
 
-
-####Retrospektiv for kva vi har klart til no.
-
-Siden siste innlevering har vi klart å legge til players liv/helsepoeng samt funksjonaliteten å ta skade/miste liv. I tillegg 
-har kortstokk blitt implementert og menyen har fått en "Exit" knapp som avslutter spillet. Viktig å nevne at spillet mangler fremdeles en grafisk representasjon av liv og kortstokk og det er noe vi har bestemt å fikse senere. noe mer ???
 
 ####Forbedringspunk frå retrospekt:
 
