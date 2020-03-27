@@ -1,5 +1,6 @@
 package inf112.app;
 
+import inf112.app.player.Direction;
 import inf112.app.player.Player;
 import org.junit.Test;
 
@@ -14,11 +15,11 @@ public class CardTest {
     public CardTest() {
         card = new Card(100, CardType.MOVE1);
         deck = new Deck();
-        player = new Player();
+        player = new Player(Direction.SOUTH);
     }
 
     @Test
-    public void getDirTest() {
+    public void getTypeTest() {
         assertEquals(CardType.MOVE1, card.getType());
     }
     @Test
@@ -56,9 +57,9 @@ public class CardTest {
     public void getHandTest() {
 
         for (int i = 0; i < 9; i++) {
-            player.setInitHand(deck.dealCard());
+            player.setDealtCards(deck.dealCard());
         }
-        assertEquals(9, player.getInitHand().size());
+        assertEquals(9, player.getDealtCards().size());
 
     }
 }

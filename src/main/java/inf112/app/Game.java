@@ -13,7 +13,7 @@ public class Game {
     private Player player;
     private BoardObjects boardObjects;
     private int turn;
-    public Deck deck;
+    private Deck deck;
 
 
     /**
@@ -33,21 +33,21 @@ public class Game {
         }
         for (int i = 0; i < 9; i++) {
             Card c = deck.dealCard();
-            player.setInitHand(c);
+            player.setDealtCards(c);
         }
         player.setHand();
-        deck.setDiscardPile(player.getInitHand());
-        player.reSetInitHand();
+        deck.setDiscardPile(player.getDealtCards());
+        player.resetDealtCards();
         new Input(player, this);
     }
 
     /**
      * Puts the player imagine in a cell. Updates everytime a player moves or changes direction
      */
-    public void updatePlayer() {
+    private void updatePlayer() {
         board.getBoardLayers()
                 .get("player")
-                .setCell(player.getPos().getX(), player.getPos().getY(), player.setImage());
+                .setCell(player.getPos().getX(), player.getPos().getY(), player.setPlayerTexture());
     }
 
 
@@ -57,7 +57,7 @@ public class Game {
      * @param newPos the position player wants to move to
      * @return boolean true or false
      */
-    public boolean outOfBoard(Position newPos) {
+    private boolean outOfBoard(Position newPos) {
         if (newPos.getX() < 0 || newPos.getX() >= board.getBoardWidth()) {
             System.out.println("player moved out of the board");
             player.loseLife();
@@ -78,7 +78,7 @@ public class Game {
      * @param direction direction of the player
      * @return true if player can move
      */
-    public boolean canNotMove(Position newPos, Direction direction) {
+    private boolean canNotMove(Position newPos, Direction direction) {
         return boardObjects.tileHasWall(player.getPos(), newPos, direction);
     }
 
@@ -116,8 +116,6 @@ public class Game {
         if (card.getSteps() == 0) {
             movePlayer2(dir, pos, card.getType());
         } else if (card.getType() == CardType.BACKUP) {
-            System.out.println(dir);
-            System.out.println(dir.reverseDirection());
             movePlayer(pos, dir.reverseDirection());
         }
         else {
@@ -138,7 +136,7 @@ public class Game {
 
     }
 
-    public void movePlayer2(Direction dir, Position pos, CardType cardType) {
+    private void movePlayer2(Direction dir, Position pos, CardType cardType) {
         board.getBoardLayers().get("player").setCell(pos.getX(), pos.getY(), null);
         switch (cardType) {
             case TURN180:
@@ -167,7 +165,7 @@ public class Game {
      *
      * @return position of the player
      */
-    public Position getPlayerPos() {
+    private Position getPlayerPos() {
         return player.getPos();
     }
 
@@ -184,7 +182,7 @@ public class Game {
     /**
      * sets the player to a new position
      */
-    public void resetPlayer() {
+    private void resetPlayer() {
         board.getBoardLayers().get("player").setCell(player.getPos().getX(), player.getPos().getY(), null);
         player.setSpawnPoint(player.getSpawnPoint());
         updatePlayer();
@@ -223,6 +221,7 @@ public class Game {
             player.repairHitPoints();
         }
         player.printStatus();
+        System.out.println();
     }
 
     /**
