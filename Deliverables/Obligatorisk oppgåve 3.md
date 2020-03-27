@@ -258,3 +258,5 @@ Lage 2 nye "exit" knapp Textures, en med default farget og en når man peker på
 - Å kunne spela med andre spelarar(LAN).
 - Å implementere runder og faser.
 - Å kunne tape eller vinna.
+
+### Manuelle tester: Guiden til manuelle tester ligger på README filen på forsiden.
