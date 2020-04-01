@@ -20,7 +20,6 @@ public class Game {
         //String boardName = "boards/Risky_Exchange.tmx";
         String boardName = "boards/Whirlwind Tour.tmx";
         Deck deck = new Deck();
-        int turn = 0;
         board = new Board(boardName);
         boardObjects = new BoardObjects(board.getBoardLayers(), this);
         player = new Player();
