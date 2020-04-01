@@ -71,10 +71,21 @@ public class Deck {
         }
     }
 
-    public Card dealCard() {
-        Card card = deck.get(0);
-        deck.remove(0);
-        return card;
+    /**
+     * Deals an arraylist of cards of size n
+     *
+     * @param n size of the arraylist
+     * @return arraylist of cards
+     */
+    public ArrayList<Card> dealCards(int n) {
+        ArrayList<Card> cards = new ArrayList<>();
+        if (deck.size() < n)
+            shuffleDiscardPile();
+        for (int i = 0; i < n; i++) {
+            cards.add(deck.get(0));
+            deck.remove(0);
+        }
+        return cards;
     }
 
     /**

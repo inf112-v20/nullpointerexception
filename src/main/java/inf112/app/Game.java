@@ -24,13 +24,7 @@ public class Game {
         boardObjects = new BoardObjects(board.getBoardLayers(), this);
         player = new Player();
         updatePlayer();
-        if (deck.getDeck().size() < 9) {
-            deck.shuffleDiscardPile();
-        }
-        for (int i = 0; i < 9; i++) {
-            Card c = deck.dealCard();
-            player.setDealtCards(c);
-        }
+        player.setDealtCards(deck.dealCards(Math.min(9, player.getHitPoints())));
         player.setHand();
         deck.setDiscardPile(player.getDealtCards());
         player.resetDealtCards();

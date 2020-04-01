@@ -236,8 +236,8 @@ public class Player {
      *
      * @param card Card
      */
-    public void setDealtCards(Card card) {
-        dealtCards.add(card);
+    public void setDealtCards(ArrayList<Card> card) {
+        dealtCards = card;
     }
 
     /**
