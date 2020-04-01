@@ -82,7 +82,7 @@ public class MenuScreen extends ScreenAdapter {
             //If mouse is clicked - close the game
             if (Gdx.input.isTouched()) {
                 dispose();
-                System.exit(0);
+                Gdx.app.exit();
             }
         } else {
             gameRunner.batch.draw(startButton.getButtonTexture(), startButton.getButtonX(), startButton.getButtonY());
