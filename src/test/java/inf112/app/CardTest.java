@@ -4,6 +4,8 @@ import inf112.app.player.Direction;
 import inf112.app.player.Player;
 import org.junit.Test;
 
+import java.util.ArrayList;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 
@@ -35,10 +37,10 @@ public class CardTest {
     @Test
     public void dealCardTest() {
         deck = new Deck();
-        Card original = deck.getDeck().get(0);
-        Card dealt = deck.dealCard();
-        assertEquals(dealt, original);
-        assertEquals(83, deck.getDeck().size());
+        Card c = deck.getDeck().get(0);
+        ArrayList<Card> dealtCards = deck.dealCards(9);
+        assertEquals(dealtCards.size(), 9);
+        assertEquals(c, dealtCards.get(0));
     }
 
     @Test
@@ -51,15 +53,5 @@ public class CardTest {
             idx++;
         }
         assertNotEquals(5, count);
-    }
-
-    @Test
-    public void getHandTest() {
-
-        for (int i = 0; i < 9; i++) {
-            player.setDealtCards(deck.dealCard());
-        }
-        assertEquals(9, player.getDealtCards().size());
-
     }
 }
