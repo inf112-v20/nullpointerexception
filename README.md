@@ -11,8 +11,8 @@ when the java version used is >8. This has no effect on function or performance,
 *   SPACE to test progam cards
 
 ## Manual testing
-*   Test hitpoints and life. If you press **Q** life and hitpoints are printed out in the console. If you're one 
-    tile away from a lazer while on a regular conveyor belt, or 2 on an express conveyor belt, you will lose one HP.
+*   Test hitpoints and life. If you press **Q** life and hitpoints are printed out in the console.
+*   If you're one tile away from a lazer while on a regular conveyor belt, or 2 on an express conveyor belt, you will lose one HP.
 *   Test conveyor belts. Press **Q** on a conveyor belt to move.
 *   Test program cards. Press **SPACE** to use a program card.
 
