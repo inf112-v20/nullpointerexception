@@ -12,9 +12,6 @@ public class Game {
     private Board board;
     private Player player;
     private BoardObjects boardObjects;
-    private int turn;
-    private Deck deck;
-
 
     /**
      * Initializing a board, camera, renderer and player in addition to creating the needed TiledMap layers.
@@ -22,8 +19,8 @@ public class Game {
     public Game() {
         //String boardName = "boards/Risky_Exchange.tmx";
         String boardName = "boards/Whirlwind Tour.tmx";
-        deck = new Deck();
-        turn = 0;
+        Deck deck = new Deck();
+        int turn = 0;
         board = new Board(boardName);
         boardObjects = new BoardObjects(board.getBoardLayers(), this);
         player = new Player();
