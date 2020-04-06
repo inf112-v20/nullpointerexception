@@ -17,21 +17,35 @@ public class BoardObjects {
         this.game = game;
     }
 
+    public void setTile(Position pos, String layer, TiledMapTileLayer.Cell newValue) {
+        board.get("layer").setCell(pos.getX(), pos.getY(), newValue);
+    }
+
     /**
      * Returns true if the tile has a wall.
      *
-     * @param playerPos position of the player
-     * @param newPos    the position the player would have if he moves
-     * @param dir       direction of the player
+     * @param pos    position of the player
+     * @param newPos the position the player would have if he moves
+     * @param dir    direction of the player
      * @return true or false depending on if there is a wall or not
      */
-    public boolean tileHasWall(Position playerPos, Position newPos, Direction dir) {
+    public boolean tileHasWall(Position pos, Position newPos, Direction dir) {
         if (board.get("wall" + dir.getName())
-                .getCell(playerPos.getX(), playerPos.getY()) != null)
+                .getCell(pos.getX(), pos.getY()) != null)
             return true;
 
         return board.get("wall" + dir.reverseDirection().getName())
                 .getCell(newPos.getX(), newPos.getY()) != null;
+    }
+
+    /**
+     * Returns true if the tile has an actor
+     *
+     * @param pos position of the actor
+     * @return true or false
+     */
+    public boolean tileHasActor(Position pos) {
+        return board.get("actor").getCell(pos.getX(), pos.getY()) != null;
     }
 
     /**
@@ -45,6 +59,16 @@ public class BoardObjects {
     }
 
     /**
+     * Returns true if the tile has a spawn.
+     *
+     * @param pos position of the player
+     * @return true or false
+     */
+    public boolean tileHasSpawn(Position pos) {
+        return board.get("spawn").getCell(pos.getX(), pos.getY()) != null;
+    }
+
+    /**
      * Returns true if the tile has a wheel.
      *
      * @param pos position of the player
@@ -52,15 +76,7 @@ public class BoardObjects {
      * @return true or false
      */
     public boolean tileHasTurnWheel(Position pos, Direction dir) {
-        if (board.get("turnwheel").getCell(pos.getX(), pos.getY()) != null) {
-            TiledMapTileLayer.Cell currentCell = board.get("turnwheel").getCell(pos.getX(), pos.getY());
-            if (currentCell.getTile().getId() == 53)
-                game.turnPlayer(dir.turnLeft());
-            else
-                game.turnPlayer(dir.turnRight());
-            return true;
-        }
-        return false;
+        return board.get("turnwheel").getCell(pos.getX(), pos.getY()) != null;
     }
 
     /**

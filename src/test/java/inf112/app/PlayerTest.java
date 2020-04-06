@@ -13,7 +13,7 @@ public class PlayerTest {
 
     @Before
     public void init() {
-        player = new Player(Direction.SOUTH);
+        player = new Player(new Position(0, 0), null);
     }
 
     /**

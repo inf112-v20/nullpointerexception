@@ -14,6 +14,10 @@ public class Button {
         this.picture = new Texture(path);
     }
 
+    public int getButtonX() {
+        return x;
+    }
+
     /**
      * Setters and Getters for button coordinates
      * x and y are the coordinates where the spritebatch should start drawing the texture
@@ -22,16 +26,12 @@ public class Button {
         this.x = x;
     }
 
-    public void setButtonY(int y) {
-        this.y = y;
-    }
-
-    public int getButtonX() {
-        return x;
-    }
-
     public int getButtonY() {
         return y;
+    }
+
+    public void setButtonY(int y) {
+        this.y = y;
     }
 
     public Texture getButtonTexture() {

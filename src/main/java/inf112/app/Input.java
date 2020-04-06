@@ -33,25 +33,25 @@ public class Input extends InputAdapter {
                 if (dir != Direction.EAST)
                     player.setDirection(Direction.EAST);
                 else
-                    game.movePlayer(pos, dir);
+                    game.moveActor(player, player.getDirection());
                 break;
             case com.badlogic.gdx.Input.Keys.LEFT:
                 if (dir != Direction.WEST)
                     player.setDirection(Direction.WEST);
                 else
-                    game.movePlayer(pos, dir);
+                    game.moveActor(player, player.getDirection());
                 break;
             case com.badlogic.gdx.Input.Keys.UP:
                 if (dir != Direction.NORTH)
                     player.setDirection(Direction.NORTH);
                 else
-                    game.movePlayer(pos, dir);
+                    game.moveActor(player, player.getDirection());
                 break;
             case com.badlogic.gdx.Input.Keys.DOWN:
                 if (dir != Direction.SOUTH)
                     player.setDirection(Direction.SOUTH);
                 else
-                    game.movePlayer(pos, dir);
+                    game.moveActor(player, player.getDirection());
                 break;
             case com.badlogic.gdx.Input.Keys.Q:
                 game.checkCurrentTile(player);
@@ -59,9 +59,12 @@ public class Input extends InputAdapter {
             case com.badlogic.gdx.Input.Keys.SPACE:
                 game.tryToMove();
                 break;
+            case com.badlogic.gdx.Input.Keys.P:
+                player.printCards();
+                break;
             default:
         }
-        player.updateState();
+        player.updateTexture();
         return super.keyDown(keycode);
     }
 }

@@ -41,6 +41,24 @@ public class Deck {
     }
 
     /**
+     * Sets the discardPile given an ArrayList.
+     *
+     * @param d ArrayList<Card>
+     */
+    public void setDiscardPile(ArrayList<Card> d) {
+        discardPile.addAll(d);
+    }
+
+    /**
+     * Sets the discardPile given a Card.
+     *
+     * @param c Card
+     */
+    public void setDiscardPile(Card c) {
+        discardPile.add(c);
+    }
+
+    /**
      * Creates a unique random priority between 100 and 990
      *
      * @return int
@@ -86,24 +104,6 @@ public class Deck {
             deck.remove(0);
         }
         return cards;
-    }
-
-    /**
-     * Sets the discardPile given an ArrayList.
-     *
-     * @param d ArrayList<Card>
-     */
-    public void setDiscardPile(ArrayList<Card> d) {
-        discardPile.addAll(d);
-    }
-
-    /**
-     * Sets the discardPile given a Card.
-     *
-     * @param c Card
-     */
-    public void setDiscardPile(Card c) {
-        discardPile.add(c);
     }
 
     /**

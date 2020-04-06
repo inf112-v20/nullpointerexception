@@ -1,7 +1,7 @@
 package inf112.app;
 
-import inf112.app.player.Direction;
 import inf112.app.player.Player;
+import inf112.app.player.Position;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -17,7 +17,7 @@ public class CardTest {
     public CardTest() {
         card = new Card(100, CardType.MOVE1);
         deck = new Deck();
-        player = new Player(Direction.SOUTH);
+        player = new Player(new Position(0, 0), null);
     }
 
     @Test

@@ -1,29 +1,54 @@
 package inf112.app;
 
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import inf112.app.board.Board;
 import inf112.app.board.BoardObjects;
-import inf112.app.player.Direction;
-import inf112.app.player.Player;
-import inf112.app.player.Position;
+import inf112.app.player.*;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class Game {
     public static final float TILE_SIZE = 300;
 
     private Board board;
-    private Player player;
     private BoardObjects boardObjects;
+
+    private Player player;
+    private ArrayList<IActor> actors;
+
+
+    private List<TextureRegion> robotTextures;
+    private ArrayList<Position> spawnPoints;
 
     /**
      * Initializing a board, camera, renderer and player in addition to creating the needed TiledMap layers.
      */
     public Game() {
         //String boardName = "boards/Risky_Exchange.tmx";
-        String boardName = "boards/Whirlwind Tour.tmx";
-        Deck deck = new Deck();
+        //String boardName = "boards/Whirlwind Tour.tmx";
+        String boardName = "boards/Robot Stew.tmx";
+
         board = new Board(boardName);
         boardObjects = new BoardObjects(board.getBoardLayers(), this);
-        player = new Player();
-        updatePlayer();
+
+        robotTextures();
+        spawnPoints();
+
+        ArrayList<IActor> actors = new ArrayList<>();
+
+        player = new Player(spawnPoints.remove(0), robotTextures.remove(4));
+        setActorTexture(player);
+
+        for (int i = 0; i < 7; i++) {
+            actors.add(new Actor(spawnPoints.remove(0), robotTextures.remove(0)));
+            setActorTexture(actors.get(i));
+        }
+
+
+        Deck deck = new Deck();
         player.setDealtCards(deck.dealCards(Math.min(9, player.getHitPoints())));
         player.setHand();
         deck.setDiscardPile(player.getDealtCards());
@@ -31,15 +56,64 @@ public class Game {
         new Input(player, this);
     }
 
+
     /**
-     * Puts the player imagine in a cell. Updates everytime a player moves or changes direction
+     * Creates player textures from an assets file
      */
-    private void updatePlayer() {
-        board.getBoardLayers()
-                .get("player")
-                .setCell(player.getPos().getX(), player.getPos().getY(), player.setPlayerTexture());
+    private void robotTextures() {
+        Texture robotImage = new Texture("assets/robots.png");
+        TextureRegion[][] robotTexture = TextureRegion.split(robotImage,
+                (int) Game.TILE_SIZE,
+                (int) Game.TILE_SIZE);
+
+        robotTextures = new ArrayList<>();
+
+
+        for (TextureRegion[] textures : robotTexture) {
+            robotTextures.addAll(Arrays.asList(textures));
+        }
     }
 
+    /**
+     * Creates a list of all the initial spawn points actors can have
+     */
+    private void spawnPoints() {
+        spawnPoints = new ArrayList<>();
+        for (int x = 0; x < board.getBoardWidth(); x++) {
+            for (int y = 0; y < board.getBoardHeight(); y++) {
+                if (boardObjects.tileHasSpawn(new Position(x, y)))
+                    spawnPoints.add(new Position(x, y));
+            }
+        }
+    }
+
+
+    /**
+     * Puts the actor imagine in a cell.
+     *
+     * @param actor actor
+     */
+    private void setActorTexture(IActor actor) {
+        board.getBoardLayers().get("actor").setCell(actor.getPos().getX(), actor.getPos().getY(), actor.setTexture());
+    }
+
+    /**
+     * Removes the actor imagine in a cell.
+     *
+     * @param actor actor
+     */
+    private void removeActorTexture(IActor actor) {
+        board.getBoardLayers().get("actor").setCell(actor.getPos().getX(), actor.getPos().getY(), null);
+    }
+
+    /**
+     * sets the player to a new position
+     */
+    private void resetPlayer(IActor actor) {
+        removeActorTexture(actor);
+        actor.setPos(actor.getSpawnPoint());
+        setActorTexture(actor);
+    }
 
     /**
      * Checks if the position the player wants to move to is valid
@@ -48,185 +122,136 @@ public class Game {
      * @return boolean true or false
      */
     private boolean outOfBoard(Position newPos) {
-        if (newPos.getX() < 0 || newPos.getX() >= board.getBoardWidth()) {
-            System.out.println("player moved out of the board");
-            player.loseLife();
+        if (newPos.getX() < 0 || newPos.getX() >= board.getBoardWidth())
             return true;
-        }
-        if (newPos.getY() < 0 || newPos.getY() >= board.getBoardHeight()) {
-            System.out.println("player moved out of the board");
-            player.loseLife();
-            return true;
-        }
-        return false;
+        return newPos.getY() < 0 || newPos.getY() >= board.getBoardHeight();
     }
 
     /**
      * Checks if the player is blocked by something or can move
      *
-     * @param newPos    the position the player will have if he moves
-     * @param direction direction of the player
+     * @param newPos the position the player will have if he moves
+     * @param actor  direction of the player
      * @return true if player can move
      */
-    private boolean canNotMove(Position newPos, Direction direction) {
-        return boardObjects.tileHasWall(player.getPos(), newPos, direction);
+    private boolean canNotMove(IActor actor, Position newPos) {
+        return boardObjects.tileHasWall(actor.getPos(), newPos, actor.getDirection());
     }
 
     /**
      * Moves player in the direction given if the player is not blocked. Resets player if player is out of board
      *
-     * @param pos position of the player
-     * @param dir direction to move towards
      * @return the new position of the player
      */
-    public Position movePlayer(Position pos, Direction dir) {
-        board.getBoardLayers().get("player").setCell(pos.getX(), pos.getY(), null);
+    public Position moveActor(IActor actor, Direction direction) {
+        removeActorTexture(actor);
 
-        if (canNotMove(pos.getNextPos(dir), dir)) {
+        if (canNotMove(actor, actor.getPos().getNextPos(direction))) {
             System.out.println("Something is blocking");
-        } else if (outOfBoard(pos.getNextPos(dir)))
-            resetPlayer();
+        } else if (outOfBoard(actor.getPos().getNextPos(direction)))
+            resetPlayer(actor);
         else
-            player.setPos(pos.getNextPos(dir));
-        updatePlayer();
-        player.updateState();
+            actor.setPos(actor.getPos().getNextPos(direction));
 
-        return player.getPos();
+
+        setActorTexture(actor);
+        actor.updateTexture();
+
+        return actor.getPos();
     }
 
     public void tryToMove() {
-        Card card = new Card(100, CardType.BACKUP);
-        /*
+        //Card card = new Card(100, CardType.BACKUP);
         Card card = player.getCard(0);
-        deck.setDiscardPile(card);
-        */
-        Position pos = player.getPos();
-        Direction dir = player.getDirection();
-
-        if (card.getSteps() == 0) {
-            movePlayer2(dir, pos, card.getType());
-        } else if (card.getType() == CardType.BACKUP) {
-            movePlayer(pos, dir.reverseDirection());
-        }
-        else {
-            for (int i = 0; i < card.getSteps(); i++) {
-                pos = player.getPos();
-                dir = player.getDirection();
-                if (canNotMove(pos.getNextPos(dir), dir)) {
-                    System.out.println("Something is blocking!");
-                    break;
-                } else if (outOfBoard(pos.getNextPos(dir))) {
-                    resetPlayer();
-                    System.out.println("Player moved out of the board!");
-                    break;
-                } else
-                    movePlayer(pos, dir);
-            }
-        }
+        movedByCard(player, card.getType());
 
     }
 
-    private void movePlayer2(Direction dir, Position pos, CardType cardType) {
-        board.getBoardLayers().get("player").setCell(pos.getX(), pos.getY(), null);
+    public void movedByCard(IActor actor, CardType cardType) {
+        removeActorTexture(actor);
+
         switch (cardType) {
+            case MOVE1:
+                moveActor(actor, actor.getDirection());
+                break;
+            case MOVE2:
+                moveActor(actor, actor.getDirection());
+                moveActor(actor, actor.getDirection());
+                break;
+            case MOVE3:
+                moveActor(actor, actor.getDirection());
+                moveActor(actor, actor.getDirection());
+                moveActor(actor, actor.getDirection());
+                break;
             case TURN180:
-                turnPlayer(dir.reverseDirection());
+                actor.setDirection(actor.getDirection().reverseDirection());
                 break;
             case TURNLEFT:
-                turnPlayer(dir.turnLeft());
+                actor.setDirection(actor.getDirection().turnLeft());
                 break;
             case TURNRIGHT:
-                turnPlayer(dir.turnRight());
+                actor.setDirection(actor.getDirection().turnRight());
                 break;
             default:
-                player.setPos(pos.getNextPos(dir));
+                actor.setPos(actor.getPos().getNextPos(actor.getDirection()));
                 break;
-
-
         }
-        updatePlayer();
-        player.updateState();
-
-
+        setActorTexture(player);
+        player.updateTexture();
     }
 
-    /**
-     * Returns player position
-     *
-     * @return position of the player
-     */
-    private Position getPlayerPos() {
-        return player.getPos();
-    }
-
-    /**
-     * Sets a new player direction
-     *
-     * @param dir direction
-     */
-    public void turnPlayer(Direction dir) {
-        player.setDirection(dir);
-        player.updateState();
-    }
-
-    /**
-     * sets the player to a new position
-     */
-    private void resetPlayer() {
-        board.getBoardLayers().get("player").setCell(player.getPos().getX(), player.getPos().getY(), null);
-        player.setSpawnPoint(player.getSpawnPoint());
-        updatePlayer();
-    }
 
     /**
      * Checks what objects is on the player tile.
      *
-     * @param player player object
+     * @param actor actor object
      */
-    public void checkCurrentTile(Player player) {
-        if (boardObjects.tileHasHole(player.getPos())) {
-            resetPlayer();
+    public void checkCurrentTile(IActor actor) {
+        if (boardObjects.tileHasHole(actor.getPos())) {
+            resetPlayer(actor);
             System.out.println("player stepped in a hole!");
             return;
         }
-        if (boardObjects.tileHasFlag(player.getPos())) {
+        if (boardObjects.tileHasFlag(actor.getPos())) {
             System.out.println("player is standing on a flag!");
         }
-        if (boardObjects.hasConveyor(player.getPos())) {
-            conveyor();
-            if (boardObjects.hasExpressConveyor(player.getPos())) {
-                conveyor();
+        if (boardObjects.hasConveyor(actor.getPos())) {
+            conveyor(actor);
+            if (boardObjects.hasExpressConveyor(actor.getPos())) {
+                conveyor(actor);
             }
             System.out.println("PLayer was moved by a conveyorbelt");
         }
-        if (boardObjects.tileHasTurnWheel(player.getPos(), player.getDirection())) {
+        if (boardObjects.tileHasTurnWheel(actor.getPos(), actor.getDirection())) {
             System.out.println("player was turned by a turnwheel");
         }
-        if (boardObjects.tileHasLaser(player.getPos())) {
+        if (boardObjects.tileHasLaser(actor.getPos())) {
             System.out.println("player is standing on a laser!");
             player.handleDamage();
         }
-        if (boardObjects.tileHasRepair(player.getPos())) {
+        if (boardObjects.tileHasRepair(actor.getPos())) {
             System.out.println("player is standing on a repair kit!");
-            player.repairHitPoints();
+            actor.repairHitPoints();
         }
-        player.printStatus();
+        //player.printStatus();
         System.out.println();
     }
 
     /**
      * Moves the player if he is standing on a conveyor tile
+     *
+     * @param actor actor
      */
-    private void conveyor() {
-        Direction conveyorDir = boardObjects.conveyorDirection(player.getPos());
+    private void conveyor(IActor actor) {
+        Direction conveyorDir = boardObjects.conveyorDirection(actor.getPos());
 
-        if (outOfBoard(getPlayerPos().getNextPos(conveyorDir))) {
-            resetPlayer();
+        if (outOfBoard(actor.getPos().getNextPos(conveyorDir))) {
+            resetPlayer(actor);
             return;
         }
 
-        movePlayer(player.getPos(), conveyorDir);
-        conveyorTurn(conveyorDir);
+        moveActor(actor, conveyorDir);
+        conveyorTurn(actor, conveyorDir);
     }
 
 
@@ -235,25 +260,24 @@ public class Game {
      *
      * @param oldDirection the previous direction of the conveyor
      */
-    private void conveyorTurn(Direction oldDirection) {
-        if (!boardObjects.hasConveyor(player.getPos()))
+    private void conveyorTurn(IActor actor, Direction oldDirection) {
+        if (!boardObjects.hasConveyor(actor.getPos()))
             return;
 
-        Direction conveyorDir = boardObjects.conveyorDirection(player.getPos());
+        Direction conveyorDir = boardObjects.conveyorDirection(actor.getPos());
 
-        if (boardObjects.tileHasFlag(player.getPos()))
+        if (boardObjects.tileHasFlag(actor.getPos()))
             return;
 
         if (!conveyorDir.equals(oldDirection)) {
             if (oldDirection.turnLeft().equals(conveyorDir))
-                turnPlayer(player.getDirection().turnLeft());
+                actor.setDirection(actor.getDirection().turnLeft());
             else
-                turnPlayer(player.getDirection().turnRight());
+                actor.setDirection(actor.getDirection().turnRight());
         }
     }
 
     public Board getBoard() {
         return board;
     }
-
 }
