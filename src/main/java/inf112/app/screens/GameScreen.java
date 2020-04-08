@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -21,15 +22,17 @@ public class GameScreen extends ScreenAdapter {
     private OrthogonalTiledMapRenderer renderer;
     private  inf112.app.Game game;
     private Board board;
+    private Texture dock;
+    private OrthographicCamera camera;
 
     public GameScreen() {
         game = new inf112.app.Game();
         board = game.getBoard();
-
-        OrthographicCamera camera = new OrthographicCamera();
+        dock = new Texture("dock.PNG");
+        camera = new OrthographicCamera();
         camera.setToOrtho(true,
                 board.getBoardWidth() * TILE_SIZE,
-                board.getBoardHeight() * TILE_SIZE + 1000);
+                board.getBoardHeight() * TILE_SIZE + 1500);
         camera.update();
 
         renderer = new OrthogonalTiledMapRenderer(board.getBoard());
@@ -48,12 +51,18 @@ public class GameScreen extends ScreenAdapter {
         Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT);
 
         renderer.render();
-        stage.act(v);
+        /**stage.act(v);
         stage.draw();
+        **/
+        //camera.setToOrtho(false);
+        GameRunner.batch.setProjectionMatrix(camera.combined);
 
+        GameRunner.batch.begin();
+        GameRunner.batch.draw(dock,0,board.getBoardHeight()*TILE_SIZE,board.getBoardWidth()*TILE_SIZE,5*TILE_SIZE);
+        GameRunner.batch.end();
     }
 
-    @Override
+    /**@Override
     public void show(){
         stage = new Stage();
         skin = new Skin();
@@ -63,13 +72,14 @@ public class GameScreen extends ScreenAdapter {
         table.add(button);
         stage.addActor(table);
     }
-
+**/
     /**
      * Called when the Application is destroyed. Preceded by a call to pause().
      */
     @Override
     public void dispose() {
         renderer.dispose();
+        GameRunner.batch.dispose();
     }
 
 }
