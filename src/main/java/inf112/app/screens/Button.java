@@ -18,11 +18,8 @@ public class Button {
      * Setters and Getters for button coordinates
      * x and y are the coordinates where the spritebatch should start drawing the texture
      */
-    public void setButtonX(int x) {
+    public void setButtonCoords(int x,int y) {
         this.x = x;
-    }
-
-    public void setButtonY(int y) {
         this.y = y;
     }
 

@@ -22,12 +22,16 @@ public class GameScreen extends ScreenAdapter {
     private OrthogonalTiledMapRenderer renderer;
     private  inf112.app.Game game;
     private Board board;
-    private Texture dock;
+    private Button powerdown;
+    private Texture lifes;
     private OrthographicCamera camera;
 
     public GameScreen() {
         game = new inf112.app.Game();
         board = game.getBoard();
+        powerdown = new Button("powerdown.png");
+        powerdown.setButtonCoords(0,board.getBoardHeight()*TILE_SIZE + 500);
+        lifes = new Texture("life.png");
         camera = new OrthographicCamera();
         camera.setToOrtho(false,
                 board.getBoardWidth() * TILE_SIZE,
@@ -54,12 +58,13 @@ public class GameScreen extends ScreenAdapter {
         stage.draw();
         **/
 
-        /**GameRunner.batch.setProjectionMatrix(camera.combined);
+        GameRunner.batch.setProjectionMatrix(camera.combined);
 
         GameRunner.batch.begin();
-        GameRunner.batch.draw(dock,0,board.getBoardHeight()*TILE_SIZE,board.getBoardWidth()*TILE_SIZE,5*TILE_SIZE);
+        GameRunner.batch.draw(powerdown.getButtonTexture(), powerdown.getButtonX(),powerdown.getButtonY(),350,350);
+        GameRunner.batch.draw(lifes, 0,board.getBoardHeight()*TILE_SIZE + 100,150,150);
         GameRunner.batch.end();
-         **/
+
     }
 
     /**@Override

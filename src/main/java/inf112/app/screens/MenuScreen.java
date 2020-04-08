@@ -32,10 +32,8 @@ public class MenuScreen extends ScreenAdapter {
         int yStartBtn = (GameRunner.SCREEN_HEIGHT / 2) - (startButton.getButtonTexture().getHeight() / 2);
         int xExitBtn = (GameRunner.SCREEN_WIDTH / 2) - (exitButton.getButtonTexture().getWidth() / 2);
         int yExitBtn = (GameRunner.SCREEN_HEIGHT / 2 - (2 * startButton.getButtonTexture().getHeight())) - (exitButton.getButtonTexture().getHeight() / 2);
-        startButton.setButtonX(xStartBtn);
-        startButton.setButtonY(yStartBtn);
-        exitButton.setButtonX(xExitBtn);
-        exitButton.setButtonY(yExitBtn);
+        startButton.setButtonCoords(xStartBtn,yStartBtn);
+        exitButton.setButtonCoords(xExitBtn,yExitBtn);
     }
 
 
