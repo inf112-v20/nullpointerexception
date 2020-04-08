@@ -28,11 +28,10 @@ public class GameScreen extends ScreenAdapter {
     public GameScreen() {
         game = new inf112.app.Game();
         board = game.getBoard();
-        dock = new Texture("dock.PNG");
         camera = new OrthographicCamera();
-        camera.setToOrtho(true,
+        camera.setToOrtho(false,
                 board.getBoardWidth() * TILE_SIZE,
-                board.getBoardHeight() * TILE_SIZE + 1500);
+                board.getBoardHeight() * TILE_SIZE + 1000);
         camera.update();
 
         renderer = new OrthogonalTiledMapRenderer(board.getBoard());
@@ -54,12 +53,13 @@ public class GameScreen extends ScreenAdapter {
         /**stage.act(v);
         stage.draw();
         **/
-        //camera.setToOrtho(false);
-        GameRunner.batch.setProjectionMatrix(camera.combined);
+
+        /**GameRunner.batch.setProjectionMatrix(camera.combined);
 
         GameRunner.batch.begin();
         GameRunner.batch.draw(dock,0,board.getBoardHeight()*TILE_SIZE,board.getBoardWidth()*TILE_SIZE,5*TILE_SIZE);
         GameRunner.batch.end();
+         **/
     }
 
     /**@Override

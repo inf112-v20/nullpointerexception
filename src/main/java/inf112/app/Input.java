@@ -41,13 +41,13 @@ public class Input extends InputAdapter {
                 else
                     game.movePlayer(pos, dir);
                 break;
-            case com.badlogic.gdx.Input.Keys.DOWN:
+            case com.badlogic.gdx.Input.Keys.UP:
                 if (dir != Direction.NORTH)
                     player.setDirection(Direction.NORTH);
                 else
                     game.movePlayer(pos, dir);
                 break;
-            case com.badlogic.gdx.Input.Keys.UP:
+            case com.badlogic.gdx.Input.Keys.DOWN:
                 if (dir != Direction.SOUTH)
                     player.setDirection(Direction.SOUTH);
                 else
