@@ -22,7 +22,7 @@ public class Game {
         Deck deck = new Deck();
         board = new Board(boardName);
         boardObjects = new BoardObjects(board.getBoardLayers(), this);
-        player = new Player();
+        player = new Player(board);
         updatePlayer();
         player.setDealtCards(deck.dealCards(Math.min(9, player.getHitPoints())));
         player.setHand();

@@ -7,6 +7,7 @@ import com.badlogic.gdx.maps.tiled.tiles.StaticTiledMapTile;
 import com.badlogic.gdx.math.Vector2;
 import inf112.app.Card;
 import inf112.app.Game;
+import inf112.app.board.Board;
 
 import java.util.ArrayList;
 
@@ -32,7 +33,7 @@ public class Player {
      * Texture region splits the player texture into 3 different textures and puts them in a 2-dimensional array.
      * Initializing the inputProcessor for input-listening.
      */
-    public Player() {
+    public Player(Board board) {
         dealtCards = new ArrayList<>();
         hitPoints = HIT_POINTS;
         lifeCount = LIFE_COUNT;
@@ -47,7 +48,7 @@ public class Player {
         playerCell = new TiledMapTileLayer.Cell().setTile(new StaticTiledMapTile(robotTexture[0][0]));
 
         player = new Vector2();
-        pos = new Position((int) player.x, (int) player.y);
+        pos = new Position((int) player.x, board.getBoardHeight() -1);
         spawnPoint = pos;
 
     }
