@@ -2,15 +2,19 @@ package inf112.app.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import inf112.app.board.Board;
+
+import java.awt.*;
 
 public class GameScreen extends ScreenAdapter {
 
@@ -59,10 +63,14 @@ public class GameScreen extends ScreenAdapter {
         **/
 
         GameRunner.batch.setProjectionMatrix(camera.combined);
-
+        BitmapFont font = new BitmapFont();
+        int lifepoints = game.getPlayersLifeCount();
         GameRunner.batch.begin();
         GameRunner.batch.draw(powerdown.getButtonTexture(), powerdown.getButtonX(),powerdown.getButtonY(),350,350);
         GameRunner.batch.draw(lifes, 0,board.getBoardHeight()*TILE_SIZE + 100,150,150);
+        font.getData().setScale(7,7);
+        font.setColor(Color.BLACK);
+        font.draw(GameRunner.batch,"x " + lifepoints, 150,board.getBoardHeight()*TILE_SIZE + 100 + lifes.getHeight()/2);
         GameRunner.batch.end();
 
     }

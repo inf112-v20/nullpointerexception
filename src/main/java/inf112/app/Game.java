@@ -256,4 +256,7 @@ public class Game {
         return board;
     }
 
+    public int getPlayersLifeCount(){
+        return player.getLifeCount();
+    }
 }
