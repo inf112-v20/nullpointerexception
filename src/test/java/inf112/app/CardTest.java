@@ -1,7 +1,5 @@
 package inf112.app;
 
-import inf112.app.player.Player;
-import inf112.app.player.Position;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -12,12 +10,10 @@ import static org.junit.Assert.assertNotEquals;
 public class CardTest {
     private Card card;
     private Deck deck;
-    private Player player;
 
     public CardTest() {
         card = new Card(100, CardType.MOVE1);
         deck = new Deck();
-        player = new Player(new Position(0, 0), null);
     }
 
     @Test

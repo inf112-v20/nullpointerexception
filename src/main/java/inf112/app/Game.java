@@ -19,7 +19,6 @@ public class Game {
     private Player player;
     private ArrayList<IActor> actors;
 
-
     private List<TextureRegion> robotTextures;
     private ArrayList<Position> spawnPoints;
 
@@ -37,16 +36,16 @@ public class Game {
         robotTextures();
         spawnPoints();
 
-        ArrayList<IActor> actors = new ArrayList<>();
+        actors = new ArrayList<>();
 
         player = new Player(spawnPoints.remove(0), robotTextures.remove(4));
         setActorTexture(player);
 
-        for (int i = 0; i < 7; i++) {
+        int activeActors = 7;
+        for (int i = 0; i < activeActors; i++) {
             actors.add(new Actor(spawnPoints.remove(0), robotTextures.remove(0)));
             setActorTexture(actors.get(i));
         }
-
 
         Deck deck = new Deck();
         player.setDealtCards(deck.dealCards(Math.min(9, player.getHitPoints())));
@@ -67,7 +66,6 @@ public class Game {
                 (int) Game.TILE_SIZE);
 
         robotTextures = new ArrayList<>();
-
 
         for (TextureRegion[] textures : robotTexture) {
             robotTextures.addAll(Arrays.asList(textures));
@@ -107,12 +105,17 @@ public class Game {
     }
 
     /**
-     * sets the player to a new position
+     * Checks if there is an actor in a certain position, and returns the actor
+     *
+     * @param position position to check
+     * @return actor
      */
-    private void resetPlayer(IActor actor) {
-        removeActorTexture(actor);
-        actor.setPos(actor.getSpawnPoint());
-        setActorTexture(actor);
+    private IActor getActor(Position position) {
+        for (IActor actor : actors) {
+            if (actor.getPos().equals(position))
+                return actor;
+        }
+        return null;
     }
 
     /**
@@ -122,6 +125,8 @@ public class Game {
      * @return boolean true or false
      */
     private boolean outOfBoard(Position newPos) {
+        if (boardObjects.tileHasHole(newPos))
+            return true;
         if (newPos.getX() < 0 || newPos.getX() >= board.getBoardWidth())
             return true;
         return newPos.getY() < 0 || newPos.getY() >= board.getBoardHeight();
@@ -134,8 +139,26 @@ public class Game {
      * @param actor  direction of the player
      * @return true if player can move
      */
-    private boolean canNotMove(IActor actor, Position newPos) {
-        return boardObjects.tileHasWall(actor.getPos(), newPos, actor.getDirection());
+    private boolean canMove(IActor actor, Position newPos, Direction direction) {
+        return !boardObjects.tileHasWall(actor.getPos(), newPos, direction);
+    }
+
+    /**
+     * Moves all the actors
+     */
+    public void moveActors() {
+        for (IActor actor : actors) {
+            moveActor(actor, actor.getDirection());
+        }
+    }
+
+    /**
+     * Moves all the actors
+     */
+    public void moveActorsByCards() {
+        for (IActor actor : actors) {
+            movedByCard(actor, actor.getCard(0).getType());
+        }
     }
 
     /**
@@ -143,30 +166,44 @@ public class Game {
      *
      * @return the new position of the player
      */
-    public Position moveActor(IActor actor, Direction direction) {
+    public Boolean moveActor(IActor actor, Direction direction) {
+        Position newPos = new Position(actor.getPos().getNextPos(direction));
+
+        if (!canMove(actor, newPos, direction)) {
+            System.out.println("Something is blocking");
+            return false;
+        }
+
         removeActorTexture(actor);
 
-        if (canNotMove(actor, actor.getPos().getNextPos(direction))) {
-            System.out.println("Something is blocking");
-        } else if (outOfBoard(actor.getPos().getNextPos(direction)))
-            resetPlayer(actor);
-        else
-            actor.setPos(actor.getPos().getNextPos(direction));
+        if (boardObjects.tileHasActor(newPos)) {
+            IActor otherActor = getActor(newPos);
+            if (otherActor == null)
+                return false;
+            else if (!moveActor(otherActor, direction)) {
+                setActorTexture(actor);
+                System.out.println("didnt move");
+                return false;
+            }
+        }
 
+        if (outOfBoard(newPos)) {
+            System.out.println("Actor respawned");
+            actor.setPos(actor.getSpawnPoint());
+        } else
+            actor.setPos(newPos);
 
         setActorTexture(actor);
-        actor.updateTexture();
-
-        return actor.getPos();
+        return true;
     }
 
-    public void tryToMove() {
-        //Card card = new Card(100, CardType.BACKUP);
-        Card card = player.getCard(0);
-        movedByCard(player, card.getType());
 
-    }
-
+    /**
+     * Moves an actor depending on its card
+     *
+     * @param actor    actor
+     * @param cardType card type
+     */
     public void movedByCard(IActor actor, CardType cardType) {
         removeActorTexture(actor);
 
@@ -197,7 +234,6 @@ public class Game {
                 break;
         }
         setActorTexture(player);
-        player.updateTexture();
     }
 
 
@@ -208,7 +244,7 @@ public class Game {
      */
     public void checkCurrentTile(IActor actor) {
         if (boardObjects.tileHasHole(actor.getPos())) {
-            resetPlayer(actor);
+            actor.setPos(actor.getSpawnPoint());
             System.out.println("player stepped in a hole!");
             return;
         }
@@ -244,12 +280,6 @@ public class Game {
      */
     private void conveyor(IActor actor) {
         Direction conveyorDir = boardObjects.conveyorDirection(actor.getPos());
-
-        if (outOfBoard(actor.getPos().getNextPos(conveyorDir))) {
-            resetPlayer(actor);
-            return;
-        }
-
         moveActor(actor, conveyorDir);
         conveyorTurn(actor, conveyorDir);
     }

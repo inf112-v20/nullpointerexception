@@ -32,11 +32,11 @@ public class Position {
     /**
      * given direction sets the new player position
      *
-     * @param dir
+     * @param direction direction
      * @return new position
      */
-    public Position getNextPos(Direction dir) {
-        switch (dir) {
+    public Position getNextPos(Direction direction) {
+        switch (direction) {
             case NORTH:
                 return new Position(xCoordinate, yCoordinate + 1);
             case EAST:
@@ -46,7 +46,7 @@ public class Position {
             case WEST:
                 return new Position(xCoordinate - 1, yCoordinate);
             default:
-                throw new IllegalStateException("Unexpected value: " + dir);
+                throw new IllegalStateException("Unexpected value: " + direction);
         }
     }
 
@@ -64,5 +64,13 @@ public class Position {
         Position position = (Position) object;
         return xCoordinate == position.xCoordinate &&
                 yCoordinate == position.yCoordinate;
+    }
+
+    @Override
+    public String toString() {
+        return "Position{" +
+                "xCoordinate=" + xCoordinate +
+                ", yCoordinate=" + yCoordinate +
+                '}';
     }
 }

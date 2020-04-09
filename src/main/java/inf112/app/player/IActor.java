@@ -11,35 +11,6 @@ public interface IActor {
     int MAX_LIFE = 3;
 
     /**
-     * Subtracts healthscore and lives if healtscore is less than 1. Also sets the player to dead when there are no more lives.
-     */
-    void handleDamage();
-
-    /**
-     * Lets a player gain healthscore if it isn´t already at it´s maximum.
-     */
-    void repairHitPoints();
-
-    /**
-     * Player loses a life and updates isDead if there are no more lives.
-     */
-    void loseLife();
-
-    /**
-     * Returns whether or not the player is dead
-     *
-     * @return boolean
-     */
-    boolean isDead();
-
-    /**
-     * Changes the position of the player to a predetermined position
-     *
-     * @return the new position
-     */
-    Position checkpoint();
-
-    /**
      * Sets the current player state to default
      *
      * @return the new player state
@@ -47,9 +18,16 @@ public interface IActor {
     TiledMapTileLayer.Cell setTexture();
 
     /**
-     * Checks which imagine to show to the screen depending on player state
+     * Adds a card to the hand from initial hand.
      */
-    void updateTexture();
+    void setHand();
+
+    /**
+     * Changes the position of the player to a predetermined position
+     *
+     * @return the new position
+     */
+    Position checkpoint();
 
     /**
      * Gets the current position of the player
@@ -79,17 +57,73 @@ public interface IActor {
      */
     void setDirection(Direction dir);
 
-    void setHand();
-
+    /**
+     * @return spawnPoint The spawn point of the player
+     */
     Position getSpawnPoint();
 
+    /**
+     * Changes the spawn point of the actor
+     *
+     * @param spawnPoint new spawn
+     */
     void setSpawnPoint(Position spawnPoint);
 
-    void resetDealtCards();
-
-    ArrayList<Card> getDealtCards();
-
+    /**
+     * @return The players hit points
+     */
     int getHitPoints();
 
+    /**
+     * @return lifeCount
+     */
     int getLifeCount();
+
+    /**
+     * Returns a card in hand given index
+     *
+     * @param index int
+     * @return Card
+     */
+    Card getCard(int index);
+
+    /**
+     * @return initHand An arraylist of cards from dealtCards.
+     */
+    ArrayList<Card> getDealtCards();
+
+    /**
+     * Adds a program card to dealtcards.
+     *
+     * @param card Card
+     */
+    void setDealtCards(ArrayList<Card> card);
+
+    /**
+     * Resets the initHand
+     */
+    void resetDealtCards();
+
+    /**
+     * Subtracts healthscore and lives if healtscore is less than 1. Also sets the player to dead when there are no more lives.
+     */
+    void handleDamage();
+
+    /**
+     * Lets a player gain healthscore if it isn´t already at it´s maximum.
+     */
+    void repairHitPoints();
+
+    /**
+     * Player loses a life and updates isDead if there are no more lives.
+     */
+    void loseLife();
+
+    /**
+     * Returns whether or not the player is dead
+     *
+     * @return boolean
+     */
+    boolean isDead();
+
 }

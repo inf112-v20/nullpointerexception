@@ -3,7 +3,6 @@ package inf112.app.player;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.tiles.StaticTiledMapTile;
-import com.badlogic.gdx.math.Vector2;
 import inf112.app.Card;
 
 import java.util.ArrayList;
@@ -12,17 +11,15 @@ import java.util.ArrayList;
 public class Player implements IActor {
 
     //Vector holds players position
-    private Vector2 player;
     private TiledMapTileLayer.Cell playerCell;
     private Position currentPos;
-    private Direction dir;
+    private Direction direction;
     private ArrayList<Card> hand;
     private ArrayList<Card> dealtCards;
     private Position spawnPoint;
     private int hitPoints;
     private int lifeCount;
     private boolean isDead;
-
 
     /**
      * Initializing default/dying/winning cells of a player.
@@ -33,17 +30,17 @@ public class Player implements IActor {
      * @param texture texture of player
      */
     public Player(Position spawn, TextureRegion texture) {
-        dealtCards = new ArrayList<>();
         hitPoints = MAX_HP;
         lifeCount = MAX_LIFE;
-        hand = new ArrayList<>();
+        playerCell = new TiledMapTileLayer.Cell().setTile(new StaticTiledMapTile(texture));
         isDead = false;
 
-        playerCell = new TiledMapTileLayer.Cell().setTile(new StaticTiledMapTile(texture));
-
-        player = new Vector2();
-        currentPos = spawn;
         spawnPoint = spawn;
+        currentPos = spawn;
+        setDirection(Direction.EAST);
+
+        dealtCards = new ArrayList<>();
+        hand = new ArrayList<>();
     }
 
     /**
@@ -107,11 +104,6 @@ public class Player implements IActor {
     }
 
     @Override
-    public void updateTexture() {
-        playerCell.setRotation(dir.getID());
-    }
-
-    @Override
     public Position getPos() {
         return currentPos;
     }
@@ -123,32 +115,23 @@ public class Player implements IActor {
 
     @Override
     public Direction getDirection() {
-        return dir;
+        return direction;
     }
 
     @Override
     public void setDirection(Direction dir) {
-        this.dir = dir;
+        direction = dir;
+        playerCell.setRotation(direction.getID());
     }
 
-    /**
-     * Adds a card to the hand from initial hand.
-     */
     @Override
     public void setHand() {
         for (int i = 0; i < 5; i++) {
-            int idx = 1;
-            hand.add(dealtCards.get(idx));
-            dealtCards.remove(idx);
+            hand.add(dealtCards.remove(0));
         }
     }
 
-    /**
-     * Returns a card in hand given index
-     *
-     * @param index int
-     * @return Card
-     */
+    @Override
     public Card getCard(int index) {
         if (hand.isEmpty()) {
             System.out.println("No more cards");
@@ -159,9 +142,6 @@ public class Player implements IActor {
         return card;
     }
 
-    /**
-     * @return spawnPoint The spawn point of the player
-     */
     @Override
     public Position getSpawnPoint() {
         return spawnPoint;
@@ -170,42 +150,29 @@ public class Player implements IActor {
     @Override
     public void setSpawnPoint(Position spawnPoint) {
         this.spawnPoint = spawnPoint;
-        this.currentPos = spawnPoint;
     }
 
-    /**
-     * Resets the initHand
-     */
+    @Override
     public void resetDealtCards() {
         dealtCards = new ArrayList<>();
     }
 
-    /**
-     * @return initHand An arraylist of cards from dealtCards.
-     */
+    @Override
     public ArrayList<Card> getDealtCards() {
         return dealtCards;
     }
 
-    /**
-     * Adds a program card to dealtcards.
-     *
-     * @param card Card
-     */
+    @Override
     public void setDealtCards(ArrayList<Card> card) {
         dealtCards = card;
     }
 
-    /**
-     * @return The players hit points
-     */
+    @Override
     public int getHitPoints() {
         return hitPoints;
     }
 
-    /**
-     * @return lifeCount
-     */
+    @Override
     public int getLifeCount() {
         return lifeCount;
     }

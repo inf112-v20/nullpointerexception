@@ -3,7 +3,6 @@ package inf112.app.player;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.tiles.StaticTiledMapTile;
-import com.badlogic.gdx.math.Vector2;
 import inf112.app.Card;
 
 import java.util.ArrayList;
@@ -12,7 +11,6 @@ public class Actor implements IActor {
 
     private final int MAX_HP = 9;
     private final int MAX_LIFE = 3;
-    private Vector2 actor;
     private TiledMapTileLayer.Cell actorTexture;
     private Position currentPos;
     private Direction direction;
@@ -24,18 +22,17 @@ public class Actor implements IActor {
     private boolean isDead;
 
     public Actor(Position spawn, TextureRegion texture) {
-        dealtCards = new ArrayList<>();
         hitPoints = MAX_HP;
         lifeCount = MAX_LIFE;
-        hand = new ArrayList<>();
+        actorTexture = new TiledMapTileLayer.Cell().setTile(new StaticTiledMapTile(texture));
         isDead = false;
 
-        actorTexture = new TiledMapTileLayer.Cell().setTile(new StaticTiledMapTile(texture));
-
-        actor = new Vector2();
         spawnPoint = spawn;
         currentPos = spawn;
+        setDirection(Direction.EAST);
 
+        dealtCards = new ArrayList<>();
+        hand = new ArrayList<>();
     }
 
     @Override
@@ -82,11 +79,6 @@ public class Actor implements IActor {
     }
 
     @Override
-    public void updateTexture() {
-        actorTexture.setRotation(direction.getID());
-    }
-
-    @Override
     public Position getPos() {
         return currentPos;
     }
@@ -104,6 +96,7 @@ public class Actor implements IActor {
     @Override
     public void setDirection(Direction newDir) {
         direction = newDir;
+        actorTexture.setRotation(direction.getID());
     }
 
     @Override
@@ -134,6 +127,11 @@ public class Actor implements IActor {
     }
 
     @Override
+    public void setDealtCards(ArrayList<Card> card) {
+        dealtCards = card;
+    }
+
+    @Override
     public int getHitPoints() {
         return hitPoints;
     }
@@ -141,5 +139,16 @@ public class Actor implements IActor {
     @Override
     public int getLifeCount() {
         return lifeCount;
+    }
+
+    @Override
+    public Card getCard(int index) {
+        if (hand.isEmpty()) {
+            System.out.println("No more cards");
+            return null;
+        }
+        Card card = hand.get(index);
+        hand.remove(index);
+        return card;
     }
 }

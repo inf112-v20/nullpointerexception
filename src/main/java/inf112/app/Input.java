@@ -56,15 +56,13 @@ public class Input extends InputAdapter {
             case com.badlogic.gdx.Input.Keys.Q:
                 game.checkCurrentTile(player);
                 break;
-            case com.badlogic.gdx.Input.Keys.SPACE:
-                game.tryToMove();
-                break;
             case com.badlogic.gdx.Input.Keys.P:
                 player.printCards();
                 break;
+            case com.badlogic.gdx.Input.Keys.Z:
+                game.moveActors();
             default:
         }
-        player.updateTexture();
         return super.keyDown(keycode);
     }
 }
