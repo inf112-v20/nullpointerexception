@@ -32,10 +32,8 @@ public class MenuScreen extends ScreenAdapter {
         int yStartBtn = (GameRunner.SCREEN_HEIGHT / 2) - (startButton.getButtonTexture().getHeight() / 2);
         int xExitBtn = (GameRunner.SCREEN_WIDTH / 2) - (exitButton.getButtonTexture().getWidth() / 2);
         int yExitBtn = (GameRunner.SCREEN_HEIGHT / 2 - (2 * startButton.getButtonTexture().getHeight())) - (exitButton.getButtonTexture().getHeight() / 2);
-        startButton.setButtonX(xStartBtn);
-        startButton.setButtonY(yStartBtn);
-        exitButton.setButtonX(xExitBtn);
-        exitButton.setButtonY(yExitBtn);
+        startButton.setButtonCoords(xStartBtn, yStartBtn);
+        exitButton.setButtonCoords(xExitBtn, yExitBtn);
     }
 
 
@@ -48,10 +46,10 @@ public class MenuScreen extends ScreenAdapter {
     public void render(float v) {
         Gdx.gl.glClearColor(1, 1, 1, 1);
         Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT);
-        gameRunner.batch.setProjectionMatrix(camera.combined);
-        gameRunner.batch.begin();
+        GameRunner.batch.setProjectionMatrix(camera.combined);
+        GameRunner.batch.begin();
 
-        gameRunner.batch.draw(background, 0, 0, GameRunner.SCREEN_WIDTH, GameRunner.SCREEN_HEIGHT);
+        GameRunner.batch.draw(background, 0, 0, GameRunner.SCREEN_WIDTH, GameRunner.SCREEN_HEIGHT);
 
         //Current mouse position on Y-axis
         int mousePosition_Y = Gdx.input.getY();
@@ -69,33 +67,33 @@ public class MenuScreen extends ScreenAdapter {
 
         //If mouse hovers over the button and its being clicked, start the game
         if (buttonIsHovered(startButton, input)) {
-            gameRunner.batch.draw(startButtonActive.getButtonTexture(), startButton.getButtonX(), startButton.getButtonY());
-            gameRunner.batch.draw(exitButton.getButtonTexture(), exitButton.getButtonX(), exitButton.getButtonY());
+            GameRunner.batch.draw(startButtonActive.getButtonTexture(), startButton.getButtonX(), startButton.getButtonY());
+            GameRunner.batch.draw(exitButton.getButtonTexture(), exitButton.getButtonX(), exitButton.getButtonY());
             //If mouse is clicked - start the game
             if (Gdx.input.isTouched()) {
                 dispose();
                 gameRunner.setScreen(new GameScreen());
             }
         } else if (buttonIsHovered(exitButton, input)) {
-            gameRunner.batch.draw(exitButtonActive.getButtonTexture(), exitButton.getButtonX(), exitButton.getButtonY());
-            gameRunner.batch.draw(startButton.getButtonTexture(), startButton.getButtonX(), startButton.getButtonY());
+            GameRunner.batch.draw(exitButtonActive.getButtonTexture(), exitButton.getButtonX(), exitButton.getButtonY());
+            GameRunner.batch.draw(startButton.getButtonTexture(), startButton.getButtonX(), startButton.getButtonY());
             //If mouse is clicked - close the game
             if (Gdx.input.isTouched()) {
                 dispose();
                 Gdx.app.exit();
             }
         } else {
-            gameRunner.batch.draw(startButton.getButtonTexture(), startButton.getButtonX(), startButton.getButtonY());
-            gameRunner.batch.draw(exitButton.getButtonTexture(), exitButton.getButtonX(), exitButton.getButtonY());
+            GameRunner.batch.draw(startButton.getButtonTexture(), startButton.getButtonX(), startButton.getButtonY());
+            GameRunner.batch.draw(exitButton.getButtonTexture(), exitButton.getButtonX(), exitButton.getButtonY());
         }
-        gameRunner.batch.end();
+        GameRunner.batch.end();
     }
 
     /**
      * Checks if the button is hovered over by the mouse cursor
      *
-     * @param button
-     * @param input
+     * @param button button
+     * @param input  input
      * @return true or false
      */
     private boolean buttonIsHovered(Button button, Vector3 input) {

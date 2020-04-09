@@ -14,24 +14,21 @@ public class Button {
         this.picture = new Texture(path);
     }
 
-    public int getButtonX() {
-        return x;
-    }
-
     /**
      * Setters and Getters for button coordinates
      * x and y are the coordinates where the spritebatch should start drawing the texture
      */
-    public void setButtonX(int x) {
+    public void setButtonCoords(int x, int y) {
         this.x = x;
+        this.y = y;
+    }
+
+    public int getButtonX() {
+        return x;
     }
 
     public int getButtonY() {
         return y;
-    }
-
-    public void setButtonY(int y) {
-        this.y = y;
     }
 
     public Texture getButtonTexture() {
