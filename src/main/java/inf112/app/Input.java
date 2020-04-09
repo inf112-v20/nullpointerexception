@@ -59,8 +59,13 @@ public class Input extends InputAdapter {
                 break;
             case com.badlogic.gdx.Input.Keys.Z:
                 game.moveActors();
+                break;
             case com.badlogic.gdx.Input.Keys.X:
                 game.moveActorsByCards();
+                break;
+            case com.badlogic.gdx.Input.Keys.C:
+                game.resetActors();
+                break;
             default:
         }
         return super.keyDown(keycode);

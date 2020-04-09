@@ -173,6 +173,14 @@ public class Game {
         }
     }
 
+    public void resetActors() {
+        for (IActor actor : actors) {
+            removeActorTexture(actor);
+            actor.setPos(actor.getSpawnPoint());
+            setActorTexture(actor);
+        }
+    }
+
     /**
      * Moves player in the direction given if the player is not blocked. Resets player if player is out of board
      *
