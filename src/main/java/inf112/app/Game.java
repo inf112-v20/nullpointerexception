@@ -47,11 +47,7 @@ public class Game {
             setActorTexture(actors.get(i));
         }
 
-        Deck deck = new Deck();
-        player.setDealtCards(deck.dealCards(Math.min(9, player.getHitPoints())));
-        player.setHand();
-        deck.setDiscardPile(player.getDealtCards());
-        player.resetDealtCards();
+        dealCards();
         new Input(player, this);
     }
 
@@ -82,6 +78,21 @@ public class Game {
                 if (boardObjects.tileHasSpawn(new Position(x, y)))
                     spawnPoints.add(new Position(x, y));
             }
+        }
+    }
+
+    private void dealCards() {
+        Deck deck = new Deck();
+        player.setDealtCards(deck.dealCards(Math.min(9, player.getHitPoints())));
+        player.setHand();
+        deck.setDiscardPile(player.getDealtCards());
+        player.resetDealtCards();
+
+        for (IActor actor : actors) {
+            actor.setDealtCards(deck.dealCards(Math.min(9, actor.getHitPoints())));
+            actor.setHand();
+            deck.setDiscardPile(actor.getDealtCards());
+            actor.resetDealtCards();
         }
     }
 
@@ -157,7 +168,8 @@ public class Game {
      */
     public void moveActorsByCards() {
         for (IActor actor : actors) {
-            movedByCard(actor, actor.getCard(0).getType());
+            if (actor.getCard(0) != null)
+                movedByCard(actor, actor.getCard(0).getType());
         }
     }
 

@@ -4,7 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputAdapter;
 import inf112.app.player.Direction;
 import inf112.app.player.Player;
-import inf112.app.player.Position;
 
 public class Input extends InputAdapter {
     private Player player;
@@ -27,7 +26,6 @@ public class Input extends InputAdapter {
     @Override
     public boolean keyUp(int keycode) {
         Direction dir = player.getDirection();
-        Position pos = player.getPos();
         switch (keycode) {
             case com.badlogic.gdx.Input.Keys.RIGHT:
                 if (dir != Direction.EAST)
@@ -61,6 +59,8 @@ public class Input extends InputAdapter {
                 break;
             case com.badlogic.gdx.Input.Keys.Z:
                 game.moveActors();
+            case com.badlogic.gdx.Input.Keys.X:
+                game.moveActorsByCards();
             default:
         }
         return super.keyDown(keycode);

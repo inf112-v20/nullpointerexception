@@ -127,8 +127,8 @@ public class Actor implements IActor {
     }
 
     @Override
-    public void setDealtCards(ArrayList<Card> card) {
-        dealtCards = card;
+    public void setDealtCards(ArrayList<Card> cards) {
+        dealtCards = cards;
     }
 
     @Override
@@ -147,8 +147,7 @@ public class Actor implements IActor {
             System.out.println("No more cards");
             return null;
         }
-        Card card = hand.get(index);
-        hand.remove(index);
-        return card;
+
+        return hand.remove(index);
     }
 }
