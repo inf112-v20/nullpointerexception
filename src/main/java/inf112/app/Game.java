@@ -208,6 +208,7 @@ public class Game {
         }
 
         if (outOfBoard(newPos)) {
+            actor.loseLife();
             System.out.println("Actor respawned");
             actor.setPos(actor.getSpawnPoint());
         } else
@@ -333,5 +334,8 @@ public class Game {
 
     public int getPlayersLifeCount() {
         return player.getLifeCount();
+    }
+    public int getPlayersHitPoints() {
+        return player.getHitPoints();
     }
 }

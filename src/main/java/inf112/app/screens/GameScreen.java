@@ -26,6 +26,7 @@ public class GameScreen extends ScreenAdapter {
     private Board board;
     private Button powerdown;
     private Texture lifes;
+    private Texture health;
     private OrthographicCamera camera;
 
     public GameScreen() {
@@ -34,6 +35,7 @@ public class GameScreen extends ScreenAdapter {
         powerdown = new Button("powerdown.png");
         powerdown.setButtonCoords(0, board.getBoardHeight() * TILE_SIZE + 500);
         lifes = new Texture("life.png");
+        health = new Texture("healthpoints.png");
         camera = new OrthographicCamera();
         camera.setToOrtho(false,
                 board.getBoardWidth() * TILE_SIZE,
@@ -63,12 +65,16 @@ public class GameScreen extends ScreenAdapter {
         GameRunner.batch.setProjectionMatrix(camera.combined);
         BitmapFont font = new BitmapFont();
         int lifepoints = game.getPlayersLifeCount();
+        int healthpoints = game.getPlayersHitPoints();
         GameRunner.batch.begin();
         GameRunner.batch.draw(powerdown.getButtonTexture(), powerdown.getButtonX(), powerdown.getButtonY(), 350, 350);
-        GameRunner.batch.draw(lifes, 0, board.getBoardHeight() * TILE_SIZE + 100, 150, 150);
+        GameRunner.batch.draw(lifes, 0, board.getBoardHeight() * TILE_SIZE + 50, 150, 150);
+        GameRunner.batch.draw(health, 0, board.getBoardHeight() * TILE_SIZE + 50 + 200, 220, 220);
+
         font.getData().setScale(7, 7);
         font.setColor(Color.BLACK);
-        font.draw(GameRunner.batch, "x " + lifepoints, 150, board.getBoardHeight() * TILE_SIZE + 100 + lifes.getHeight() / 2);
+        font.draw(GameRunner.batch, "x " + lifepoints, 150, board.getBoardHeight() * TILE_SIZE + 50 + lifes.getHeight() / 2);
+        font.draw(GameRunner.batch, "x " + healthpoints, 210, board.getBoardHeight() * TILE_SIZE + 400 + health.getHeight()/2);
         GameRunner.batch.end();
 
     }

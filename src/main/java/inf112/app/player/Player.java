@@ -20,8 +20,7 @@ public class Player implements IActor {
     private int hitPoints;
     private int lifeCount;
     private boolean isDead;
-    public static int MAX_HP = 9;
-    public static int MAX_LIFE = 3;
+
 
     /**
      * Initializing default/dying/winning cells of a player.
