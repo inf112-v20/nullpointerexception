@@ -209,12 +209,19 @@ public class Game {
 
         if (outOfBoard(newPos)) {
             System.out.println("Actor respawned");
-            actor.setPos(actor.getSpawnPoint());
+            spawnActor(actor);
         } else
             actor.setPos(newPos);
 
         setActorTexture(actor);
         return true;
+    }
+
+    private void spawnActor(IActor actor) {
+        if (boardObjects.tileHasActor(actor.getSpawnPoint())) {
+            moveActor(getActor(actor.getSpawnPoint()), getActor(actor.getSpawnPoint()).getDirection());
+        }
+        actor.setPos(actor.getSpawnPoint());
     }
 
 
@@ -280,6 +287,8 @@ public class Game {
         }
         if (boardObjects.tileHasTurnWheel(actor.getPos(), actor.getDirection())) {
             System.out.println("player was turned by a turnwheel");
+            turnWheel(board.getBoardLayers().get("turnwheel").getCell(
+                    actor.getPos().getX(), actor.getPos().getY()).getTile().getId() == 53, actor);
         }
         if (boardObjects.tileHasLaser(actor.getPos())) {
             System.out.println("player is standing on a laser!");
@@ -325,6 +334,17 @@ public class Game {
             else
                 actor.setDirection(actor.getDirection().turnRight());
         }
+    }
+
+    private void turnWheel(boolean leftTurn, IActor actor) {
+        if (leftTurn) {
+            actor.setDirection(actor.getDirection().turnLeft());
+        }
+        else {
+            actor.setDirection(actor.getDirection().turnRight());
+        }
+
+
     }
 
     public Board getBoard() {
