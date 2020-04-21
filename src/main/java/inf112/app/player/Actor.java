@@ -29,6 +29,7 @@ public class Actor implements IActor {
         lifeCount = MAX_LIFE;
         actorTexture = new TiledMapTileLayer.Cell().setTile(new StaticTiledMapTile(texture));
         isDead = false;
+        onFlag = false;
 
         spawnPoint = spawn;
         currentPos = spawn;
