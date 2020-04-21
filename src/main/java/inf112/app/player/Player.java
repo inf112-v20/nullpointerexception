@@ -16,10 +16,14 @@ public class Player implements IActor {
     private Direction direction;
     private ArrayList<Card> hand;
     private ArrayList<Card> dealtCards;
+    private ArrayList<Integer> flags;
     private Position spawnPoint;
+    private int flagid;
     private int hitPoints;
     private int lifeCount;
     private boolean isDead;
+    private boolean onFlag;
+
 
     /**
      * Initializing default/dying/winning cells of a player.
@@ -34,6 +38,7 @@ public class Player implements IActor {
         lifeCount = MAX_LIFE;
         playerCell = new TiledMapTileLayer.Cell().setTile(new StaticTiledMapTile(texture));
         isDead = false;
+        onFlag = false;
 
         spawnPoint = spawn;
         currentPos = spawn;
@@ -86,6 +91,21 @@ public class Player implements IActor {
             hitPoints = MAX_HP;
             System.out.println("Player lost a life.");
         }
+    }
+    @Override
+    public boolean onFlag(){
+        return onFlag;
+    }
+
+    @Override
+    public void isOnFlag(){
+        if(onFlag = true && flags.isEmpty()){// && flag id == 1 ){
+            flags.add(flagid);
+        }
+        else if (onFlag = true && flagid > flags.lastIndexOf(flagid)){
+            flags.add(flagid);
+        }
+        else return;
     }
 
     @Override

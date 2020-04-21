@@ -16,10 +16,13 @@ public class Actor implements IActor {
     private Direction direction;
     private ArrayList<Card> hand;
     private ArrayList<Card> dealtCards;
+    private ArrayList<Integer> flags;
     private Position spawnPoint;
     private int hitPoints;
     private int lifeCount;
+    private int flagid;
     private boolean isDead;
+    private boolean onFlag;
 
     public Actor(Position spawn, TextureRegion texture) {
         hitPoints = MAX_HP;
@@ -61,6 +64,20 @@ public class Actor implements IActor {
             hitPoints = MAX_HP;
         }
 
+    }
+    @Override
+    public boolean onFlag(){
+        return onFlag;
+    }
+    @Override
+    public void isOnFlag(){
+        if(onFlag = true && flags.isEmpty()){// && flag id == 1 ){
+            flags.add(flagid);
+        }
+        else if (onFlag = true && flagid > flags.lastIndexOf(flagid)){
+            flags.add(flagid);
+        }
+        else return;
     }
 
     @Override
