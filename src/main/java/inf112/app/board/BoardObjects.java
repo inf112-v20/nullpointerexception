@@ -66,7 +66,7 @@ public class BoardObjects {
      */
     public boolean tileHasSpawn(Position pos) {
         return board.get("spawn").getCell(pos.getX(), pos.getY()) != null;
-    }
+    }                   
 
     /**
      * Returns true if the tile has a wheel.

@@ -37,6 +37,7 @@ public class Game {
 
         robotTextures();
         spawnPoints();
+        flags();
 
         actors = new ArrayList<>();
 

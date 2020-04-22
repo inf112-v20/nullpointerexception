@@ -16,8 +16,9 @@ public class Player implements IActor {
     private Direction direction;
     private ArrayList<Card> hand;
     private ArrayList<Card> dealtCards;
-    private ArrayList<Integer> flags;
+    private ArrayList<Integer> flagList;
     private Position spawnPoint;
+    private Position flags;
     private int flagid;
     private int hitPoints;
     private int lifeCount;
@@ -98,14 +99,13 @@ public class Player implements IActor {
     }
 
     @Override
-    public void isOnFlag(){
-        if(onFlag = true && flags.isEmpty()){// && flag id == 1 ){
-            flags.add(flagid);
+    public void isOnFlag(Position flags){
+        if(onFlag = true && flagList.isEmpty() && flags.equals(55)){// && flag id == 1 ){
+            flagList.add(flagid);
         }
-        else if (onFlag = true && flagid > flags.lastIndexOf(flagid)){
-            flags.add(flagid);
+        else if (onFlag = true && flagid > flagList.lastIndexOf(flagid)){
+            flagList.add(flagid);
         }
-        else return;
     }
 
     @Override
