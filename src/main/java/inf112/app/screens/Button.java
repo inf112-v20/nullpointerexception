@@ -1,6 +1,7 @@
 package inf112.app.screens;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.math.Vector3;
 
 public class Button {
     /**
@@ -33,5 +34,15 @@ public class Button {
 
     public Texture getButtonTexture() {
         return picture;
+    }
+
+    /**
+     * Checks if the button is hovered over by the mouse cursor
+     * @param input  input
+     * @return true or false
+     */
+    public boolean buttonIsHovered(Vector3 input) {
+        return input.x < this.getButtonX() + this.getButtonTexture().getWidth() && input.x > this.getButtonX()
+                && input.y < this.getButtonY() + this.getButtonTexture().getHeight() && input.y > this.getButtonY();
     }
 }

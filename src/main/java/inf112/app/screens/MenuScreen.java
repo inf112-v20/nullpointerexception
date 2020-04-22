@@ -66,7 +66,7 @@ public class MenuScreen extends ScreenAdapter {
         camera.unproject(input);
 
         //If mouse hovers over the button and its being clicked, start the game
-        if (buttonIsHovered(startButton, input)) {
+        if (startButton.buttonIsHovered(input)) {
             GameRunner.batch.draw(startButtonActive.getButtonTexture(), startButton.getButtonX(), startButton.getButtonY());
             GameRunner.batch.draw(exitButton.getButtonTexture(), exitButton.getButtonX(), exitButton.getButtonY());
             //If mouse is clicked - start the game
@@ -74,7 +74,7 @@ public class MenuScreen extends ScreenAdapter {
                 dispose();
                 gameRunner.setScreen(new GameScreen());
             }
-        } else if (buttonIsHovered(exitButton, input)) {
+        } else if (exitButton.buttonIsHovered(input)) {
             GameRunner.batch.draw(exitButtonActive.getButtonTexture(), exitButton.getButtonX(), exitButton.getButtonY());
             GameRunner.batch.draw(startButton.getButtonTexture(), startButton.getButtonX(), startButton.getButtonY());
             //If mouse is clicked - close the game
@@ -87,18 +87,6 @@ public class MenuScreen extends ScreenAdapter {
             GameRunner.batch.draw(exitButton.getButtonTexture(), exitButton.getButtonX(), exitButton.getButtonY());
         }
         GameRunner.batch.end();
-    }
-
-    /**
-     * Checks if the button is hovered over by the mouse cursor
-     *
-     * @param button button
-     * @param input  input
-     * @return true or false
-     */
-    private boolean buttonIsHovered(Button button, Vector3 input) {
-        return input.x < button.getButtonX() + button.getButtonTexture().getWidth() && input.x > button.getButtonX()
-                && input.y < button.getButtonY() + button.getButtonTexture().getHeight() && input.y > button.getButtonY();
     }
 
 
