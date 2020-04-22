@@ -120,7 +120,7 @@ public interface IActor {
      */
     void loseLife();
 
-    void isOnFlag();
+    void isOnFlag(Integer tileID);
 
     /**
      * Returns whether or not the player is dead

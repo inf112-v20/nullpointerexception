@@ -6,6 +6,7 @@ import com.badlogic.gdx.maps.tiled.tiles.StaticTiledMapTile;
 import inf112.app.Card;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 public class Actor implements IActor {
 
@@ -16,11 +17,12 @@ public class Actor implements IActor {
     private Direction direction;
     private ArrayList<Card> hand;
     private ArrayList<Card> dealtCards;
-    private ArrayList<Integer> flags;
+    private ArrayList<Integer> flagList;
+    private Map<Integer,Position> flagMap;
+    private ArrayList<Integer> flagIDList;
     private Position spawnPoint;
     private int hitPoints;
     private int lifeCount;
-    private int flagid;
     private boolean isDead;
     private boolean onFlag;
 
@@ -31,6 +33,7 @@ public class Actor implements IActor {
         isDead = false;
         onFlag = false;
 
+        flagIDList.addAll(flagMap.keySet());
         spawnPoint = spawn;
         currentPos = spawn;
         setDirection(Direction.EAST);
@@ -71,14 +74,14 @@ public class Actor implements IActor {
         return onFlag;
     }
     @Override
-    public void isOnFlag(){
-        if(onFlag = true && flags.isEmpty()){// && flag id == 1 ){
-            flags.add(flagid);
+    public void isOnFlag(Integer tileID){
+        Map<Integer, Position> flagIntegers;
+        if(onFlag && flagList.isEmpty() && tileID.equals(flagIDList.get(0))){
+            flagList.add(tileID);
         }
-        else if (onFlag = true && flagid > flags.lastIndexOf(flagid)){
-            flags.add(flagid);
+        else if (onFlag && tileID.compareTo(flagList.size()-1) == -1){
+            flagList.add(tileID);
         }
-        else return;
     }
 
     @Override

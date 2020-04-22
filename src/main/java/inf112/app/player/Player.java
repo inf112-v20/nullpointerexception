@@ -4,8 +4,12 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.tiles.StaticTiledMapTile;
 import inf112.app.Card;
+import sun.jvm.hotspot.runtime.Flags;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Map;
+import java.util.Set;
 
 
 public class Player implements IActor {
@@ -18,8 +22,8 @@ public class Player implements IActor {
     private ArrayList<Card> dealtCards;
     private ArrayList<Integer> flagList;
     private Position spawnPoint;
-    private Position flags;
-    private int flagid;
+    private Map<Integer,Position> flagMap;
+    private ArrayList<Integer> flagIDList;
     private int hitPoints;
     private int lifeCount;
     private boolean isDead;
@@ -34,9 +38,12 @@ public class Player implements IActor {
      * @param spawn   spawn point of the player
      * @param texture texture of player
      */
-    public Player(Position spawn, TextureRegion texture) {
+    public Player(Position spawn, TextureRegion texture, Map<Integer,Position> flagMap) {
         hitPoints = MAX_HP;
         lifeCount = MAX_LIFE;
+
+        flagIDList.addAll(flagMap.keySet());
+        Collections.sort(flagIDList);
         playerCell = new TiledMapTileLayer.Cell().setTile(new StaticTiledMapTile(texture));
         isDead = false;
         onFlag = false;
@@ -99,12 +106,13 @@ public class Player implements IActor {
     }
 
     @Override
-    public void isOnFlag(Position flags){
-        if(onFlag = true && flagList.isEmpty() && flags.equals(55)){// && flag id == 1 ){
-            flagList.add(flagid);
+    public void isOnFlag(Integer tileID){
+        Map<Integer, Position> flagIntegers;
+        if(onFlag && flagList.isEmpty() && tileID.equals(flagIDList.get(0))){
+            flagList.add(tileID);
         }
-        else if (onFlag = true && flagid > flagList.lastIndexOf(flagid)){
-            flagList.add(flagid);
+        else if (onFlag && tileID.compareTo(flagList.size()-1) == -1){
+            flagList.add(tileID);
         }
     }
 

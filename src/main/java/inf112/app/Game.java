@@ -38,7 +38,7 @@ public class Game {
 
         actors = new ArrayList<>();
 
-        player = new Player(spawnPoints.remove(0), robotTextures.remove(4));
+        player = new Player(spawnPoints.remove(0), robotTextures.remove(4), flags);
         setActorTexture(player);
 
         int activeActors = 7;
