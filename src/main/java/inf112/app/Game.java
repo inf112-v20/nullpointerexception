@@ -9,18 +9,20 @@ import inf112.app.player.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 public class Game {
     public static final float TILE_SIZE = 300;
 
-    private Board board;
-    private BoardObjects boardObjects;
+    private final Board board;
+    private final BoardObjects boardObjects;
 
-    private Player player;
-    private ArrayList<IActor> actors;
+    private final Player player;
+    private final ArrayList<IActor> actors;
 
     private List<TextureRegion> robotTextures;
     private ArrayList<Position> spawnPoints;
+    private Map<Integer, Position> flags;
 
     /**
      * Initializing a board, camera, renderer and player in addition to creating the needed TiledMap layers.
@@ -77,6 +79,17 @@ public class Game {
             for (int y = 0; y < board.getBoardHeight(); y++) {
                 if (boardObjects.tileHasSpawn(new Position(x, y)))
                     spawnPoints.add(new Position(x, y));
+            }
+        }
+    }
+
+    private void flags() {
+        for (int x = 0; x < board.getBoardWidth(); x++) {
+            for (int y = 0; y < board.getBoardHeight(); y++) {
+                if (boardObjects.tileHasFlag(new Position(x, y))) {
+                    Integer flagID = board.getBoardLayers().get("flag").getCell(x, y).getTile().getId();
+                    flags.put(flagID, new Position(x, y));
+                }
             }
         }
     }
