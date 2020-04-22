@@ -6,10 +6,7 @@ import inf112.app.board.Board;
 import inf112.app.board.BoardObjects;
 import inf112.app.player.*;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class Game {
     public static final float TILE_SIZE = 300;
@@ -85,6 +82,7 @@ public class Game {
     }
 
     private void flags() {
+        flags = new HashMap<>();
         for (int x = 0; x < board.getBoardWidth(); x++) {
             for (int y = 0; y < board.getBoardHeight(); y++) {
                 if (boardObjects.tileHasFlag(new Position(x, y))) {
