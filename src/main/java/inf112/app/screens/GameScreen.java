@@ -45,6 +45,7 @@ public class GameScreen extends ScreenAdapter {
     private ArrayList<Card> dealtCards;
     private ArrayList<Button> cards = new ArrayList<>();
     private ArrayList<Button> hand = new ArrayList<>();
+
     public GameScreen() {
         game = new Game();
         board = game.getBoard();
@@ -87,7 +88,6 @@ public class GameScreen extends ScreenAdapter {
 
         renderer = new OrthogonalTiledMapRenderer(board.getBoard());
         renderer.setView(camera);
-
 
     }
 
@@ -134,7 +134,7 @@ public class GameScreen extends ScreenAdapter {
         font.draw(GameRunner.batch, "x " + lifepoints, 170, board.getBoardHeight() * TILE_SIZE + 50 + lifes.getHeight() / 2);
         font.draw(GameRunner.batch, "x " + healthpoints, 210, board.getBoardHeight() * TILE_SIZE + 400 + health.getHeight()/2);
 
-
+        setHand();
 
         /**GameRunner.batch.draw(move1.getButtonTexture(), move1.getButtonX(), move1.getButtonY(), 500, 600);
         GameRunner.batch.draw(move2.getButtonTexture(), move2.getButtonX(), move2.getButtonY(), 500, 600);
@@ -214,13 +214,21 @@ public class GameScreen extends ScreenAdapter {
         powerdown.getButtonTexture().dispose();
         lifes.dispose();
         health.dispose();
+        MOVE1.getButtonTexture().dispose();
+        MOVE2.getButtonTexture().dispose();
+        MOVE3.getButtonTexture().dispose();
+        BACKUP.getButtonTexture().dispose();
+        TURN180.getButtonTexture().dispose();
+        TURNLEFT.getButtonTexture().dispose();
+        TURNRIGHT.getButtonTexture().dispose();
         GameRunner.batch.dispose();
     }
     private void setHand(){
-        int x = powerdown.getButtonX() + powerdown.getButtonTexture().getWidth() + 500;
-        int y = board.getBoardHeight() * TILE_SIZE + 200
+        int x = powerdown.getButtonX() + powerdown.getButtonTexture().getWidth();
+        int y = board.getBoardHeight() * TILE_SIZE + 200;
+        System.out.println(dealtCards.size());
         for(Card card:dealtCards) {
-            x += 350;
+            x+= MOVE1.getButtonTexture().getWidth() + 350;
             switch (card.getType()) {
                 case MOVE1:
                     GameRunner.batch.draw(MOVE1.getButtonTexture(), x, y, 500, 600);
@@ -243,7 +251,7 @@ public class GameScreen extends ScreenAdapter {
                 case BACKUP:
                     GameRunner.batch.draw(BACKUP.getButtonTexture(), x, y, 500, 600);
                     break;
-            }
+                }
         }
         /**while(dealtCards.size() > 3){
 

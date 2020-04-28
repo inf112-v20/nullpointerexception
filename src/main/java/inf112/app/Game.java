@@ -86,7 +86,7 @@ public class Game {
         player.setDealtCards(deck.dealCards(Math.min(9, player.getHitPoints())));
         player.setHand();
         deck.setDiscardPile(player.getDealtCards());
-        player.resetDealtCards();
+        //player.resetDealtCards();
 
         for (IActor actor : actors) {
             actor.setDealtCards(deck.dealCards(Math.min(9, actor.getHitPoints())));
