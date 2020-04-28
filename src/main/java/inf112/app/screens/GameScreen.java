@@ -13,6 +13,8 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import inf112.app.Card;
+import inf112.app.Game;
 import inf112.app.board.Board;
 
 import java.util.ArrayList;
@@ -31,58 +33,58 @@ public class GameScreen extends ScreenAdapter {
     private Texture lifes;
     private Texture health;
 
-    private Button move1;
-    private Button move2;
-    private Button move3;
-    private Button right_turn;
-    private Button left_turn;
-    private Button backup;
-    private Button turn_180;
-    private Button powerup;
+    private Button MOVE1;
+    private Button MOVE2;
+    private Button MOVE3;
+    private Button TURNRIGHT;
+    private Button TURNLEFT;
+    private Button BACKUP;
+    private Button TURN180;
 
     private OrthographicCamera camera;
-
-    private ArrayList<Button> dealtCards = new ArrayList<>();
+    private ArrayList<Card> dealtCards;
+    private ArrayList<Button> cards = new ArrayList<>();
     private ArrayList<Button> hand = new ArrayList<>();
     public GameScreen() {
-        game = new inf112.app.Game();
+        game = new Game();
         board = game.getBoard();
+        dealtCards = game.getPlayersDealtCards();
         powerdown = new Button("powerdown.png");
         powerdown.setButtonCoords(0, board.getBoardHeight() * TILE_SIZE + 500);
         lifes = new Texture("life.png");
         health = new Texture("healthpoints.png");
 
-        move1 = new Button("cards/move1_card.png");
-        move1.setButtonCoords(powerdown.getButtonX() + powerdown.getButtonTexture().getWidth() + 500, board.getBoardHeight() * TILE_SIZE + 200);
-        dealtCards.add(move1);
+        MOVE1 = new Button("cards/move1_card.png");
+        MOVE1.setButtonCoords(powerdown.getButtonX() + powerdown.getButtonTexture().getWidth() + 500, board.getBoardHeight() * TILE_SIZE + 200);
+        cards.add(MOVE1);
 
-        move2= new Button("cards/move2_card.png");
-        move2.setButtonCoords(move1.getButtonX() + move1.getButtonTexture().getWidth() + 340, board.getBoardHeight() * TILE_SIZE + 200);
-        dealtCards.add(move2);
+        MOVE2= new Button("cards/move2_card.png");
+        MOVE2.setButtonCoords(MOVE1.getButtonX() + MOVE1.getButtonTexture().getWidth() + 340, board.getBoardHeight() * TILE_SIZE + 200);
+        cards.add(MOVE2);
 
-        move3= new Button("cards/move3_card.png");
-        move3.setButtonCoords(move2.getButtonX() + move2.getButtonTexture().getWidth()+ 340, board.getBoardHeight() * TILE_SIZE + 200);
-        dealtCards.add(move3);
+        MOVE3= new Button("cards/move3_card.png");
+        MOVE3.setButtonCoords(MOVE2.getButtonX() + MOVE2.getButtonTexture().getWidth()+ 340, board.getBoardHeight() * TILE_SIZE + 200);
+        cards.add(MOVE3);
 
-        right_turn= new Button("cards/right_turn_card.jpg");
-        right_turn.setButtonCoords(move3.getButtonX() + move3.getButtonTexture().getWidth()+ 340, board.getBoardHeight() * TILE_SIZE + 200);
-        dealtCards.add(right_turn);
+        TURNRIGHT= new Button("cards/right_turn_card.jpg");
+        TURNRIGHT.setButtonCoords(MOVE3.getButtonX() + MOVE3.getButtonTexture().getWidth()+ 340, board.getBoardHeight() * TILE_SIZE + 200);
+        cards.add(TURNRIGHT);
 
-        left_turn= new Button("cards/left_turn_card.jpg");
-        left_turn.setButtonCoords(right_turn.getButtonX() + right_turn.getButtonTexture().getWidth()+ 340, board.getBoardHeight() * TILE_SIZE + 200);
-        dealtCards.add(left_turn);
+        TURNLEFT= new Button("cards/left_turn_card.jpg");
+        TURNLEFT.setButtonCoords(TURNRIGHT.getButtonX() + TURNRIGHT.getButtonTexture().getWidth()+ 340, board.getBoardHeight() * TILE_SIZE + 200);
+        cards.add(TURNLEFT);
 
-        backup= new Button("cards/backup_card.jpg");
-        backup.setButtonCoords(left_turn.getButtonX() + left_turn.getButtonTexture().getWidth()+ 340, board.getBoardHeight() * TILE_SIZE + 200);
-        dealtCards.add(backup);
+        BACKUP= new Button("cards/backup_card.jpg");
+        BACKUP.setButtonCoords(TURNLEFT.getButtonX() + TURNLEFT.getButtonTexture().getWidth()+ 340, board.getBoardHeight() * TILE_SIZE + 200);
+        cards.add(BACKUP);
 
-        turn_180= new Button("cards/180_turn_card.jpg");
-        turn_180.setButtonCoords(backup.getButtonX() + backup.getButtonTexture().getWidth()+ 340, board.getBoardHeight() * TILE_SIZE + 200);
-        dealtCards.add(turn_180);
+        TURN180= new Button("cards/180_turn_card.jpg");
+        TURN180.setButtonCoords(MOVE1.getButtonX() + MOVE1.getButtonTexture().getWidth()+ 340, board.getBoardHeight() * TILE_SIZE + 200);
+        cards.add(TURN180);
 
-        powerup= new Button("cards/powerup_card.jpg");
+        /**powerup= new Button("cards/powerup_card.jpg");
         powerup.setButtonCoords(turn_180.getButtonX() + turn_180.getButtonTexture().getWidth()+ 340, board.getBoardHeight() * TILE_SIZE + 200);
-        dealtCards.add(powerup);
+        cards.add(powerup);**/
 
         camera = new OrthographicCamera();
         camera.setToOrtho(false,
@@ -134,18 +136,37 @@ public class GameScreen extends ScreenAdapter {
         GameRunner.batch.draw(powerdown.getButtonTexture(), powerdown.getButtonX(), powerdown.getButtonY(), 350, 350);
         GameRunner.batch.draw(lifes, 20, board.getBoardHeight() * TILE_SIZE + 50, 150, 150);
         GameRunner.batch.draw(health, 0, board.getBoardHeight() * TILE_SIZE + 50 + 200, 220, 220);
+        font.getData().setScale(7, 7);
+        font.setColor(Color.BLACK);
+        font.draw(GameRunner.batch, "x " + lifepoints, 170, board.getBoardHeight() * TILE_SIZE + 50 + lifes.getHeight() / 2);
+        font.draw(GameRunner.batch, "x " + healthpoints, 210, board.getBoardHeight() * TILE_SIZE + 400 + health.getHeight()/2);
 
-        for(Button button:dealtCards) {
-            if (button.buttonIsHovered(input)) {
-                if (Gdx.input.isTouched()) {
-                    hand.add(button);
-                    System.out.println("A card has been added");
-                    //dealtCards.remove(button);
-                }
-            } else {
-                GameRunner.batch.draw(button.getButtonTexture(), button.getButtonX(), button.getButtonY(), 500, 600);
+        for(Card card:dealtCards) {
+            switch (card.getType()) {
+                case MOVE1:
+                    GameRunner.batch.draw(MOVE1.getButtonTexture(), MOVE1.getButtonX(), MOVE1.getButtonY(), 500, 600);
+                    break;
+                case MOVE2:
+                    GameRunner.batch.draw(MOVE2.getButtonTexture(), MOVE2.getButtonX(), MOVE2.getButtonY(), 500, 600);
+                    break;
+                case MOVE3:
+                    GameRunner.batch.draw(MOVE3.getButtonTexture(), MOVE3.getButtonX(), MOVE3.getButtonY(), 500, 600);
+                    break;
+                case TURN180:
+                    GameRunner.batch.draw(TURN180.getButtonTexture(), TURN180.getButtonX(), TURN180.getButtonY(), 500, 600);
+                    break;
+                case TURNLEFT:
+                    GameRunner.batch.draw(TURNLEFT.getButtonTexture(), TURNLEFT.getButtonX(), TURNLEFT.getButtonY(), 500, 600);
+                    break;
+                case TURNRIGHT:
+                    GameRunner.batch.draw(TURNRIGHT.getButtonTexture(), TURNRIGHT.getButtonX(), TURNRIGHT.getButtonY(), 500, 600);
+                    break;
+                case BACKUP:
+                    GameRunner.batch.draw(BACKUP.getButtonTexture(), BACKUP.getButtonX(), BACKUP.getButtonY(), 500, 600);
+                    break;
             }
         }
+
         /**GameRunner.batch.draw(move1.getButtonTexture(), move1.getButtonX(), move1.getButtonY(), 500, 600);
         GameRunner.batch.draw(move2.getButtonTexture(), move2.getButtonX(), move2.getButtonY(), 500, 600);
         GameRunner.batch.draw(move3.getButtonTexture(), move3.getButtonX(), move3.getButtonY(), 500, 600);
@@ -155,10 +176,7 @@ public class GameScreen extends ScreenAdapter {
         GameRunner.batch.draw(backup.getButtonTexture(), backup.getButtonX(), backup.getButtonY(), 500, 600);
         GameRunner.batch.draw(powerup.getButtonTexture(), powerup.getButtonX(), powerup.getButtonY(), 500, 600);**/
 
-        font.getData().setScale(7, 7);
-        font.setColor(Color.BLACK);
-        font.draw(GameRunner.batch, "x " + lifepoints, 170, board.getBoardHeight() * TILE_SIZE + 50 + lifes.getHeight() / 2);
-        font.draw(GameRunner.batch, "x " + healthpoints, 210, board.getBoardHeight() * TILE_SIZE + 400 + health.getHeight()/2);
+
 
         /**while(hand.size() < 5) {
             /**for(Button button : dealtCards) {
@@ -224,7 +242,18 @@ public class GameScreen extends ScreenAdapter {
     @Override
     public void dispose() {
         renderer.dispose();
+        powerdown.getButtonTexture().dispose();
+        lifes.dispose();
+        health.dispose();
         GameRunner.batch.dispose();
     }
+    /**private void setHand(){
+        while(dealtCards.size() > 3){
+
+        }
+    }**/
+
+
+
 
 }

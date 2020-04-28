@@ -48,7 +48,7 @@ public class Game {
         }
 
         dealCards();
-        new Input(player, this);
+        //new Input(player, this);
     }
 
 
@@ -337,5 +337,9 @@ public class Game {
     }
     public int getPlayersHitPoints() {
         return player.getHitPoints();
+    }
+
+    public ArrayList<Card> getPlayersDealtCards() {
+        return player.getDealtCards();
     }
 }
