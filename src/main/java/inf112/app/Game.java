@@ -50,7 +50,7 @@ public class Game {
         }
 
         dealCards();
-        new Input(player, this);
+        //new Input(player, this);
     }
 
 
@@ -347,5 +347,8 @@ public class Game {
 
     public Deck getDeckObject() {
         return deck;
+    }
+    public Player getPlayerObject(){
+        return player;
     }
 }

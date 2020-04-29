@@ -17,6 +17,7 @@ import inf112.app.Card;
 import inf112.app.Deck;
 import inf112.app.Game;
 import inf112.app.board.Board;
+import inf112.app.player.Player;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -49,6 +50,8 @@ public class GameScreen extends ScreenAdapter {
     private HashMap<Button,Card> cards;
 
     private Deck deck;
+    private boolean roundStart = false;
+    private Player player;
 
     public GameScreen() {
         game = new Game();
@@ -60,8 +63,8 @@ public class GameScreen extends ScreenAdapter {
         health = new Texture("healthpoints.png");
         yPriority = board.getBoardHeight() * TILE_SIZE + 800;
         yCard = board.getBoardHeight() * TILE_SIZE + 200;
-        cards = new HashMap<>();
         deck = game.getDeckObject();
+        player = game.getPlayerObject();
 
         camera = new OrthographicCamera();
         camera.setToOrtho(false,
@@ -119,9 +122,9 @@ public class GameScreen extends ScreenAdapter {
         font.draw(GameRunner.batch, "x " + lifepoints, 170, board.getBoardHeight() * TILE_SIZE + 50 + lifes.getHeight() / 2);
         font.draw(GameRunner.batch, "x " + healthpoints, 210, board.getBoardHeight() * TILE_SIZE + 400 + health.getHeight()/2);
 
-        displayDealtCards();
 
         if(hand.size() < 5) {
+            displayCards();
             for(Button button : cards.keySet()) {
                 if (button.buttonIsHovered(input)) {
                     if (Gdx.input.justTouched()) {
@@ -136,7 +139,10 @@ public class GameScreen extends ScreenAdapter {
                 }
             }
         } else {
-
+            deck.setDiscardPile(dealtCards);
+            roundStart = true;
+            round();
+            displayCards();
         }
         GameRunner.batch.end();
 
@@ -171,6 +177,7 @@ public class GameScreen extends ScreenAdapter {
         GameRunner.batch.dispose();
     }
     private void drawDealtCards(){
+        cards = new HashMap<>();
         int x = powerdown.getButtonX() + 300;
            //ArrayList<Card> copy = new ArrayList<Card>(dealtCards);
             for(Card card : dealtCards) {
@@ -214,16 +221,108 @@ public class GameScreen extends ScreenAdapter {
                 }
         }
     }
-    private void displayDealtCards(){
+    private void displayCards(){
         for(Button button : cards.keySet()) {
             GameRunner.batch.draw(button.getButtonTexture(), button.getButtonX(), button.getButtonY(), 390, 490);
             font.draw(GameRunner.batch, "" + cards.get(button).getPriority(), button.getButtonX() + 100, yPriority);
         }
     }
 
-    private void displayHand(){
-        
+    private void drawHand(){
+        cards = new HashMap<Button,Card>();
+        int x = powerdown.getButtonX() + 300;
+        for(Card card:hand){
+            x += 450;
+            switch (card.getType()) {
+                case MOVE1:
+                    MOVE1 = new Button("cards/move1_card.png");
+                    MOVE1.setButtonCoords(x, yCard);
+                    cards.put(MOVE1,card);
+                    break;
+                case MOVE2:
+                    MOVE2 = new Button("cards/move2_card.png");
+                    MOVE2.setButtonCoords(x, yCard);
+                    cards.put(MOVE2,card);
+                    break;
+                case MOVE3:
+                    MOVE3 = new Button("cards/move3_card.png");
+                    MOVE3.setButtonCoords(x, yCard);
+                    cards.put(MOVE3,card);
+                    break;
+                case TURN180:
+                    TURN180 = new Button("cards/180_turn_card.jpg");
+                    TURN180.setButtonCoords(x, yCard);
+                    cards.put(TURN180,card);
+                    break;
+                case TURNLEFT:
+                    TURNLEFT = new Button("cards/left_turn_card.jpg");
+                    TURNLEFT.setButtonCoords(x, yCard);
+                    cards.put(TURNLEFT,card);
+                    break;
+                case TURNRIGHT:
+                    TURNRIGHT = new Button("cards/right_turn_card.jpg");
+                    TURNRIGHT.setButtonCoords(x, yCard);
+                    cards.put(TURNRIGHT,card);
+                    break;
+                case BACKUP:
+                    BACKUP = new Button("cards/backup_card.jpg");
+                    BACKUP.setButtonCoords(x, yCard);
+                    cards.put(BACKUP,card);
+                    break;
+            }
+        }
     }
-
+    private void round(){
+        while(roundStart){
+            drawHand();
+            game.movedByCard(player,hand.get(0).getType());
+            hand.remove(0);
+            roundStart = false;
+            }
+        }
+    }
+    /**private void drawCards(ArrayList<Card> cards){
+        int x = powerdown.getButtonX() + 300;
+        for(Card card:cards){
+            x += 450;
+            switch (card.getType()) {
+                case MOVE1:
+                    MOVE1 = new Button("cards/move1_card.png");
+                    MOVE1.setButtonCoords(x, yCard);
+                    cards.put(MOVE1,card);
+                    break;
+                case MOVE2:
+                    MOVE2 = new Button("cards/move2_card.png");
+                    MOVE2.setButtonCoords(x, yCard);
+                    cards.put(MOVE2,card);
+                    break;
+                case MOVE3:
+                    MOVE3 = new Button("cards/move3_card.png");
+                    MOVE3.setButtonCoords(x, yCard);
+                    cards.put(MOVE3,card);
+                    break;
+                case TURN180:
+                    TURN180 = new Button("cards/180_turn_card.jpg");
+                    TURN180.setButtonCoords(x, yCard);
+                    cards.put(TURN180,card);
+                    break;
+                case TURNLEFT:
+                    TURNLEFT = new Button("cards/left_turn_card.jpg");
+                    TURNLEFT.setButtonCoords(x, yCard);
+                    cards.put(TURNLEFT,card);
+                    break;
+                case TURNRIGHT:
+                    TURNRIGHT = new Button("cards/right_turn_card.jpg");
+                    TURNRIGHT.setButtonCoords(x, yCard);
+                    cards.put(TURNRIGHT,card);
+                    break;
+                case BACKUP:
+                    BACKUP = new Button("cards/backup_card.jpg");
+                    BACKUP.setButtonCoords(x, yCard);
+                    cards.put(BACKUP,card);
+                    break;
+            }
+        }
+    }**/
 
 }
