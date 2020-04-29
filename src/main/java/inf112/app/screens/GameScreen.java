@@ -280,7 +280,7 @@ public class GameScreen extends ScreenAdapter {
             roundStart = false;
             }
         }
-    }
+
     /**private void drawCards(ArrayList<Card> cards){
         int x = powerdown.getButtonX() + 300;
         for(Card card:cards){
