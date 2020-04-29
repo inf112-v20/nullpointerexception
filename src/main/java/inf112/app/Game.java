@@ -50,7 +50,7 @@ public class Game {
         }
 
         dealCards();
-        //new Input(player, this);
+        new Input(player, this);
     }
 
 

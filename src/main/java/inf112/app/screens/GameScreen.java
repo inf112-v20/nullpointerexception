@@ -122,7 +122,7 @@ public class GameScreen extends ScreenAdapter {
         font.draw(GameRunner.batch, "x " + lifepoints, 170, board.getBoardHeight() * TILE_SIZE + 50 + lifes.getHeight() / 2);
         font.draw(GameRunner.batch, "x " + healthpoints, 210, board.getBoardHeight() * TILE_SIZE + 400 + health.getHeight()/2);
 
-
+        //Her velger man 5 kort, trykk på venstre-nedre hjørne av kortet for å velge
         if(hand.size() < 5) {
             displayCards();
             for(Button button : cards.keySet()) {
@@ -191,6 +191,9 @@ public class GameScreen extends ScreenAdapter {
         drawCards(hand);
     }
 
+    /**
+     * Method takes the first card out of hand and makes the move.
+     */
     private void round(){
         while(roundStart){
             drawHand();
