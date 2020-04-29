@@ -224,36 +224,36 @@ public class GameScreen extends ScreenAdapter {
         GameRunner.batch.dispose();
     }
     private void setHand(){
-        int x = powerdown.getButtonX() + powerdown.getButtonTexture().getWidth();
+        int x = powerdown.getButtonX() + 300;
         int y = board.getBoardHeight() * TILE_SIZE + 200;
         System.out.println(dealtCards.size());
         for(Card card:dealtCards) {
-            x+= MOVE1.getButtonTexture().getWidth() + 350;
+            x+= MOVE1.getButtonTexture().getWidth() + 250;
             switch (card.getType()) {
                 case MOVE1:
-                    GameRunner.batch.draw(MOVE1.getButtonTexture(), x, y, 500, 600);
+                    GameRunner.batch.draw(MOVE1.getButtonTexture(), x, y, 390, 490);
                     break;
                 case MOVE2:
-                    GameRunner.batch.draw(MOVE2.getButtonTexture(), x, y, 500, 600);
+                    GameRunner.batch.draw(MOVE2.getButtonTexture(), x, y, 390, 490);
                     break;
                 case MOVE3:
-                    GameRunner.batch.draw(MOVE3.getButtonTexture(), x, y, 500, 600);
+                    GameRunner.batch.draw(MOVE3.getButtonTexture(), x, y, 390, 490);
                     break;
                 case TURN180:
-                    GameRunner.batch.draw(TURN180.getButtonTexture(), x, y, 500, 600);
+                    GameRunner.batch.draw(TURN180.getButtonTexture(), x, y, 390, 490);
                     break;
                 case TURNLEFT:
-                    GameRunner.batch.draw(TURNLEFT.getButtonTexture(), x, y, 500, 600);
+                    GameRunner.batch.draw(TURNLEFT.getButtonTexture(), x, y, 390, 490);
                     break;
                 case TURNRIGHT:
-                    GameRunner.batch.draw(TURNRIGHT.getButtonTexture(), x, y, 500, 600);
+                    GameRunner.batch.draw(TURNRIGHT.getButtonTexture(), x, y, 390, 490);
                     break;
                 case BACKUP:
-                    GameRunner.batch.draw(BACKUP.getButtonTexture(), x, y, 500, 600);
+                    GameRunner.batch.draw(BACKUP.getButtonTexture(), x, y, 390, 490);
                     break;
                 }
         }
-        /**while(dealtCards.size() > 3){
+        /**while(dealtCards.size() > 4){
 
         }**/
     }
