@@ -18,6 +18,7 @@ import inf112.app.Game;
 import inf112.app.board.Board;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class GameScreen extends ScreenAdapter {
 
@@ -198,18 +199,18 @@ public class GameScreen extends ScreenAdapter {
     }
     private void displayDealtCards(){
         int x = powerdown.getButtonX() + 300;
-        int n = dealtCards.size();
-        if(!dealtCards.isEmpty()) {
-            for (int i = 0; i<n; i++) {
+        if(dealtCards.size() == 9) {
+           ArrayList<Card> copy = new ArrayList<Card>(dealtCards);
+            for(Card card : copy) {
                 x += 450;
-                switch (dealtCards.get(i).getType()) {
+                switch (card.getType()) {
                     case MOVE1:
                         MOVE1 = new Button("cards/move1_card.png");
                         MOVE1.setButtonCoords(x, yCard);
                         cards.add(MOVE1);
                         GameRunner.batch.draw(MOVE1.getButtonTexture(), x, yCard, 390, 490);
-                        font.draw(GameRunner.batch, "" + dealtCards.get(i).getPriority(), x + 100, yPriority);
-                        dealtCards.remove(dealtCards.get(i));
+                        font.draw(GameRunner.batch, "" + card.getPriority(), x + 100, yPriority);
+                        dealtCards.remove(card);
                         break;
                     case MOVE2:
                         MOVE2 = new Button("cards/move2_card.png");
