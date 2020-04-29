@@ -16,6 +16,8 @@ public class Game {
     private Board board;
     private BoardObjects boardObjects;
 
+    private Deck deck;
+
     private Player player;
     private ArrayList<IActor> actors;
 
@@ -82,7 +84,7 @@ public class Game {
     }
 
     private void dealCards() {
-        Deck deck = new Deck();
+        deck = new Deck();
         player.setDealtCards(deck.dealCards(Math.min(9, player.getHitPoints())));
         //player.setHand();
         //deck.setDiscardPile(player.getDealtCards());
@@ -341,5 +343,9 @@ public class Game {
 
     public ArrayList<Card> getPlayersDealtCards() {
         return player.getDealtCards();
+    }
+
+    public Deck getDeckObject() {
+        return deck;
     }
 }

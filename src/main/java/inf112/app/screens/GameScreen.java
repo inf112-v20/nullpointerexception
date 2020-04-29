@@ -14,6 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import inf112.app.Card;
+import inf112.app.Deck;
 import inf112.app.Game;
 import inf112.app.board.Board;
 
@@ -47,6 +48,8 @@ public class GameScreen extends ScreenAdapter {
     private BitmapFont font = new BitmapFont();
     private HashMap<Button,Card> cards;
 
+    private Deck deck;
+
     public GameScreen() {
         game = new Game();
         board = game.getBoard();
@@ -58,6 +61,7 @@ public class GameScreen extends ScreenAdapter {
         yPriority = board.getBoardHeight() * TILE_SIZE + 800;
         yCard = board.getBoardHeight() * TILE_SIZE + 200;
         cards = new HashMap<>();
+        deck = game.getDeckObject();
 
         camera = new OrthographicCamera();
         camera.setToOrtho(false,
@@ -123,6 +127,7 @@ public class GameScreen extends ScreenAdapter {
                     if (Gdx.input.justTouched()) {
                         if(!hand.contains(cards.get(button))) {
                             hand.add(cards.get(button));
+                            dealtCards.remove(cards.get(button));
                             System.out.println("A card has been added to the hand");
                             String c = cards.get(button).toString();
                             System.out.println(c);
@@ -130,9 +135,9 @@ public class GameScreen extends ScreenAdapter {
                     }
                 }
             }
+        } else {
+
         }
-
-
         GameRunner.batch.end();
 
     }
@@ -167,51 +172,44 @@ public class GameScreen extends ScreenAdapter {
     }
     private void drawDealtCards(){
         int x = powerdown.getButtonX() + 300;
-           ArrayList<Card> copy = new ArrayList<Card>(dealtCards);
-            for(Card card : copy) {
+           //ArrayList<Card> copy = new ArrayList<Card>(dealtCards);
+            for(Card card : dealtCards) {
                 x += 450;
                 switch (card.getType()) {
                     case MOVE1:
                         MOVE1 = new Button("cards/move1_card.png");
                         MOVE1.setButtonCoords(x, yCard);
                         cards.put(MOVE1,card);
-                        dealtCards.remove(card);
                         break;
                     case MOVE2:
                         MOVE2 = new Button("cards/move2_card.png");
                         MOVE2.setButtonCoords(x, yCard);
                         cards.put(MOVE2,card);
-                        dealtCards.remove(card);
                         break;
                     case MOVE3:
                         MOVE3 = new Button("cards/move3_card.png");
                         MOVE3.setButtonCoords(x, yCard);
                         cards.put(MOVE3,card);
-                        dealtCards.remove(card);
                         break;
                     case TURN180:
                         TURN180 = new Button("cards/180_turn_card.jpg");
                         TURN180.setButtonCoords(x, yCard);
                         cards.put(TURN180,card);
-                        dealtCards.remove(card);
                         break;
                     case TURNLEFT:
                         TURNLEFT = new Button("cards/left_turn_card.jpg");
                         TURNLEFT.setButtonCoords(x, yCard);
                         cards.put(TURNLEFT,card);
-                        dealtCards.remove(card);
                         break;
                     case TURNRIGHT:
                         TURNRIGHT = new Button("cards/right_turn_card.jpg");
                         TURNRIGHT.setButtonCoords(x, yCard);
                         cards.put(TURNRIGHT,card);
-                        dealtCards.remove(card);
                         break;
                     case BACKUP:
                         BACKUP = new Button("cards/backup_card.jpg");
                         BACKUP.setButtonCoords(x, yCard);
                         cards.put(BACKUP,card);
-                        dealtCards.remove(card);
                         break;
                 }
         }
@@ -223,6 +221,9 @@ public class GameScreen extends ScreenAdapter {
         }
     }
 
+    private void displayHand(){
+        
+    }
 
 
 }
