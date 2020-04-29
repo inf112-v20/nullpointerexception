@@ -6,6 +6,7 @@ import com.badlogic.gdx.maps.tiled.tiles.StaticTiledMapTile;
 import inf112.app.Card;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Map;
 
 public class Actor implements IActor {
@@ -18,7 +19,6 @@ public class Actor implements IActor {
     private ArrayList<Card> hand;
     private ArrayList<Card> dealtCards;
     private ArrayList<Integer> flagList;
-    private Map<Integer,Position> flagMap;
     private ArrayList<Integer> flagIDList;
     private Position spawnPoint;
     private int hitPoints;
@@ -27,15 +27,17 @@ public class Actor implements IActor {
     private boolean onFlag;
     private boolean win;
 
-    public Actor(Position spawn, TextureRegion texture) {
+    public Actor(Position spawn, TextureRegion texture, Map<Integer,Position> flagMap) {
         hitPoints = MAX_HP;
         lifeCount = MAX_LIFE;
         actorTexture = new TiledMapTileLayer.Cell().setTile(new StaticTiledMapTile(texture));
         isDead = false;
         onFlag = false;
         win = false;
-
+        flagIDList = new ArrayList<>();
         flagIDList.addAll(flagMap.keySet());
+        Collections.sort(flagIDList);
+        flagList = new ArrayList<>(flagIDList.size());
         spawnPoint = spawn;
         currentPos = spawn;
         setDirection(Direction.EAST);

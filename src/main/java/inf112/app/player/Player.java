@@ -4,12 +4,11 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.tiles.StaticTiledMapTile;
 import inf112.app.Card;
-import sun.jvm.hotspot.runtime.Flags;
+
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Map;
-import java.util.Set;
 
 
 public class Player implements IActor {
@@ -22,7 +21,6 @@ public class Player implements IActor {
     private ArrayList<Card> dealtCards;
     private ArrayList<Integer> flagList;
     private Position spawnPoint;
-    private Map<Integer,Position> flagMap;
     private ArrayList<Integer> flagIDList;
     private int hitPoints;
     private int lifeCount;
@@ -43,8 +41,10 @@ public class Player implements IActor {
         hitPoints = MAX_HP;
         lifeCount = MAX_LIFE;
 
+        flagIDList = new ArrayList<>();
         flagIDList.addAll(flagMap.keySet());
         Collections.sort(flagIDList);
+        flagList = new ArrayList<>(flagIDList.size());
         playerCell = new TiledMapTileLayer.Cell().setTile(new StaticTiledMapTile(texture));
         isDead = false;
         onFlag = false;
@@ -109,7 +109,6 @@ public class Player implements IActor {
 
     @Override
     public void isOnFlag(Integer tileID){
-        Map<Integer, Position> flagIntegers;
         if(flagList.isEmpty()){
             win();
         }
