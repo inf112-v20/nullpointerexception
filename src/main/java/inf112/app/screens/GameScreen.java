@@ -45,6 +45,7 @@ public class GameScreen extends ScreenAdapter {
     private ArrayList<Card> dealtCards;
     private ArrayList<Button> cards = new ArrayList<>();
     private ArrayList<Button> hand = new ArrayList<>();
+    private BitmapFont font = new BitmapFont();
 
     public GameScreen() {
         game = new Game();
@@ -106,7 +107,6 @@ public class GameScreen extends ScreenAdapter {
          **/
 
         GameRunner.batch.setProjectionMatrix(camera.combined);
-        BitmapFont font = new BitmapFont();
         int lifepoints = game.getPlayersLifeCount();
         int healthpoints = game.getPlayersHitPoints();
         GameRunner.batch.begin();
@@ -232,24 +232,31 @@ public class GameScreen extends ScreenAdapter {
             switch (card.getType()) {
                 case MOVE1:
                     GameRunner.batch.draw(MOVE1.getButtonTexture(), x, y, 390, 490);
+                    font.draw(GameRunner.batch, ""+ card.getPriority(), x + 100, y + 600);
                     break;
                 case MOVE2:
                     GameRunner.batch.draw(MOVE2.getButtonTexture(), x, y, 390, 490);
+                    font.draw(GameRunner.batch, ""+ card.getPriority(), x + 100, y + 600);
                     break;
                 case MOVE3:
                     GameRunner.batch.draw(MOVE3.getButtonTexture(), x, y, 390, 490);
+                    font.draw(GameRunner.batch, ""+ card.getPriority(), x + 100, y + 600);
                     break;
                 case TURN180:
                     GameRunner.batch.draw(TURN180.getButtonTexture(), x, y, 390, 490);
+                    font.draw(GameRunner.batch, ""+ card.getPriority(), x + 100, y + 600);
                     break;
                 case TURNLEFT:
                     GameRunner.batch.draw(TURNLEFT.getButtonTexture(), x, y, 390, 490);
+                    font.draw(GameRunner.batch, ""+ card.getPriority(), x + 100, y + 600);
                     break;
                 case TURNRIGHT:
                     GameRunner.batch.draw(TURNRIGHT.getButtonTexture(), x, y, 390, 490);
+                    font.draw(GameRunner.batch, ""+ card.getPriority(), x + 100, y + 600);
                     break;
                 case BACKUP:
                     GameRunner.batch.draw(BACKUP.getButtonTexture(), x, y, 390, 490);
+                    font.draw(GameRunner.batch, ""+ card.getPriority(), x + 100, y + 600);
                     break;
                 }
         }
