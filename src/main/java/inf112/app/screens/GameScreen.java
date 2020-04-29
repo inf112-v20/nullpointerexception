@@ -124,10 +124,12 @@ public class GameScreen extends ScreenAdapter {
         for(Button button : cards.keySet()) {
             if (button.buttonIsHovered(input)) {
                 if (Gdx.input.justTouched()) {
+                    if(hand.size() < 5) {
                         hand.add(cards.get(button));
                         System.out.println("A card has been added to the hand");
                         String c = cards.get(button).toString();
                         System.out.println(c);
+                    }
                 }
             }
         }
