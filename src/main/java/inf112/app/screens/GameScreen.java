@@ -18,6 +18,7 @@ import inf112.app.Game;
 import inf112.app.board.Board;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 
 public class GameScreen extends ScreenAdapter {
@@ -46,10 +47,9 @@ public class GameScreen extends ScreenAdapter {
 
     private OrthographicCamera camera;
     private ArrayList<Card> dealtCards;
-    private ArrayList<Button> cards = new ArrayList<>();
-    private ArrayList<Button> hand = new ArrayList<>();
+    private ArrayList<Card> hand = new ArrayList<>();
     private BitmapFont font = new BitmapFont();
-
+    private HashMap<Button,Card> cards;
 
     public GameScreen() {
         game = new Game();
@@ -61,6 +61,7 @@ public class GameScreen extends ScreenAdapter {
         health = new Texture("healthpoints.png");
         yPriority = board.getBoardHeight() * TILE_SIZE + 800;
         yCard = board.getBoardHeight() * TILE_SIZE + 200;
+        cards = new HashMap<>();
 
         camera = new OrthographicCamera();
         camera.setToOrtho(false,
@@ -71,6 +72,9 @@ public class GameScreen extends ScreenAdapter {
         renderer = new OrthogonalTiledMapRenderer(board.getBoard());
         renderer.setView(camera);
 
+        Gdx.graphics.setContinuousRendering(false);
+        //Gdx.graphics.requestRendering();
+        drawDealtCards();
     }
 
     /**
@@ -117,16 +121,17 @@ public class GameScreen extends ScreenAdapter {
 
         displayDealtCards();
 
-        for(Button button : cards) {
+        for(Button button : cards.keySet()) {
             if (button.buttonIsHovered(input)) {
-                if (Gdx.input.isTouched()) {
-                    ///if(hand.size() < 3) {
-                        hand.add(button);
+                if (Gdx.input.justTouched()) {
+                        hand.add(cards.get(button));
                         System.out.println("A card has been added to the hand");
-
+                        String c = cards.get(button).toString();
+                        System.out.println(c);
                 }
             }
         }
+
         /**if (MOVE1.buttonIsHovered(input)) {
             if (Gdx.input.isTouched()) {
                 if(hand.size() != 5)
@@ -197,74 +202,64 @@ public class GameScreen extends ScreenAdapter {
         TURNRIGHT.getButtonTexture().dispose();
         GameRunner.batch.dispose();
     }
-    private void displayDealtCards(){
+    private void drawDealtCards(){
         int x = powerdown.getButtonX() + 300;
-        if(dealtCards.size() == 9) {
            ArrayList<Card> copy = new ArrayList<Card>(dealtCards);
             for(Card card : copy) {
+            //for(Card card : dealtCards) {
                 x += 450;
                 switch (card.getType()) {
                     case MOVE1:
                         MOVE1 = new Button("cards/move1_card.png");
                         MOVE1.setButtonCoords(x, yCard);
-                        cards.add(MOVE1);
-                        GameRunner.batch.draw(MOVE1.getButtonTexture(), x, yCard, 390, 490);
-                        font.draw(GameRunner.batch, "" + card.getPriority(), x + 100, yPriority);
+                        cards.put(MOVE1,card);
                         dealtCards.remove(card);
                         break;
                     case MOVE2:
                         MOVE2 = new Button("cards/move2_card.png");
                         MOVE2.setButtonCoords(x, yCard);
-                        cards.add(MOVE2);
-                        GameRunner.batch.draw(MOVE2.getButtonTexture(), x, yCard, 390, 490);
-                        font.draw(GameRunner.batch, "" + card.getPriority(), x + 100, yPriority);
+                        cards.put(MOVE2,card);
                         dealtCards.remove(card);
                         break;
                     case MOVE3:
                         MOVE3 = new Button("cards/move3_card.png");
                         MOVE3.setButtonCoords(x, yCard);
-                        cards.add(MOVE3);
-                        GameRunner.batch.draw(MOVE3.getButtonTexture(), x, yCard, 390, 490);
-                        font.draw(GameRunner.batch, "" + card.getPriority(), x + 100, yPriority);
+                        cards.put(MOVE3,card);
                         dealtCards.remove(card);
                         break;
                     case TURN180:
                         TURN180 = new Button("cards/180_turn_card.jpg");
                         TURN180.setButtonCoords(x, yCard);
-                        cards.add(TURN180);
-                        GameRunner.batch.draw(TURN180.getButtonTexture(), x, yCard, 390, 490);
-                        font.draw(GameRunner.batch, "" + card.getPriority(), x + 100, yPriority);
+                        cards.put(TURN180,card);
                         dealtCards.remove(card);
                         break;
                     case TURNLEFT:
                         TURNLEFT = new Button("cards/left_turn_card.jpg");
                         TURNLEFT.setButtonCoords(x, yCard);
-                        cards.add(TURNLEFT);
-                        GameRunner.batch.draw(TURNLEFT.getButtonTexture(), x, yCard, 390, 490);
-                        font.draw(GameRunner.batch, "" + card.getPriority(), x + 100, yPriority);
+                        cards.put(TURNLEFT,card);
                         dealtCards.remove(card);
                         break;
                     case TURNRIGHT:
                         TURNRIGHT = new Button("cards/right_turn_card.jpg");
                         TURNRIGHT.setButtonCoords(x, yCard);
-                        cards.add(TURNRIGHT);
-                        GameRunner.batch.draw(TURNRIGHT.getButtonTexture(), x, yCard, 390, 490);
-                        font.draw(GameRunner.batch, "" + card.getPriority(), x + 100, yPriority);
+                        cards.put(TURNRIGHT,card);
                         dealtCards.remove(card);
                         break;
                     case BACKUP:
                         BACKUP = new Button("cards/backup_card.jpg");
                         BACKUP.setButtonCoords(x, yCard);
-                        cards.add(BACKUP);
-                        GameRunner.batch.draw(BACKUP.getButtonTexture(), x, yCard, 390, 490);
-                        font.draw(GameRunner.batch, "" + card.getPriority(), x + 100, yPriority);
+                        cards.put(BACKUP,card);
                         dealtCards.remove(card);
                         break;
                 }
-            }
         }
     }
-
+    private void displayDealtCards(){
+        for(Button button : cards.keySet()) {
+            GameRunner.batch.draw(button.getButtonTexture(), button.getButtonX(), button.getButtonY(), 390, 490);
+            font.draw(GameRunner.batch, "" + cards.get(button).getPriority(), button.getButtonX() + 100, yPriority);
+        }
+    }
 
 
 
