@@ -32,7 +32,9 @@ public class GameScreen extends ScreenAdapter {
     private Button powerdown;
     private Texture lifes;
     private Texture health;
-
+    // y value for priority labels of cards
+    private int yPriority;
+    private int yCard;
     private Button MOVE1;
     private Button MOVE2;
     private Button MOVE3;
@@ -47,6 +49,7 @@ public class GameScreen extends ScreenAdapter {
     private ArrayList<Button> hand = new ArrayList<>();
     private BitmapFont font = new BitmapFont();
 
+
     public GameScreen() {
         game = new Game();
         board = game.getBoard();
@@ -55,31 +58,8 @@ public class GameScreen extends ScreenAdapter {
         powerdown.setButtonCoords(0, board.getBoardHeight() * TILE_SIZE + 500);
         lifes = new Texture("life.png");
         health = new Texture("healthpoints.png");
-
-        MOVE1 = new Button("cards/move1_card.png");
-        cards.add(MOVE1);
-
-        MOVE2= new Button("cards/move2_card.png");
-        cards.add(MOVE2);
-
-        MOVE3= new Button("cards/move3_card.png");
-        cards.add(MOVE3);
-
-        TURNRIGHT= new Button("cards/right_turn_card.jpg");
-        cards.add(TURNRIGHT);
-
-        TURNLEFT= new Button("cards/left_turn_card.jpg");
-        cards.add(TURNLEFT);
-
-        BACKUP= new Button("cards/backup_card.jpg");
-        cards.add(BACKUP);
-
-        TURN180= new Button("cards/180_turn_card.jpg");
-        cards.add(TURN180);
-
-        /**powerup= new Button("cards/powerup_card.jpg");
-        powerup.setButtonCoords(turn_180.getButtonX() + turn_180.getButtonTexture().getWidth()+ 340, board.getBoardHeight() * TILE_SIZE + 200);
-        cards.add(powerup);**/
+        yPriority = board.getBoardHeight() * TILE_SIZE + 800;
+        yCard = board.getBoardHeight() * TILE_SIZE + 200;
 
         camera = new OrthographicCamera();
         camera.setToOrtho(false,
@@ -135,16 +115,6 @@ public class GameScreen extends ScreenAdapter {
         font.draw(GameRunner.batch, "x " + healthpoints, 210, board.getBoardHeight() * TILE_SIZE + 400 + health.getHeight()/2);
 
         setHand();
-
-        /**GameRunner.batch.draw(move1.getButtonTexture(), move1.getButtonX(), move1.getButtonY(), 500, 600);
-        GameRunner.batch.draw(move2.getButtonTexture(), move2.getButtonX(), move2.getButtonY(), 500, 600);
-        GameRunner.batch.draw(move3.getButtonTexture(), move3.getButtonX(), move3.getButtonY(), 500, 600);
-        GameRunner.batch.draw(right_turn.getButtonTexture(), right_turn.getButtonX(), right_turn.getButtonY(), 500, 600);
-        GameRunner.batch.draw(left_turn.getButtonTexture(), left_turn.getButtonX(), left_turn.getButtonY(), 500, 600);
-        GameRunner.batch.draw(turn_180.getButtonTexture(), turn_180.getButtonX(), turn_180.getButtonY(), 500, 600);
-        GameRunner.batch.draw(backup.getButtonTexture(), backup.getButtonX(), backup.getButtonY(), 500, 600);
-        GameRunner.batch.draw(powerup.getButtonTexture(), powerup.getButtonX(), powerup.getButtonY(), 500, 600);**/
-
 
 
         /**while(hand.size() < 5) {
@@ -225,38 +195,57 @@ public class GameScreen extends ScreenAdapter {
     }
     private void setHand(){
         int x = powerdown.getButtonX() + 300;
-        int y = board.getBoardHeight() * TILE_SIZE + 200;
-        System.out.println(dealtCards.size());
         for(Card card:dealtCards) {
-            x+= MOVE1.getButtonTexture().getWidth() + 250;
+            x += 450;
             switch (card.getType()) {
                 case MOVE1:
-                    GameRunner.batch.draw(MOVE1.getButtonTexture(), x, y, 390, 490);
-                    font.draw(GameRunner.batch, ""+ card.getPriority(), x + 100, y + 600);
+                    MOVE1 = new Button("cards/move1_card.png");
+                    MOVE1.setButtonCoords(x,yCard);
+                    cards.add(MOVE1);
+                    GameRunner.batch.draw(MOVE1.getButtonTexture(), x, yCard, 390, 490);
+                    font.draw(GameRunner.batch, ""+ card.getPriority(), x + 100, yPriority);
                     break;
                 case MOVE2:
-                    GameRunner.batch.draw(MOVE2.getButtonTexture(), x, y, 390, 490);
-                    font.draw(GameRunner.batch, ""+ card.getPriority(), x + 100, y + 600);
+                    MOVE2= new Button("cards/move2_card.png");
+                    MOVE2.setButtonCoords(x,yCard);
+                    cards.add(MOVE2);
+                    GameRunner.batch.draw(MOVE2.getButtonTexture(), x, yCard, 390, 490);
+                    font.draw(GameRunner.batch, ""+ card.getPriority(), x + 100, yPriority);
                     break;
                 case MOVE3:
-                    GameRunner.batch.draw(MOVE3.getButtonTexture(), x, y, 390, 490);
-                    font.draw(GameRunner.batch, ""+ card.getPriority(), x + 100, y + 600);
+                    MOVE3= new Button("cards/move3_card.png");
+                    MOVE3.setButtonCoords(x,yCard);
+                    cards.add(MOVE3);
+                    GameRunner.batch.draw(MOVE3.getButtonTexture(), x, yCard, 390, 490);
+                    font.draw(GameRunner.batch, ""+ card.getPriority(), x + 100, yPriority);
                     break;
                 case TURN180:
-                    GameRunner.batch.draw(TURN180.getButtonTexture(), x, y, 390, 490);
-                    font.draw(GameRunner.batch, ""+ card.getPriority(), x + 100, y + 600);
+                    TURN180= new Button("cards/180_turn_card.jpg");
+                    TURN180.setButtonCoords(x,yCard);
+                    cards.add(TURN180);
+                    GameRunner.batch.draw(TURN180.getButtonTexture(), x, yCard, 390, 490);
+                    font.draw(GameRunner.batch, ""+ card.getPriority(), x + 100, yPriority);
                     break;
                 case TURNLEFT:
-                    GameRunner.batch.draw(TURNLEFT.getButtonTexture(), x, y, 390, 490);
-                    font.draw(GameRunner.batch, ""+ card.getPriority(), x + 100, y + 600);
+                    TURNLEFT= new Button("cards/left_turn_card.jpg");
+                    TURNLEFT.setButtonCoords(x,yCard);
+                    cards.add(TURNLEFT);
+                    GameRunner.batch.draw(TURNLEFT.getButtonTexture(), x, yCard, 390, 490);
+                    font.draw(GameRunner.batch, ""+ card.getPriority(), x + 100, yPriority);
                     break;
                 case TURNRIGHT:
-                    GameRunner.batch.draw(TURNRIGHT.getButtonTexture(), x, y, 390, 490);
-                    font.draw(GameRunner.batch, ""+ card.getPriority(), x + 100, y + 600);
+                    TURNRIGHT= new Button("cards/right_turn_card.jpg");
+                    TURNRIGHT.setButtonCoords(x,yCard);
+                    cards.add(TURNRIGHT);
+                    GameRunner.batch.draw(TURNRIGHT.getButtonTexture(), x, yCard, 390, 490);
+                    font.draw(GameRunner.batch, ""+ card.getPriority(), x + 100, yPriority);
                     break;
                 case BACKUP:
-                    GameRunner.batch.draw(BACKUP.getButtonTexture(), x, y, 390, 490);
-                    font.draw(GameRunner.batch, ""+ card.getPriority(), x + 100, y + 600);
+                    BACKUP= new Button("cards/backup_card.jpg");
+                    BACKUP.setButtonCoords(x,yCard);
+                    cards.add(BACKUP);
+                    GameRunner.batch.draw(BACKUP.getButtonTexture(), x, yCard, 390, 490);
+                    font.draw(GameRunner.batch, ""+ card.getPriority(), x + 100, yPriority);
                     break;
                 }
         }
