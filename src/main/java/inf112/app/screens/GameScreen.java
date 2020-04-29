@@ -23,10 +23,6 @@ import java.util.Iterator;
 
 public class GameScreen extends ScreenAdapter {
 
-    private Stage stage;
-    private Table table;
-    private TextButton button;
-    private Skin skin;
     private static final int TILE_SIZE = 300;
     private OrthogonalTiledMapRenderer renderer;
     private inf112.app.Game game;
@@ -121,10 +117,10 @@ public class GameScreen extends ScreenAdapter {
 
         displayDealtCards();
 
-        for(Button button : cards.keySet()) {
-            if (button.buttonIsHovered(input)) {
-                if (Gdx.input.justTouched()) {
-                    if(hand.size() < 5) {
+        if(hand.size() < 5) {
+            for(Button button : cards.keySet()) {
+                if (button.buttonIsHovered(input)) {
+                    if (Gdx.input.justTouched()) {
                         hand.add(cards.get(button));
                         System.out.println("A card has been added to the hand");
                         String c = cards.get(button).toString();
@@ -134,43 +130,6 @@ public class GameScreen extends ScreenAdapter {
             }
         }
 
-        /**if (MOVE1.buttonIsHovered(input)) {
-            if (Gdx.input.isTouched()) {
-                if(hand.size() != 5)
-                    hand.add(MOVE1);
-            }
-            else if (MOVE2.buttonIsHovered(input)) {
-                if (Gdx.input.isTouched()) {
-                    if(hand.size() != 5)
-                        hand.add(MOVE2);
-                }
-            } else if (MOVE3.buttonIsHovered(input)) {
-                if (Gdx.input.isTouched()) {
-                    if(hand.size() != 5)
-                        hand.add(MOVE3);
-                }
-            } else if (TURNRIGHT.buttonIsHovered(input)) {
-                if (Gdx.input.isTouched()) {
-                    if(hand.size() != 5)
-                        hand.add(TURNRIGHT);
-                }
-            } else if (TURNLEFT.buttonIsHovered(input)) {
-                if (Gdx.input.isTouched()) {
-                    if(hand.size() != 5)
-                        hand.add(TURNLEFT);
-                }
-            } else if (BACKUP.buttonIsHovered(input)) {
-                if (Gdx.input.isTouched()) {
-                    if(hand.size() != 5)
-                        hand.add(BACKUP);
-                }
-            } else if (TURN180.buttonIsHovered(input)) {
-                if (Gdx.input.isTouched()) {
-                    if(hand.size() != 5)
-                        hand.add(TURN180);
-                }
-            }
-         **/
 
         GameRunner.batch.end();
 
@@ -208,7 +167,6 @@ public class GameScreen extends ScreenAdapter {
         int x = powerdown.getButtonX() + 300;
            ArrayList<Card> copy = new ArrayList<Card>(dealtCards);
             for(Card card : copy) {
-            //for(Card card : dealtCards) {
                 x += 450;
                 switch (card.getType()) {
                     case MOVE1:
