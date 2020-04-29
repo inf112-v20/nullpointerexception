@@ -4,31 +4,28 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.tiles.StaticTiledMapTile;
 import inf112.app.Card;
-import sun.jvm.hotspot.runtime.Flags;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Map;
-import java.util.Set;
-
 
 public class Player implements IActor {
 
     //Vector holds players position
-    private TiledMapTileLayer.Cell playerCell;
+    private final TiledMapTileLayer.Cell playerCell;
     private Position currentPos;
     private Direction direction;
-    private ArrayList<Card> hand;
+    private final ArrayList<Card> hand;
     private ArrayList<Card> dealtCards;
     private ArrayList<Integer> flagList;
     private Position spawnPoint;
-    private Map<Integer,Position> flagMap;
+    private final boolean onFlag;
     private ArrayList<Integer> flagIDList;
     private int hitPoints;
     private int lifeCount;
     private boolean isDead;
-    private boolean onFlag;
-    private boolean win;
+    private final boolean win;
+    private Map<Integer, Position> flagMap;
 
 
     /**
