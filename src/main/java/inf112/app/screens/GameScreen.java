@@ -142,7 +142,6 @@ public class GameScreen extends ScreenAdapter {
             deck.setDiscardPile(dealtCards);
             roundStart = true;
             round();
-            displayCards();
         }
         GameRunner.batch.end();
 
@@ -176,51 +175,11 @@ public class GameScreen extends ScreenAdapter {
         TURNRIGHT.getButtonTexture().dispose();
         GameRunner.batch.dispose();
     }
+
     private void drawDealtCards(){
-        cards = new HashMap<>();
-        int x = powerdown.getButtonX() + 300;
-           //ArrayList<Card> copy = new ArrayList<Card>(dealtCards);
-            for(Card card : dealtCards) {
-                x += 450;
-                switch (card.getType()) {
-                    case MOVE1:
-                        MOVE1 = new Button("cards/move1_card.png");
-                        MOVE1.setButtonCoords(x, yCard);
-                        cards.put(MOVE1,card);
-                        break;
-                    case MOVE2:
-                        MOVE2 = new Button("cards/move2_card.png");
-                        MOVE2.setButtonCoords(x, yCard);
-                        cards.put(MOVE2,card);
-                        break;
-                    case MOVE3:
-                        MOVE3 = new Button("cards/move3_card.png");
-                        MOVE3.setButtonCoords(x, yCard);
-                        cards.put(MOVE3,card);
-                        break;
-                    case TURN180:
-                        TURN180 = new Button("cards/180_turn_card.jpg");
-                        TURN180.setButtonCoords(x, yCard);
-                        cards.put(TURN180,card);
-                        break;
-                    case TURNLEFT:
-                        TURNLEFT = new Button("cards/left_turn_card.jpg");
-                        TURNLEFT.setButtonCoords(x, yCard);
-                        cards.put(TURNLEFT,card);
-                        break;
-                    case TURNRIGHT:
-                        TURNRIGHT = new Button("cards/right_turn_card.jpg");
-                        TURNRIGHT.setButtonCoords(x, yCard);
-                        cards.put(TURNRIGHT,card);
-                        break;
-                    case BACKUP:
-                        BACKUP = new Button("cards/backup_card.jpg");
-                        BACKUP.setButtonCoords(x, yCard);
-                        cards.put(BACKUP,card);
-                        break;
-                }
-        }
+       drawCards(dealtCards);
     }
+
     private void displayCards(){
         for(Button button : cards.keySet()) {
             GameRunner.batch.draw(button.getButtonTexture(), button.getButtonX(), button.getButtonY(), 390, 490);
@@ -229,9 +188,24 @@ public class GameScreen extends ScreenAdapter {
     }
 
     private void drawHand(){
+        drawCards(hand);
+    }
+
+    private void round(){
+        while(roundStart){
+            drawHand();
+            displayCards();
+            player.resetDealtCards();
+            game.movedByCard(player, hand.get(0).getType());
+            hand.remove(0);
+            roundStart = false;
+            }
+        }
+
+    private void drawCards(ArrayList<Card> list){
         cards = new HashMap<Button,Card>();
         int x = powerdown.getButtonX() + 300;
-        for(Card card:hand){
+        for(Card card:list){
             x += 450;
             switch (card.getType()) {
                 case MOVE1:
@@ -272,57 +246,5 @@ public class GameScreen extends ScreenAdapter {
             }
         }
     }
-    private void round(){
-        while(roundStart){
-            drawHand();
-            game.movedByCard(player,hand.get(0).getType());
-            hand.remove(0);
-            roundStart = false;
-            }
-        }
-
-    /**private void drawCards(ArrayList<Card> cards){
-        int x = powerdown.getButtonX() + 300;
-        for(Card card:cards){
-            x += 450;
-            switch (card.getType()) {
-                case MOVE1:
-                    MOVE1 = new Button("cards/move1_card.png");
-                    MOVE1.setButtonCoords(x, yCard);
-                    cards.put(MOVE1,card);
-                    break;
-                case MOVE2:
-                    MOVE2 = new Button("cards/move2_card.png");
-                    MOVE2.setButtonCoords(x, yCard);
-                    cards.put(MOVE2,card);
-                    break;
-                case MOVE3:
-                    MOVE3 = new Button("cards/move3_card.png");
-                    MOVE3.setButtonCoords(x, yCard);
-                    cards.put(MOVE3,card);
-                    break;
-                case TURN180:
-                    TURN180 = new Button("cards/180_turn_card.jpg");
-                    TURN180.setButtonCoords(x, yCard);
-                    cards.put(TURN180,card);
-                    break;
-                case TURNLEFT:
-                    TURNLEFT = new Button("cards/left_turn_card.jpg");
-                    TURNLEFT.setButtonCoords(x, yCard);
-                    cards.put(TURNLEFT,card);
-                    break;
-                case TURNRIGHT:
-                    TURNRIGHT = new Button("cards/right_turn_card.jpg");
-                    TURNRIGHT.setButtonCoords(x, yCard);
-                    cards.put(TURNRIGHT,card);
-                    break;
-                case BACKUP:
-                    BACKUP = new Button("cards/backup_card.jpg");
-                    BACKUP.setButtonCoords(x, yCard);
-                    cards.put(BACKUP,card);
-                    break;
-            }
-        }
-    }**/
 
 }
