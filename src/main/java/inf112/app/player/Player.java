@@ -28,6 +28,7 @@ public class Player implements IActor {
     private int lifeCount;
     private boolean isDead;
     private boolean onFlag;
+    private boolean win;
 
 
     /**
@@ -47,6 +48,7 @@ public class Player implements IActor {
         playerCell = new TiledMapTileLayer.Cell().setTile(new StaticTiledMapTile(texture));
         isDead = false;
         onFlag = false;
+        win = false;
 
         spawnPoint = spawn;
         currentPos = spawn;
@@ -108,17 +110,24 @@ public class Player implements IActor {
     @Override
     public void isOnFlag(Integer tileID){
         Map<Integer, Position> flagIntegers;
-        if(onFlag && flagList.isEmpty() && tileID.equals(flagIDList.get(0))){
-            flagList.add(tileID);
+        if(flagList.isEmpty()){
+            win();
+        }
+        if(onFlag && flagList.size()==3 && tileID.equals(flagIDList.get(0))){
+            flagList.remove(1);
         }
         else if (onFlag && tileID.compareTo(flagList.size()-1) == -1){
-            flagList.add(tileID);
+            flagList.remove(1);
         }
     }
 
     @Override
     public boolean isDead() {
         return isDead;
+    }
+    @Override
+    public boolean win(){
+        return win;
     }
 
     @Override

@@ -130,6 +130,12 @@ public interface IActor {
     boolean isDead();
 
     /**
+     * Returns if the player have won
+     * @return
+     */
+    boolean win();
+
+    /**
      * Returns whether or not the player is on a flag
      * @return boolean
      */

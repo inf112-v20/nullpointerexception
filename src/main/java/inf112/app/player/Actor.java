@@ -25,6 +25,7 @@ public class Actor implements IActor {
     private int lifeCount;
     private boolean isDead;
     private boolean onFlag;
+    private boolean win;
 
     public Actor(Position spawn, TextureRegion texture) {
         hitPoints = MAX_HP;
@@ -32,6 +33,7 @@ public class Actor implements IActor {
         actorTexture = new TiledMapTileLayer.Cell().setTile(new StaticTiledMapTile(texture));
         isDead = false;
         onFlag = false;
+        win = false;
 
         flagIDList.addAll(flagMap.keySet());
         spawnPoint = spawn;
@@ -73,21 +75,27 @@ public class Actor implements IActor {
     public boolean onFlag(){
         return onFlag;
     }
+
     @Override
     public void isOnFlag(Integer tileID){
         Map<Integer, Position> flagIntegers;
-        if(onFlag && flagList.isEmpty() && tileID.equals(flagIDList.get(0))){
-            flagList.add(tileID);
+        if(flagList.isEmpty()){
+            win();
+        }
+        if(onFlag && flagList.size()==3 && tileID.equals(flagIDList.get(0))){
+            flagList.remove(1);
         }
         else if (onFlag && tileID.compareTo(flagList.size()-1) == -1){
-            flagList.add(tileID);
+            flagList.remove(1);
         }
     }
-
     @Override
     public boolean isDead() {
         return isDead;
     }
+
+    @Override
+    public boolean win(){ return win; }
 
     @Override
     public Position checkpoint() {
