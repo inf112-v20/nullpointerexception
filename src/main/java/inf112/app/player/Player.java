@@ -21,6 +21,7 @@ public class Player implements IActor {
     private int lifeCount;
     private boolean isDead;
 
+
     /**
      * Initializing default/dying/winning cells of a player.
      * Texture region splits the player texture into 3 different textures and puts them in a 2-dimensional array.
