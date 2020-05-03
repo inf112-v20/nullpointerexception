@@ -6,36 +6,38 @@ import com.badlogic.gdx.maps.tiled.tiles.StaticTiledMapTile;
 import inf112.app.Card;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Map;
 
 public class Actor implements IActor {
 
     private final int MAX_HP = 9;
     private final int MAX_LIFE = 3;
-    private TiledMapTileLayer.Cell actorTexture;
+    private final TiledMapTileLayer.Cell actorTexture;
     private Position currentPos;
     private Direction direction;
-    private ArrayList<Card> hand;
+    private final ArrayList<Card> hand;
     private ArrayList<Card> dealtCards;
-    private ArrayList<Integer> flagList;
-    private Map<Integer,Position> flagMap;
-    private ArrayList<Integer> flagIDList;
+    private final ArrayList<Integer> flagList;
+    private final ArrayList<Integer> flagIDList;
     private Position spawnPoint;
     private int hitPoints;
     private int lifeCount;
     private boolean isDead;
-    private boolean onFlag;
-    private boolean win;
+    private final boolean onFlag;
+    private final boolean win;
 
-    public Actor(Position spawn, TextureRegion texture) {
+    public Actor(Position spawn, TextureRegion texture, Map<Integer, Position> flagMap) {
         hitPoints = MAX_HP;
         lifeCount = MAX_LIFE;
         actorTexture = new TiledMapTileLayer.Cell().setTile(new StaticTiledMapTile(texture));
         isDead = false;
         onFlag = false;
         win = false;
-
+        flagIDList = new ArrayList<>();
         flagIDList.addAll(flagMap.keySet());
+        Collections.sort(flagIDList);
+        flagList = new ArrayList<>(flagIDList.size());
         spawnPoint = spawn;
         currentPos = spawn;
         setDirection(Direction.EAST);
@@ -83,9 +85,6 @@ public class Actor implements IActor {
             win();
         }
         if(onFlag && flagList.size()==3 && tileID.equals(flagIDList.get(0))){
-            flagList.remove(1);
-        }
-        else if (onFlag && tileID.compareTo(flagList.size()-1) == -1){
             flagList.remove(1);
         }
     }

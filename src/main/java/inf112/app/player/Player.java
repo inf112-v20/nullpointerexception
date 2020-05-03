@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Map;
 
+
 public class Player implements IActor {
 
     //Vector holds players position
@@ -17,15 +18,14 @@ public class Player implements IActor {
     private Direction direction;
     private final ArrayList<Card> hand;
     private ArrayList<Card> dealtCards;
-    private ArrayList<Integer> flagList;
+    private final ArrayList<Integer> flagList;
     private Position spawnPoint;
-    private final boolean onFlag;
-    private ArrayList<Integer> flagIDList;
+    private final ArrayList<Integer> flagIDList;
     private int hitPoints;
     private int lifeCount;
     private boolean isDead;
+    private final boolean onFlag;
     private final boolean win;
-    private Map<Integer, Position> flagMap;
 
 
     /**
@@ -40,8 +40,10 @@ public class Player implements IActor {
         hitPoints = MAX_HP;
         lifeCount = MAX_LIFE;
 
+        flagIDList = new ArrayList<>();
         flagIDList.addAll(flagMap.keySet());
         Collections.sort(flagIDList);
+        flagList = new ArrayList<>(flagIDList.size());
         playerCell = new TiledMapTileLayer.Cell().setTile(new StaticTiledMapTile(texture));
         isDead = false;
         onFlag = false;
@@ -106,14 +108,10 @@ public class Player implements IActor {
 
     @Override
     public void isOnFlag(Integer tileID){
-        Map<Integer, Position> flagIntegers;
         if(flagList.isEmpty()){
             win();
         }
         if(onFlag && flagList.size()==3 && tileID.equals(flagIDList.get(0))){
-            flagList.remove(1);
-        }
-        else if (onFlag && tileID.compareTo(flagList.size()-1) == -1){
             flagList.remove(1);
         }
     }
