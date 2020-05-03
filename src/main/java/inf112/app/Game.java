@@ -43,7 +43,7 @@ public class Game {
 
         int activeActors = 7;
         for (int i = 0; i < activeActors; i++) {
-            actors.add(new Actor(spawnPoints.remove(0), robotTextures.remove(0)));
+            actors.add(new Actor(spawnPoints.remove(0), robotTextures.remove(0), flags));
             setActorTexture(actors.get(i));
         }
 
