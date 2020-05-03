@@ -6,8 +6,8 @@ import inf112.app.player.Direction;
 import inf112.app.player.Player;
 
 public class Input extends InputAdapter {
-    private Player player;
-    private Game game;
+    private final Player player;
+    private final Game game;
 
     public Input(Player player, Game game) {
         Gdx.input.setInputProcessor(this);
@@ -52,7 +52,7 @@ public class Input extends InputAdapter {
                     game.moveActor(player, player.getDirection());
                 break;
             case com.badlogic.gdx.Input.Keys.Q:
-                game.checkCurrentTile(player);
+                game.checkPosition(player);
                 break;
             case com.badlogic.gdx.Input.Keys.P:
                 player.printCards();
