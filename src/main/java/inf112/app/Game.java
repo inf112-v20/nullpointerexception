@@ -6,23 +6,22 @@ import inf112.app.board.Board;
 import inf112.app.board.BoardObjects;
 import inf112.app.player.*;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 public class Game {
     public static final float TILE_SIZE = 300;
 
-    private Board board;
-    private BoardObjects boardObjects;
+    private final Board board;
+    private final BoardObjects boardObjects;
 
     private Deck deck;
 
-    private Player player;
-    private ArrayList<IActor> actors;
+    private final Player player;
+    private final ArrayList<IActor> actors;
 
     private List<TextureRegion> robotTextures;
     private ArrayList<Position> spawnPoints;
+    private Map<Integer, Position> flags;
 
     /**
      * Initializing a board, camera, renderer and player in addition to creating the needed TiledMap layers.
@@ -37,15 +36,16 @@ public class Game {
 
         robotTextures();
         spawnPoints();
+        flags();
 
         actors = new ArrayList<>();
 
-        player = new Player(spawnPoints.remove(0), robotTextures.remove(4));
+        player = new Player(spawnPoints.remove(0), robotTextures.remove(4), flags);
         setActorTexture(player);
 
         int activeActors = 7;
         for (int i = 0; i < activeActors; i++) {
-            actors.add(new Actor(spawnPoints.remove(0), robotTextures.remove(0)));
+            actors.add(new Actor(spawnPoints.remove(0), robotTextures.remove(0), flags));
             setActorTexture(actors.get(i));
         }
 
@@ -79,6 +79,18 @@ public class Game {
             for (int y = 0; y < board.getBoardHeight(); y++) {
                 if (boardObjects.tileHasSpawn(new Position(x, y)))
                     spawnPoints.add(new Position(x, y));
+            }
+        }
+    }
+
+    private void flags() {
+        flags = new HashMap<>();
+        for (int x = 0; x < board.getBoardWidth(); x++) {
+            for (int y = 0; y < board.getBoardHeight(); y++) {
+                if (boardObjects.tileHasFlag(new Position(x, y))) {
+                    Integer flagID = board.getBoardLayers().get("flag").getCell(x, y).getTile().getId();
+                    flags.put(flagID, new Position(x, y));
+                }
             }
         }
     }

@@ -79,6 +79,7 @@ public interface IActor {
      */
     int getLifeCount();
 
+
     /**
      * Returns a card in hand given index
      *
@@ -119,11 +120,28 @@ public interface IActor {
      */
     void loseLife();
 
+    void isOnFlag(Integer tileID);
+
     /**
      * Returns whether or not the player is dead
      *
      * @return boolean
      */
     boolean isDead();
+
+    /**
+     * Returns if the player have won
+     *
+     * @return boolean
+     */
+    boolean win();
+
+    /**
+     * Returns whether or not the player is on a flag
+     *
+     * @return boolean
+     */
+
+    boolean onFlag();
 
 }

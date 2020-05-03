@@ -6,27 +6,38 @@ import com.badlogic.gdx.maps.tiled.tiles.StaticTiledMapTile;
 import inf112.app.Card;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Map;
 
 public class Actor implements IActor {
 
     private final int MAX_HP = 9;
     private final int MAX_LIFE = 3;
-    private TiledMapTileLayer.Cell actorTexture;
+    private final TiledMapTileLayer.Cell actorTexture;
     private Position currentPos;
     private Direction direction;
-    private ArrayList<Card> hand;
+    private final ArrayList<Card> hand;
     private ArrayList<Card> dealtCards;
+    private final ArrayList<Integer> flagList;
+    private final ArrayList<Integer> flagIDList;
     private Position spawnPoint;
     private int hitPoints;
     private int lifeCount;
     private boolean isDead;
+    private final boolean onFlag;
+    private final boolean win;
 
-    public Actor(Position spawn, TextureRegion texture) {
+    public Actor(Position spawn, TextureRegion texture, Map<Integer, Position> flagMap) {
         hitPoints = MAX_HP;
         lifeCount = MAX_LIFE;
         actorTexture = new TiledMapTileLayer.Cell().setTile(new StaticTiledMapTile(texture));
         isDead = false;
-
+        onFlag = false;
+        win = false;
+        flagIDList = new ArrayList<>();
+        flagIDList.addAll(flagMap.keySet());
+        Collections.sort(flagIDList);
+        flagList = new ArrayList<>(flagIDList.size());
         spawnPoint = spawn;
         currentPos = spawn;
         setDirection(Direction.EAST);
@@ -64,8 +75,29 @@ public class Actor implements IActor {
     }
 
     @Override
+    public boolean onFlag() {
+        return onFlag;
+    }
+
+    @Override
+    public void isOnFlag(Integer tileID) {
+        Map<Integer, Position> flagIntegers;
+        if (flagList.isEmpty()) {
+            win();
+        }
+        if (onFlag && flagList.size() == 3 && tileID.equals(flagIDList.get(0))) {
+            flagList.remove(1);
+        }
+    }
+
+    @Override
     public boolean isDead() {
         return isDead;
+    }
+
+    @Override
+    public boolean win() {
+        return win;
     }
 
     @Override

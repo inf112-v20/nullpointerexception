@@ -6,6 +6,9 @@ import inf112.app.player.Position;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import static org.junit.Assert.assertEquals;
 
 public class PlayerTest {
@@ -13,7 +16,8 @@ public class PlayerTest {
 
     @Before
     public void init() {
-        player = new Player(new Position(0, 0), null);
+        Map<Integer, Position> flags = new HashMap<>();
+        player = new Player(new Position(0, 0), null, flags);
     }
 
     /**
