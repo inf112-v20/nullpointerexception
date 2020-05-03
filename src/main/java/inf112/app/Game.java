@@ -48,6 +48,7 @@ public class Game {
             actors.add(new Actor(spawnPoints.remove(0), robotTextures.remove(0), flags));
             setActorTexture(actors.get(i));
         }
+        actors.add(player);
 
         dealCards();
         new Input(player, this);
@@ -174,6 +175,7 @@ public class Game {
     public void moveActors() {
         for (IActor actor : actors) {
             moveActor(actor, actor.getDirection());
+            checkCurrentTile(actor);
         }
     }
 
@@ -182,8 +184,8 @@ public class Game {
      */
     public void moveActorsByCards() {
         for (IActor actor : actors) {
-            if (actor.getCard(0) != null)
-                movedByCard(actor, actor.getCard(0).getType());
+            movedByCard(actor, actor.getCard(0).getType());
+            checkCurrentTile(actor);
         }
     }
 
@@ -234,9 +236,15 @@ public class Game {
 
     private void spawnActor(IActor actor) {
         if (boardObjects.tileHasActor(actor.getSpawnPoint())) {
-            moveActor(getActor(actor.getSpawnPoint()), getActor(actor.getSpawnPoint()).getDirection());
-        }
-        actor.setPos(actor.getSpawnPoint());
+            ArrayList<Position> spawnPositions = new ArrayList<>();
+            for (Direction dir : Direction.values()) {
+                if (!outOfBoard(actor.getSpawnPoint().getNextPos(dir)) && !boardObjects.tileHasActor(actor.getSpawnPoint().getNextPos(dir))) {
+                    spawnPositions.add(actor.getSpawnPoint().getNextPos(dir));
+                }
+            }
+            actor.setPos(spawnPositions.get(0));
+        } else
+            actor.setPos(actor.getSpawnPoint());
     }
 
 

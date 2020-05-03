@@ -40,10 +40,13 @@ public class Player implements IActor {
         hitPoints = MAX_HP;
         lifeCount = MAX_LIFE;
 
+        dealtCards = new ArrayList<>();
+        hand = new ArrayList<>();
         flagIDList = new ArrayList<>();
         flagIDList.addAll(flagMap.keySet());
         Collections.sort(flagIDList);
         flagList = new ArrayList<>(flagIDList.size());
+
         playerCell = new TiledMapTileLayer.Cell().setTile(new StaticTiledMapTile(texture));
         isDead = false;
         onFlag = false;
@@ -52,9 +55,6 @@ public class Player implements IActor {
         spawnPoint = spawn;
         currentPos = spawn;
         setDirection(Direction.EAST);
-
-        dealtCards = new ArrayList<>();
-        hand = new ArrayList<>();
     }
 
     /**
