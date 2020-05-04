@@ -97,6 +97,7 @@ public class Deck {
      */
     public ArrayList<Card> dealCards(int n) {
         ArrayList<Card> cards = new ArrayList<>();
+        n = Math.max(n, 5);
         if (deck.size() < n)
             shuffleDiscardPile();
         for (int i = 0; i < n; i++) {
