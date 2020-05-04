@@ -332,7 +332,7 @@ public class Game {
         }
         if (boardObjects.tileHasLaser(actor.getPos())) {
             System.out.println("player is standing on a laser!");
-            player.handleDamage();
+            actor.handleDamage();
         }
         if (boardObjects.tileHasRepair(actor.getPos())) {
             System.out.println("player is standing on a repair kit!");
