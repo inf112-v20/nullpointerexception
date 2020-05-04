@@ -120,6 +120,9 @@ public interface IActor {
      */
     void loseLife();
 
+    /**
+     * Returns whether or not the player is on a flag
+     */
     void isOnFlag(Integer tileID);
 
     /**
@@ -136,12 +139,5 @@ public interface IActor {
      */
     boolean win();
 
-    /**
-     * Returns whether or not the player is on a flag
-     *
-     * @return boolean
-     */
-
-    boolean onFlag();
 
 }

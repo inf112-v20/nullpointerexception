@@ -9,10 +9,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import inf112.app.Card;
 import inf112.app.Deck;
 import inf112.app.Game;
@@ -21,20 +17,19 @@ import inf112.app.player.Player;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 
 public class GameScreen extends ScreenAdapter {
 
     private static final int TILE_SIZE = 300;
-    private OrthogonalTiledMapRenderer renderer;
-    private inf112.app.Game game;
-    private Board board;
-    private Button powerdown;
-    private Texture lifes;
-    private Texture health;
+    private final OrthogonalTiledMapRenderer renderer;
+    private final inf112.app.Game game;
+    private final Board board;
+    private final Button powerdown;
+    private final Texture lifes;
+    private final Texture health;
     // y value for priority labels of cards
-    private int yPriority;
-    private int yCard;
+    private final int yPriority;
+    private final int yCard;
     private Button MOVE1;
     private Button MOVE2;
     private Button MOVE3;
@@ -43,15 +38,14 @@ public class GameScreen extends ScreenAdapter {
     private Button BACKUP;
     private Button TURN180;
 
-    private OrthographicCamera camera;
-    private ArrayList<Card> dealtCards;
-    private ArrayList<Card> hand = new ArrayList<>();
-    private BitmapFont font = new BitmapFont();
-    private HashMap<Button,Card> cards;
-
-    private Deck deck;
+    private final OrthographicCamera camera;
+    private final ArrayList<Card> dealtCards;
+    private final ArrayList<Card> hand = new ArrayList<>();
+    private final BitmapFont font = new BitmapFont();
+    private final Deck deck;
+    private final Player player;
     private boolean roundStart = false;
-    private Player player;
+    private HashMap<Button, Card> cards;
 
     public GameScreen() {
         game = new Game();
@@ -201,6 +195,7 @@ public class GameScreen extends ScreenAdapter {
             player.resetDealtCards();
             game.movedByCard(player, hand.get(0).getType());
             hand.remove(0);
+
             roundStart = false;
             }
         }

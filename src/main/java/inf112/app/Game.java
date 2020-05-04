@@ -6,7 +6,10 @@ import inf112.app.board.Board;
 import inf112.app.board.BoardObjects;
 import inf112.app.player.*;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
 
 public class Game {
     public static final float TILE_SIZE = 300;
@@ -14,7 +17,7 @@ public class Game {
     private final Board board;
     private final BoardObjects boardObjects;
 
-    private Deck deck;
+    private final Deck deck;
 
     private final Player player;
     private final ArrayList<IActor> actors;
@@ -36,20 +39,19 @@ public class Game {
 
         robotTextures();
         spawnPoints();
-        flags();
 
         actors = new ArrayList<>();
 
-        player = new Player(spawnPoints.remove(0), robotTextures.remove(4), flags);
+        player = new Player(spawnPoints.remove(0), robotTextures.remove(4));
         setActorTexture(player);
 
-        int activeActors = 1;
+        int activeActors = 7;
         for (int i = 0; i < activeActors; i++) {
-            actors.add(new Actor(spawnPoints.remove(0), robotTextures.remove(0), flags));
+            actors.add(new Actor(spawnPoints.remove(0), robotTextures.remove(0)));
             setActorTexture(actors.get(i));
         }
         //actors.add(player);
-
+        deck = new Deck();
         dealCards();
         new Input(player, this);
     }
@@ -84,20 +86,8 @@ public class Game {
         }
     }
 
-    private void flags() {
-        flags = new HashMap<>();
-        for (int x = 0; x < board.getBoardWidth(); x++) {
-            for (int y = 0; y < board.getBoardHeight(); y++) {
-                if (boardObjects.tileHasFlag(new Position(x, y))) {
-                    Integer flagID = board.getBoardLayers().get("flag").getCell(x, y).getTile().getId();
-                    flags.put(flagID, new Position(x, y));
-                }
-            }
-        }
-    }
 
     private void dealCards() {
-        deck = new Deck();
         player.setDealtCards(deck.dealCards(Math.min(9, player.getHitPoints())));
         //player.setHand();
         //deck.setDiscardPile(player.getDealtCards());
@@ -187,10 +177,13 @@ public class Game {
     public void moveActorsByCards() {
         for (IActor actor : actors) {
             movedByCard(actor, actor.getCard(0).getType());
+        }
+        for (IActor actor : actors) {
             checkPosition(actor);
+        }
+        for (IActor actor : actors) {
             shootLaser(actor.getPos().getNextPos(actor.getDirection()), actor.getDirection());
         }
-
     }
 
     public void resetActors() {
@@ -265,6 +258,7 @@ public class Game {
             IActor actor = getActor(position);
             actor.handleDamage();
             System.out.println("A player got shot.");
+            System.out.println("Player now has:" + actor.getHitPoints() + " left.");
             return;
         }
         if (boardObjects.tileHasWall(position, position.getNextPos(direction), direction))
@@ -280,8 +274,6 @@ public class Game {
      * @param cardType card type
      */
     public void movedByCard(IActor actor, CardType cardType) {
-        removeActorTexture(actor);
-
         switch (cardType) {
             case MOVE1:
                 moveActor(actor, actor.getDirection());
@@ -304,11 +296,10 @@ public class Game {
             case TURNRIGHT:
                 actor.setDirection(actor.getDirection().turnRight());
                 break;
-            default:
-                actor.setPos(actor.getPos().getNextPos(actor.getDirection()));
+            default: // Move Back
+                moveActor(actor, actor.getDirection().reverseDirection());
                 break;
         }
-        setActorTexture(player);
     }
 
 
@@ -325,6 +316,7 @@ public class Game {
         }
         if (boardObjects.tileHasFlag(actor.getPos())) {
             System.out.println("player is standing on a flag!");
+            actor.isOnFlag(board.getBoardLayers().get("flag").getCell(actor.getPos().getX(), actor.getPos().getY()).getTile().getId());
         }
         if (boardObjects.hasConveyor(actor.getPos())) {
             conveyor(actor);

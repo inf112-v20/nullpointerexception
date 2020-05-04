@@ -17,7 +17,7 @@ public class PlayerTest {
     @Before
     public void init() {
         Map<Integer, Position> flags = new HashMap<>();
-        player = new Player(new Position(0, 0), null, flags);
+        player = new Player(new Position(0, 0), null);
     }
 
     /**

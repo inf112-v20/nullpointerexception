@@ -70,7 +70,6 @@ public class Deck {
             prior = random.nextInt(99);
         }
         priority.add(prior);
-        System.out.println(prior);
         return prior * 10;
     }
 
