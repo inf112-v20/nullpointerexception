@@ -45,6 +45,7 @@ public class GameScreen extends ScreenAdapter {
     private final Deck deck;
     private final Player player;
     private boolean roundStart = false;
+    private boolean chooseCards;
     private HashMap<Button, Card> cards;
 
     public GameScreen() {
@@ -72,6 +73,7 @@ public class GameScreen extends ScreenAdapter {
         Gdx.graphics.setContinuousRendering(false);
         //Gdx.graphics.requestRendering();
         drawDealtCards();
+        chooseCards = true;
     }
 
     /**
@@ -117,12 +119,14 @@ public class GameScreen extends ScreenAdapter {
         font.draw(GameRunner.batch, "x " + healthpoints, 210, board.getBoardHeight() * TILE_SIZE + 400 + health.getHeight()/2);
 
         //Her velger man 5 kort, trykk på venstre-nedre hjørne av kortet for å velge
-        if(hand.size() < 5) {
+
+        if(hand.size() < 5 && chooseCards) {
             displayCards();
-            for(Button button : cards.keySet()) {
+
+            for (Button button : cards.keySet()) {
                 if (button.buttonIsHovered(input)) {
                     if (Gdx.input.justTouched()) {
-                        if(!hand.contains(cards.get(button))) {
+                        if (!hand.contains(cards.get(button))) {
                             hand.add(cards.get(button));
                             dealtCards.remove(cards.get(button));
                             System.out.println("A card has been added to the hand");
@@ -171,7 +175,7 @@ public class GameScreen extends ScreenAdapter {
     }
 
     private void drawDealtCards(){
-       drawCards(dealtCards);
+        drawCards(dealtCards);
     }
 
     private void displayCards(){
@@ -196,9 +200,15 @@ public class GameScreen extends ScreenAdapter {
             game.movedByCard(player, hand.get(0).getType());
             hand.remove(0);
 
-            roundStart = false;
+            if(hand.isEmpty()){
+                chooseCards = true;
             }
+            else {
+                chooseCards = false;
+            }
+            roundStart = false;
         }
+    }
 
     private void drawCards(ArrayList<Card> list){
         cards = new HashMap<Button,Card>();
