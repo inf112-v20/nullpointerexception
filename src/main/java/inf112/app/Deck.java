@@ -6,7 +6,7 @@ import java.util.Random;
 
 public class Deck {
     private ArrayList<Card> deck;
-    private ArrayList<Integer> priority; // to keep track of used priorities
+    private final ArrayList<Integer> priority; // to keep track of used priorities
     private ArrayList<Card> discardPile;
 
     public Deck() {
@@ -66,10 +66,11 @@ public class Deck {
     private Integer assignPriority() {
         Random random = new Random();
         int prior = random.nextInt(99);
-        while (prior >= 10 && !priority.contains(prior)) {
+        while (prior <= 10 || priority.contains(prior)) {
             prior = random.nextInt(99);
         }
         priority.add(prior);
+        System.out.println(prior);
         return prior * 10;
     }
 

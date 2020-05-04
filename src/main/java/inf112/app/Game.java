@@ -43,12 +43,12 @@ public class Game {
         player = new Player(spawnPoints.remove(0), robotTextures.remove(4), flags);
         setActorTexture(player);
 
-        int activeActors = 7;
+        int activeActors = 1;
         for (int i = 0; i < activeActors; i++) {
             actors.add(new Actor(spawnPoints.remove(0), robotTextures.remove(0), flags));
             setActorTexture(actors.get(i));
         }
-        actors.add(player);
+        //actors.add(player);
 
         dealCards();
         new Input(player, this);
@@ -178,6 +178,7 @@ public class Game {
             checkPosition(actor);
             shootLaser(actor.getPos().getNextPos(actor.getDirection()), actor.getDirection());
         }
+        shootLaser(player.getPos().getNextPos(player.getDirection()), player.getDirection());
     }
 
     /**
@@ -189,6 +190,7 @@ public class Game {
             checkPosition(actor);
             shootLaser(actor.getPos().getNextPos(actor.getDirection()), actor.getDirection());
         }
+
     }
 
     public void resetActors() {
@@ -259,10 +261,8 @@ public class Game {
     private void shootLaser(Position position, Direction direction) {
         if (outOfBoard(position))
             return;
-        if (boardObjects.tileHasActor(position)) {
+        if (getActor(position) != null) {
             IActor actor = getActor(position);
-            if (actor == null)
-                return;
             actor.handleDamage();
             System.out.println("A player got shot.");
             return;
