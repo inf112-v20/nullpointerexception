@@ -39,8 +39,8 @@ public class GameScreen extends ScreenAdapter {
     private Button TURN180;
 
     private final OrthographicCamera camera;
-    private ArrayList<Card> dealtCards;
-    private ArrayList<Card> hand;
+    private final ArrayList<Card> dealtCards;
+    private final ArrayList<Card> hand;
     private final BitmapFont font = new BitmapFont();
     private final Deck deck;
     private final Player player;
@@ -144,7 +144,6 @@ public class GameScreen extends ScreenAdapter {
             round();
         }
         GameRunner.batch.end();
-
     }
 
     /**@Override public void show(){
@@ -194,30 +193,29 @@ public class GameScreen extends ScreenAdapter {
     /**
      * Method takes the first card out of hand and makes the move.
      */
-    private void round(){
-        while(roundStart){
+    private void round() {
+        int counter = 0;
+        while (roundStart) {
             drawHand();
             displayCards();
             player.resetDealtCards();
-            game.movedByCard(player, hand.get(0).getType());
-            game.moveActorsByCards();
-            hand.remove(0);
+            //game.movedByCard(player, hand.get(counter).getType());
+            //game.moveActorsByCards(counter);
+            //hand.remove(counter);
 
-            if(hand.isEmpty()){
-                chooseCards = true;
-                game.dealCards();
-                dealtCards = game.getPlayersDealtCards();
-                drawDealtCards();
-            }
-            else {
-                chooseCards = false;
-            }
+
+            //game.discard();
+            //game.dealCards();
+            //dealtCards = game.getPlayersDealtCards();
+            //drawDealtCards();
+            chooseCards = counter == 5;
             roundStart = false;
+            counter++;
         }
     }
 
     private void drawCards(ArrayList<Card> list){
-        cards = new HashMap<Button,Card>();
+        cards = new HashMap<>();
         int x = powerdown.getButtonX() + 300;
         for(Card card:list){
             x += 450;

@@ -23,8 +23,9 @@ public class Actor extends Player {
 
     @Override
     public void setHand() {
-        for (int i = 0; i < 5; i++) {
-            hand.add(dealtCards.remove(0));
+        int size = getDealtCards().size();
+        for (int i = 0; i < size; i++) {
+            hand.add(0, dealtCards.remove(0));
         }
     }
 
