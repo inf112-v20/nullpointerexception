@@ -109,6 +109,7 @@ public class Player implements IActor {
         return win;
     }
 
+
     @Override
     public Position checkpoint() {
         return currentPos = new Position(0, 0);
@@ -142,6 +143,7 @@ public class Player implements IActor {
 
     @Override
     public void setHand() {
+        hand = new ArrayList<Card>();
     }
 
     @Override
@@ -188,5 +190,10 @@ public class Player implements IActor {
     @Override
     public int getLifeCount() {
         return lifeCount;
+    }
+
+    @Override
+    public ArrayList<Card> getHand() {
+        return hand;
     }
 }

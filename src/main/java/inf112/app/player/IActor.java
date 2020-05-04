@@ -139,5 +139,8 @@ public interface IActor {
      */
     boolean win();
 
-
+    /**
+     * @return player sin hand
+     */
+    ArrayList<Card> getHand();
 }

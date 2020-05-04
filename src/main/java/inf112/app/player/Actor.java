@@ -1,6 +1,9 @@
 package inf112.app.player;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import inf112.app.Card;
+
+import java.util.ArrayList;
 
 
 public class Actor extends Player {
@@ -23,5 +26,10 @@ public class Actor extends Player {
         for (int i = 0; i < 5; i++) {
             hand.add(dealtCards.remove(0));
         }
+    }
+
+    @Override
+    public ArrayList<Card> getHand() {
+        return hand;
     }
 }

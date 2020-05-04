@@ -39,8 +39,8 @@ public class GameScreen extends ScreenAdapter {
     private Button TURN180;
 
     private final OrthographicCamera camera;
-    private final ArrayList<Card> dealtCards;
-    private final ArrayList<Card> hand = new ArrayList<>();
+    private ArrayList<Card> dealtCards;
+    private ArrayList<Card> hand;
     private final BitmapFont font = new BitmapFont();
     private final Deck deck;
     private final Player player;
@@ -60,6 +60,8 @@ public class GameScreen extends ScreenAdapter {
         yCard = board.getBoardHeight() * TILE_SIZE + 200;
         deck = game.getDeckObject();
         player = game.getPlayerObject();
+
+        hand = player.getHand();
 
         camera = new OrthographicCamera();
         camera.setToOrtho(false,
@@ -198,10 +200,14 @@ public class GameScreen extends ScreenAdapter {
             displayCards();
             player.resetDealtCards();
             game.movedByCard(player, hand.get(0).getType());
+            game.moveActorsByCards();
             hand.remove(0);
 
             if(hand.isEmpty()){
                 chooseCards = true;
+                game.dealCards();
+                dealtCards = game.getPlayersDealtCards();
+                drawDealtCards();
             }
             else {
                 chooseCards = false;

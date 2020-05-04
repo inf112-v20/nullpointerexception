@@ -87,7 +87,7 @@ public class Game {
     }
 
 
-    private void dealCards() {
+    public void dealCards() {
         player.setDealtCards(deck.dealCards(Math.min(9, player.getHitPoints())));
         //player.setHand();
         //deck.setDiscardPile(player.getDealtCards());
@@ -332,7 +332,7 @@ public class Game {
         }
         if (boardObjects.tileHasLaser(actor.getPos())) {
             System.out.println("player is standing on a laser!");
-            player.handleDamage();
+            actor.handleDamage();
         }
         if (boardObjects.tileHasRepair(actor.getPos())) {
             System.out.println("player is standing on a repair kit!");
