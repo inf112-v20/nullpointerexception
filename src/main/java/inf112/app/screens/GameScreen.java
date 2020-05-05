@@ -40,11 +40,12 @@ public class GameScreen extends ScreenAdapter {
 
     private final OrthographicCamera camera;
     private final ArrayList<Card> dealtCards;
-    private final ArrayList<Card> hand = new ArrayList<>();
+    private final ArrayList<Card> hand;
     private final BitmapFont font = new BitmapFont();
     private final Deck deck;
     private final Player player;
     private boolean roundStart = false;
+    private boolean chooseCards;
     private HashMap<Button, Card> cards;
 
     public GameScreen() {
@@ -60,6 +61,8 @@ public class GameScreen extends ScreenAdapter {
         deck = game.getDeckObject();
         player = game.getPlayerObject();
 
+        hand = player.getHand();
+
         camera = new OrthographicCamera();
         camera.setToOrtho(false,
                 board.getBoardWidth() * TILE_SIZE,
@@ -72,6 +75,7 @@ public class GameScreen extends ScreenAdapter {
         Gdx.graphics.setContinuousRendering(false);
         //Gdx.graphics.requestRendering();
         drawDealtCards();
+        chooseCards = true;
     }
 
     /**
@@ -117,12 +121,14 @@ public class GameScreen extends ScreenAdapter {
         font.draw(GameRunner.batch, "x " + healthpoints, 210, board.getBoardHeight() * TILE_SIZE + 400 + health.getHeight()/2);
 
         //Her velger man 5 kort, trykk på venstre-nedre hjørne av kortet for å velge
-        if(hand.size() < 5) {
+
+        if(hand.size() < 5 && chooseCards) {
             displayCards();
-            for(Button button : cards.keySet()) {
+
+            for (Button button : cards.keySet()) {
                 if (button.buttonIsHovered(input)) {
                     if (Gdx.input.justTouched()) {
-                        if(!hand.contains(cards.get(button))) {
+                        if (!hand.contains(cards.get(button))) {
                             hand.add(cards.get(button));
                             dealtCards.remove(cards.get(button));
                             System.out.println("A card has been added to the hand");
@@ -138,7 +144,6 @@ public class GameScreen extends ScreenAdapter {
             round();
         }
         GameRunner.batch.end();
-
     }
 
     /**@Override public void show(){
@@ -171,7 +176,7 @@ public class GameScreen extends ScreenAdapter {
     }
 
     private void drawDealtCards(){
-       drawCards(dealtCards);
+        drawCards(dealtCards);
     }
 
     private void displayCards(){
@@ -188,20 +193,29 @@ public class GameScreen extends ScreenAdapter {
     /**
      * Method takes the first card out of hand and makes the move.
      */
-    private void round(){
-        while(roundStart){
+    private void round() {
+        int counter = 0;
+        while (roundStart) {
             drawHand();
             displayCards();
             player.resetDealtCards();
-            game.movedByCard(player, hand.get(0).getType());
-            hand.remove(0);
+            //game.movedByCard(player, hand.get(counter).getType());
+            //game.moveActorsByCards(counter);
+            //hand.remove(counter);
 
+
+            //game.discard();
+            //game.dealCards();
+            //dealtCards = game.getPlayersDealtCards();
+            //drawDealtCards();
+            chooseCards = counter == 5;
             roundStart = false;
-            }
+            counter++;
         }
+    }
 
     private void drawCards(ArrayList<Card> list){
-        cards = new HashMap<Button,Card>();
+        cards = new HashMap<>();
         int x = powerdown.getButtonX() + 300;
         for(Card card:list){
             x += 450;

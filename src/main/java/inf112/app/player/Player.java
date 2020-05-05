@@ -109,6 +109,7 @@ public class Player implements IActor {
         return win;
     }
 
+
     @Override
     public Position checkpoint() {
         return currentPos = new Position(0, 0);
@@ -146,13 +147,7 @@ public class Player implements IActor {
 
     @Override
     public Card getCard(int index) {
-        if (hand.isEmpty()) {
-            System.out.println("No more cards");
-            return null;
-        }
-        Card card = hand.get(index);
-        hand.remove(index);
-        return card;
+        return hand.get(index);
     }
 
     @Override
@@ -188,5 +183,18 @@ public class Player implements IActor {
     @Override
     public int getLifeCount() {
         return lifeCount;
+    }
+
+    @Override
+    public ArrayList<Card> getHand() {
+        return hand;
+    }
+
+    public ArrayList<Card> discard() {
+        ArrayList<Card> discardList = new ArrayList<>();
+        for (int i = 0; i < Math.min(hitPoints, 5); i++) {
+            discardList.add(hand.remove(0));
+        }
+        return discardList;
     }
 }

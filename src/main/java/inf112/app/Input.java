@@ -9,6 +9,8 @@ public class Input extends InputAdapter {
     private final Player player;
     private final Game game;
 
+    private int counter = 0;
+
     public Input(Player player, Game game) {
         Gdx.input.setInputProcessor(this);
         this.player = player;
@@ -26,6 +28,7 @@ public class Input extends InputAdapter {
     @Override
     public boolean keyUp(int keycode) {
         Direction dir = player.getDirection();
+
         switch (keycode) {
             case com.badlogic.gdx.Input.Keys.RIGHT:
                 if (dir != Direction.EAST)
@@ -61,7 +64,8 @@ public class Input extends InputAdapter {
                 game.moveActors();
                 break;
             case com.badlogic.gdx.Input.Keys.X:
-                game.moveActorsByCards();
+                game.moveActorsByCards(counter % 5);
+                counter++;
                 break;
             case com.badlogic.gdx.Input.Keys.C:
                 game.resetActors();

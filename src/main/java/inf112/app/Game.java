@@ -87,7 +87,7 @@ public class Game {
     }
 
 
-    private void dealCards() {
+    public void dealCards() {
         player.setDealtCards(deck.dealCards(Math.min(9, player.getHitPoints())));
         //player.setHand();
         //deck.setDiscardPile(player.getDealtCards());
@@ -168,15 +168,19 @@ public class Game {
             checkPosition(actor);
             shootLaser(actor.getPos().getNextPos(actor.getDirection()), actor.getDirection());
         }
+        moveActor(player, player.getDirection());
+        checkPosition(player);
         shootLaser(player.getPos().getNextPos(player.getDirection()), player.getDirection());
     }
 
     /**
      * Moves all the actors
+     *
+     * @param counter counter
      */
-    public void moveActorsByCards() {
+    public void moveActorsByCards(int counter) {
         for (IActor actor : actors) {
-            movedByCard(actor, actor.getCard(0).getType());
+            movedByCard(actor, actor.getCard(counter).getType());
         }
         for (IActor actor : actors) {
             checkPosition(actor);
@@ -184,6 +188,13 @@ public class Game {
         for (IActor actor : actors) {
             shootLaser(actor.getPos().getNextPos(actor.getDirection()), actor.getDirection());
         }
+    }
+
+    public void discard() {
+        for (IActor actor : actors) {
+            actor.discard();
+        }
+        player.discard();
     }
 
     public void resetActors() {
@@ -317,6 +328,8 @@ public class Game {
         if (boardObjects.tileHasFlag(actor.getPos())) {
             System.out.println("player is standing on a flag!");
             actor.isOnFlag(board.getBoardLayers().get("flag").getCell(actor.getPos().getX(), actor.getPos().getY()).getTile().getId());
+            actor.repairHitPoints();
+            actor.setSpawnPoint(actor.getPos());
         }
         if (boardObjects.hasConveyor(actor.getPos())) {
             conveyor(actor);
@@ -337,6 +350,7 @@ public class Game {
         if (boardObjects.tileHasRepair(actor.getPos())) {
             System.out.println("player is standing on a repair kit!");
             actor.repairHitPoints();
+            actor.setSpawnPoint(actor.getPos());
         }
     }
 

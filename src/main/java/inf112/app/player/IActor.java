@@ -139,5 +139,13 @@ public interface IActor {
      */
     boolean win();
 
+    /**
+     * @return player sin hand
+     */
+    ArrayList<Card> getHand();
 
+    /**
+     * @return list of cards to discard
+     */
+    ArrayList<Card> discard();
 }

@@ -97,12 +97,11 @@ public class Deck {
      */
     public ArrayList<Card> dealCards(int n) {
         ArrayList<Card> cards = new ArrayList<>();
-        n = Math.max(n, 5);
+
         if (deck.size() < n)
             shuffleDiscardPile();
         for (int i = 0; i < n; i++) {
-            cards.add(deck.get(0));
-            deck.remove(0);
+            cards.add(deck.remove(0));
         }
         return cards;
     }
