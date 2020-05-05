@@ -124,9 +124,8 @@ public class GameScreen extends ScreenAdapter {
         font.draw(GameRunner.batch, "x " + healthpoints, 210, board.getBoardHeight() * TILE_SIZE + 400 + health.getHeight()/2);
 
         //Her velger man 5 kort, trykk på venstre-nedre hjørne av kortet for å velge
-
+        displayCards();
         if(hand.size() < 5 && chooseCards) {
-            displayCards();
 
             for (Button button : cards.keySet()) {
                 if (button.buttonIsHovered(input)) {
@@ -143,12 +142,24 @@ public class GameScreen extends ScreenAdapter {
             }
         } else {
             deck.setDiscardPile(dealtCards);
-            if(start_round.buttonIsHovered(input)){
-                if(Gdx.input.justTouched()){
-                    System.out.println("Starting round!");
-                    round();
+            drawHand();
+            player.resetDealtCards();
+            //int counter = 0;
+            //while(counter < 5) {
+                if(start_round.buttonIsHovered(input)){
+                    if(Gdx.input.justTouched()){
+                        System.out.println("Starting round!");
+                        round();
+                        //counter++;
+                        game.discard();
+                        game.dealCards();
+                        dealtCards = game.getPlayersDealtCards();
+                        drawDealtCards();
+                        chooseCards = true;
+                    //}
                 }
             }
+
         }
         GameRunner.batch.end();
     }
@@ -201,27 +212,17 @@ public class GameScreen extends ScreenAdapter {
      * Method takes the first card out of hand and makes the move.
      */
     private void round() {
-        int counter = 0;
-        while(counter < 5) {
-            drawHand();
-            displayCards();
-            player.resetDealtCards();
-            game.movedByCard(player, hand.get(counter).getType());
+
+            game.movedByCard(player, hand.get(0).getType());
             //game.moveActorsByCards(counter);
-            hand.remove(counter);
+            //hand.remove(count);
 
 
             //game.discard();
             //game.dealCards();
             //dealtCards = game.getPlayersDealtCards();
             //drawDealtCards();
-            counter++;
-        }
-        chooseCards = true;
-        game.discard();
-        game.dealCards();
-        dealtCards = game.getPlayersDealtCards();
-        drawDealtCards();
+
     }
 
     private void drawCards(ArrayList<Card> list){
