@@ -192,9 +192,9 @@ public class Player implements IActor {
 
     public ArrayList<Card> discard() {
         ArrayList<Card> discardList = new ArrayList<>();
-        for (int i = 0; i < Math.min(hitPoints, 5); i++) {
+        //for (int i = 0; i < Math.min(hitPoints, 5); i++) {
             discardList.add(hand.remove(0));
-        }
+        //}
         return discardList;
     }
 }

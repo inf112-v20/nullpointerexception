@@ -145,21 +145,22 @@ public class GameScreen extends ScreenAdapter {
             drawHand();
             player.resetDealtCards();
             //int counter = 0;
-            //while(counter < 5) {
+            for(int i = 0; i < 5;i++){
                 if(start_round.buttonIsHovered(input)){
                     if(Gdx.input.justTouched()){
                         System.out.println("Starting round!");
                         round();
+                        //drawHand();
                         //counter++;
-                        game.discard();
-                        game.dealCards();
-                        dealtCards = game.getPlayersDealtCards();
-                        drawDealtCards();
-                        chooseCards = true;
-                    //}
+
+                    }
                 }
             }
-
+            //game.dealCards();
+            player.setDealtCards(deck.dealCards(Math.min(9, player.getHitPoints())));
+            dealtCards = game.getPlayersDealtCards();
+            drawDealtCards();
+            chooseCards = true;
         }
         GameRunner.batch.end();
     }
@@ -215,10 +216,9 @@ public class GameScreen extends ScreenAdapter {
 
             game.movedByCard(player, hand.get(0).getType());
             //game.moveActorsByCards(counter);
-            //hand.remove(count);
+            //hand.remove(0);
+            game.discard();
 
-
-            //game.discard();
             //game.dealCards();
             //dealtCards = game.getPlayersDealtCards();
             //drawDealtCards();
