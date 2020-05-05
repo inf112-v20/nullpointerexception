@@ -1,9 +1,6 @@
 package inf112.app.screens;
 
-import com.badlogic.gdx.ApplicationAdapter;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.ScreenAdapter;
+import com.badlogic.gdx.*;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -20,7 +17,7 @@ import inf112.app.player.Player;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class GameScreen extends ApplicationAdapter{
+public class GameScreen extends InputAdapter implements Screen {
 
     private static final int TILE_SIZE = 300;
     private final OrthogonalTiledMapRenderer renderer;
@@ -49,7 +46,8 @@ public class GameScreen extends ApplicationAdapter{
     private final Player player;
     private boolean chooseCards;
     private HashMap<Button, Card> cards;
-    private boolean gamerunning;
+    private boolean roundstart;
+
 
     public GameScreen() {
         game = new Game();
@@ -76,30 +74,59 @@ public class GameScreen extends ApplicationAdapter{
 
         renderer = new OrthogonalTiledMapRenderer(board.getBoard());
         renderer.setView(camera);
+        Gdx.input.setInputProcessor(this);
 
         Gdx.graphics.setContinuousRendering(false);
         Gdx.graphics.requestRendering();
-        drawDealtCards();
         chooseCards = true;
-        gamerunning = true;
-        loop();
+        roundstart = false;
     }
 
+    @Override
+    public boolean touchDown(int screenX, int screenY, int pointer, int button){
+        Vector3 input = new Vector3(screenX, screenY, 0);
+        camera.unproject(input);
+        if(start_round.buttonIsHovered(input) && !chooseCards) {
+            roundstart = true;
+            System.out.println("Starting round!");
+            round();
 
+        } else {
+            if(chooseCards) {
+                for (Button b : cards.keySet()) {
+                    if (b.buttonIsHovered(input)) {
+                        if (!hand.contains(cards.get(b))) {
+                            hand.add(cards.get(b));
+                            dealtCards.remove(cards.get(b));
+                            System.out.println("A card has been added to the hand");
+                            String c = cards.get(b).toString();
+                            System.out.println(c);
+                        } else {
+                            System.out.println("hand is full/has that card");
+                        }
+                    }
+
+                }
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public void show() {
+
+    }
 
     /**
      * A loop method which renders the changes on the screen
      * Shows the player default/winning/dying state on the board
      */
     @Override
-    public void render() {
+    public void render(float v) {
         Gdx.gl.glClearColor(1, 1, 1, 1);
         Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT);
 
         renderer.render();
-        /**stage.act(v);
-         stage.draw();
-         **/
 
         GameRunner.batch.setProjectionMatrix(camera.combined);
         int lifepoints = game.getPlayersLifeCount();
@@ -116,86 +143,32 @@ public class GameScreen extends ApplicationAdapter{
         font.draw(GameRunner.batch, "x " + lifepoints, 170, board.getBoardHeight() * TILE_SIZE + 50 + lifes.getHeight() / 2);
         font.draw(GameRunner.batch, "x " + healthpoints, 210, board.getBoardHeight() * TILE_SIZE + 400 + health.getHeight()/2);
 
+        if(hand.isEmpty()) {
+            chooseCards = true;
+            //player.resetDealtCards();
+            //player.setDealtCards(deck.dealCards(Math.min(9, player.getHitPoints())));
+            //dealtCards = game.getPlayersDealtCards();
+           }
+
+        else if(hand.size()==5){
+            deck.setDiscardPile(dealtCards);
+            chooseCards = false;
+        }
+
+
+        if(chooseCards){
+            drawDealtCards();
+        } else {
+            drawHand();
+        }
         displayCards();
+
 
         GameRunner.batch.end();
     }
 
 
-    private void loop(){
-        while(gamerunning){
-            Gdx.graphics.requestRendering();
-            //Current mouse position on Y-axis
-            int mousePosition_Y = Gdx.input.getY();
-            //Current mouse position on X-axis
-            int mousePosition_X = Gdx.input.getX();
 
-            /**
-             * Vector point of a current mouse position
-             * unprojecting the mouse position so that it matches the worlds coordinates.
-             * (Default mouse position at Y-axis in Gdx.input is the opposite of our worlds Y-axis coords, thats why
-             * we need to unproject it)
-             */
-            Vector3 input = new Vector3(mousePosition_X, mousePosition_Y, 0);
-            camera.unproject(input);
-
-            //Her velger man 5 kort, trykk på venstre-nedre hjørne av kortet for å velge
-
-            if(hand.size() < 5 && chooseCards) {
-                for (Button button : cards.keySet()) {
-                    if (button.buttonIsHovered(input)) {
-                        if (Gdx.input.justTouched()) {
-                            if (!hand.contains(cards.get(button))) {
-                                hand.add(cards.get(button));
-                                dealtCards.remove(cards.get(button));
-                                System.out.println("A card has been added to the hand");
-                                String c = cards.get(button).toString();
-                                System.out.println(c);
-                            }
-                        }
-                    }
-                }
-            } else {
-                deck.setDiscardPile(dealtCards);
-                drawHand();
-                player.resetDealtCards();
-                int counter = 0;
-                    while(counter < 5){
-                    if(start_round.buttonIsHovered(input)){
-                        if(Gdx.input.justTouched()){
-                            System.out.println("Starting round!");
-                            round();
-                            //drawHand();
-                            counter++;
-
-                        }
-                    }
-                }
-                //game.dealCards();
-                player.setDealtCards(deck.dealCards(Math.min(9, player.getHitPoints())));
-                dealtCards = game.getPlayersDealtCards();
-                drawDealtCards();
-                chooseCards = true;
-            }
-
-        }
-
-    }
-
-
-    /**@Override public void show(){
-    stage = new Stage();
-    skin = new Skin();
-    table = new Table();
-    table.setBounds(0,board.getBoardHeight() + 1000,board.getBoardWidth(),1000);
-    button = new TextButton("HI",skin);
-    table.add(button);
-    stage.addActor(table);
-    }
-     **/
-    /**
-     * Called when the Application is destroyed. Preceded by a call to pause().
-     */
     @Override
     public void dispose() {
         renderer.dispose();
@@ -287,5 +260,28 @@ public class GameScreen extends ApplicationAdapter{
             }
         }
     }
+
+    @Override
+    public void resize(int i, int i1) {
+
+    }
+
+    @Override
+    public void pause() {
+
+    }
+
+    @Override
+    public void resume() {
+
+    }
+
+    @Override
+    public void hide() {
+
+    }
+
+
+
 
 }

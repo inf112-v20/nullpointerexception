@@ -53,7 +53,7 @@ public class Game {
         //actors.add(player);
         deck = new Deck();
         dealCards();
-        new Input(player, this);
+        //new Input(player, this);
     }
 
 
