@@ -46,7 +46,7 @@ public class GameScreen extends InputAdapter implements Screen {
     private final Player player;
     private boolean chooseCards;
     private HashMap<Button, Card> cards;
-    private boolean roundstart;
+
 
 
     public GameScreen() {
@@ -78,8 +78,7 @@ public class GameScreen extends InputAdapter implements Screen {
 
         Gdx.graphics.setContinuousRendering(false);
         Gdx.graphics.requestRendering();
-        chooseCards = true;
-        roundstart = false;
+        //chooseCards = true;
     }
 
     @Override
@@ -87,7 +86,6 @@ public class GameScreen extends InputAdapter implements Screen {
         Vector3 input = new Vector3(screenX, screenY, 0);
         camera.unproject(input);
         if(start_round.buttonIsHovered(input) && !chooseCards) {
-            roundstart = true;
             System.out.println("Starting round!");
             round();
 
@@ -145,16 +143,19 @@ public class GameScreen extends InputAdapter implements Screen {
 
         if(hand.isEmpty()) {
             chooseCards = true;
-            //player.resetDealtCards();
-            //player.setDealtCards(deck.dealCards(Math.min(9, player.getHitPoints())));
-            //dealtCards = game.getPlayersDealtCards();
+            System.out.println("choosing cards!");
+
            }
 
-        else if(hand.size()==5){
-            deck.setDiscardPile(dealtCards);
+        if(hand.size()==5){
             chooseCards = false;
-        }
+            deck.setDiscardPile(dealtCards);
+            player.resetDealtCards();
+            player.setDealtCards(deck.dealCards(Math.min(9, player.getHitPoints())));
+            dealtCards = game.getPlayersDealtCards();
+            System.out.println("round starts, press start to move a player");
 
+        }
 
         if(chooseCards){
             drawDealtCards();
@@ -206,7 +207,7 @@ public class GameScreen extends InputAdapter implements Screen {
     private void round() {
 
             game.movedByCard(player, hand.get(0).getType());
-            //game.moveActorsByCards(counter);
+            game.moveActorsByCards(0);
             //hand.remove(0);
             game.discard();
 
