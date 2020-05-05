@@ -37,14 +37,14 @@ public class GameScreen extends ScreenAdapter {
     private Button TURNLEFT;
     private Button BACKUP;
     private Button TURN180;
+    private Button start_round;
 
     private final OrthographicCamera camera;
-    private final ArrayList<Card> dealtCards;
-    private final ArrayList<Card> hand;
+    private ArrayList<Card> dealtCards;
+    private ArrayList<Card> hand;
     private final BitmapFont font = new BitmapFont();
     private final Deck deck;
     private final Player player;
-    private boolean roundStart = false;
     private boolean chooseCards;
     private HashMap<Button, Card> cards;
 
@@ -54,6 +54,8 @@ public class GameScreen extends ScreenAdapter {
         dealtCards = game.getPlayersDealtCards();
         powerdown = new Button("powerdown.png");
         powerdown.setButtonCoords(0, board.getBoardHeight() * TILE_SIZE + 500);
+        start_round = new Button("start_round.png");
+       start_round.setButtonCoords(powerdown.getButtonTexture().getWidth() + 250, board.getBoardHeight() * TILE_SIZE + 550);
         lifes = new Texture("life.png");
         health = new Texture("healthpoints.png");
         yPriority = board.getBoardHeight() * TILE_SIZE + 800;
@@ -113,6 +115,7 @@ public class GameScreen extends ScreenAdapter {
 
 
         GameRunner.batch.draw(powerdown.getButtonTexture(), powerdown.getButtonX(), powerdown.getButtonY(), 350, 350);
+        GameRunner.batch.draw(start_round.getButtonTexture(), start_round.getButtonX(), start_round.getButtonY(), 270, 250);
         GameRunner.batch.draw(lifes, 20, board.getBoardHeight() * TILE_SIZE + 50, 150, 150);
         GameRunner.batch.draw(health, 0, board.getBoardHeight() * TILE_SIZE + 50 + 200, 220, 220);
         font.getData().setScale(7, 7);
@@ -140,8 +143,12 @@ public class GameScreen extends ScreenAdapter {
             }
         } else {
             deck.setDiscardPile(dealtCards);
-            roundStart = true;
-            round();
+            if(start_round.buttonIsHovered(input)){
+                if(Gdx.input.justTouched()){
+                    System.out.println("Starting round!");
+                    round();
+                }
+            }
         }
         GameRunner.batch.end();
     }
@@ -195,23 +202,26 @@ public class GameScreen extends ScreenAdapter {
      */
     private void round() {
         int counter = 0;
-        while (roundStart) {
+        while(counter < 5) {
             drawHand();
             displayCards();
             player.resetDealtCards();
-            //game.movedByCard(player, hand.get(counter).getType());
+            game.movedByCard(player, hand.get(counter).getType());
             //game.moveActorsByCards(counter);
-            //hand.remove(counter);
+            hand.remove(counter);
 
 
             //game.discard();
             //game.dealCards();
             //dealtCards = game.getPlayersDealtCards();
             //drawDealtCards();
-            chooseCards = counter == 5;
-            roundStart = false;
             counter++;
         }
+        chooseCards = true;
+        game.discard();
+        game.dealCards();
+        dealtCards = game.getPlayersDealtCards();
+        drawDealtCards();
     }
 
     private void drawCards(ArrayList<Card> list){
