@@ -47,6 +47,7 @@ public class GameScreen extends ScreenAdapter {
     private final Player player;
     private boolean chooseCards;
     private HashMap<Button, Card> cards;
+    private boolean gamerunning;
 
     public GameScreen() {
         game = new Game();
@@ -75,9 +76,11 @@ public class GameScreen extends ScreenAdapter {
         renderer.setView(camera);
 
         Gdx.graphics.setContinuousRendering(false);
-        //Gdx.graphics.requestRendering();
+        Gdx.graphics.requestRendering();
         drawDealtCards();
         chooseCards = true;
+        gamerunning = true;
+        loop();
     }
 
     /**
@@ -99,20 +102,6 @@ public class GameScreen extends ScreenAdapter {
         int healthpoints = game.getPlayersHitPoints();
         GameRunner.batch.begin();
 
-        //Current mouse position on Y-axis
-        int mousePosition_Y = Gdx.input.getY();
-        //Current mouse position on X-axis
-        int mousePosition_X = Gdx.input.getX();
-
-        /**
-         * Vector point of a current mouse position
-         * unprojecting the mouse position so that it matches the worlds coordinates.
-         * (Default mouse position at Y-axis in Gdx.input is the opposite of our worlds Y-axis coords, thats why
-         * we need to unproject it)
-         */
-        Vector3 input = new Vector3(mousePosition_X, mousePosition_Y, 0);
-        camera.unproject(input);
-
 
         GameRunner.batch.draw(powerdown.getButtonTexture(), powerdown.getButtonX(), powerdown.getButtonY(), 350, 350);
         GameRunner.batch.draw(start_round.getButtonTexture(), start_round.getButtonX(), start_round.getButtonY(), 270, 250);
@@ -123,47 +112,70 @@ public class GameScreen extends ScreenAdapter {
         font.draw(GameRunner.batch, "x " + lifepoints, 170, board.getBoardHeight() * TILE_SIZE + 50 + lifes.getHeight() / 2);
         font.draw(GameRunner.batch, "x " + healthpoints, 210, board.getBoardHeight() * TILE_SIZE + 400 + health.getHeight()/2);
 
-        //Her velger man 5 kort, trykk på venstre-nedre hjørne av kortet for å velge
-        displayCards();
-        if(hand.size() < 5 && chooseCards) {
 
-            for (Button button : cards.keySet()) {
-                if (button.buttonIsHovered(input)) {
-                    if (Gdx.input.justTouched()) {
-                        if (!hand.contains(cards.get(button))) {
-                            hand.add(cards.get(button));
-                            dealtCards.remove(cards.get(button));
-                            System.out.println("A card has been added to the hand");
-                            String c = cards.get(button).toString();
-                            System.out.println(c);
+        GameRunner.batch.end();
+    }
+
+    private void loop(){
+        while(gamerunning){
+            Gdx.graphics.requestRendering();
+            //Current mouse position on Y-axis
+            int mousePosition_Y = Gdx.input.getY();
+            //Current mouse position on X-axis
+            int mousePosition_X = Gdx.input.getX();
+
+            /**
+             * Vector point of a current mouse position
+             * unprojecting the mouse position so that it matches the worlds coordinates.
+             * (Default mouse position at Y-axis in Gdx.input is the opposite of our worlds Y-axis coords, thats why
+             * we need to unproject it)
+             */
+            Vector3 input = new Vector3(mousePosition_X, mousePosition_Y, 0);
+            camera.unproject(input);
+
+            //Her velger man 5 kort, trykk på venstre-nedre hjørne av kortet for å velge
+            displayCards();
+            if(hand.size() < 5 && chooseCards) {
+                for (Button button : cards.keySet()) {
+                    if (button.buttonIsHovered(input)) {
+                        if (Gdx.input.justTouched()) {
+                            if (!hand.contains(cards.get(button))) {
+                                hand.add(cards.get(button));
+                                dealtCards.remove(cards.get(button));
+                                System.out.println("A card has been added to the hand");
+                                String c = cards.get(button).toString();
+                                System.out.println(c);
+                            }
                         }
                     }
                 }
-            }
-        } else {
-            deck.setDiscardPile(dealtCards);
-            drawHand();
-            player.resetDealtCards();
-            //int counter = 0;
-            for(int i = 0; i < 5;i++){
-                if(start_round.buttonIsHovered(input)){
-                    if(Gdx.input.justTouched()){
-                        System.out.println("Starting round!");
-                        round();
-                        //drawHand();
-                        //counter++;
+            } else {
+                deck.setDiscardPile(dealtCards);
+                drawHand();
+                player.resetDealtCards();
+                int counter = 0;
+                    while(counter < 5){
+                    if(start_round.buttonIsHovered(input)){
+                        if(Gdx.input.justTouched()){
+                            System.out.println("Starting round!");
+                            round();
+                            //drawHand();
+                            counter++;
 
+                        }
                     }
                 }
+                //game.dealCards();
+                player.setDealtCards(deck.dealCards(Math.min(9, player.getHitPoints())));
+                dealtCards = game.getPlayersDealtCards();
+                drawDealtCards();
+                chooseCards = true;
             }
-            //game.dealCards();
-            player.setDealtCards(deck.dealCards(Math.min(9, player.getHitPoints())));
-            dealtCards = game.getPlayersDealtCards();
-            drawDealtCards();
-            chooseCards = true;
+
         }
-        GameRunner.batch.end();
+
     }
+
 
     /**@Override public void show(){
     stage = new Stage();
