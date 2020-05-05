@@ -328,6 +328,8 @@ public class Game {
         if (boardObjects.tileHasFlag(actor.getPos())) {
             System.out.println("player is standing on a flag!");
             actor.isOnFlag(board.getBoardLayers().get("flag").getCell(actor.getPos().getX(), actor.getPos().getY()).getTile().getId());
+            actor.repairHitPoints();
+            actor.setSpawnPoint(actor.getPos());
         }
         if (boardObjects.hasConveyor(actor.getPos())) {
             conveyor(actor);
@@ -348,6 +350,7 @@ public class Game {
         if (boardObjects.tileHasRepair(actor.getPos())) {
             System.out.println("player is standing on a repair kit!");
             actor.repairHitPoints();
+            actor.setSpawnPoint(actor.getPos());
         }
     }
 
