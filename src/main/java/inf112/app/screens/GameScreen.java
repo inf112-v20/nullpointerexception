@@ -1,6 +1,8 @@
 package inf112.app.screens;
 
+import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL30;
@@ -18,7 +20,7 @@ import inf112.app.player.Player;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class GameScreen extends ScreenAdapter {
+public class GameScreen extends ApplicationAdapter{
 
     private static final int TILE_SIZE = 300;
     private final OrthogonalTiledMapRenderer renderer;
@@ -83,12 +85,14 @@ public class GameScreen extends ScreenAdapter {
         loop();
     }
 
+
+
     /**
      * A loop method which renders the changes on the screen
      * Shows the player default/winning/dying state on the board
      */
     @Override
-    public void render(float v) {
+    public void render() {
         Gdx.gl.glClearColor(1, 1, 1, 1);
         Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT);
 
@@ -112,9 +116,11 @@ public class GameScreen extends ScreenAdapter {
         font.draw(GameRunner.batch, "x " + lifepoints, 170, board.getBoardHeight() * TILE_SIZE + 50 + lifes.getHeight() / 2);
         font.draw(GameRunner.batch, "x " + healthpoints, 210, board.getBoardHeight() * TILE_SIZE + 400 + health.getHeight()/2);
 
+        displayCards();
 
         GameRunner.batch.end();
     }
+
 
     private void loop(){
         while(gamerunning){
@@ -134,7 +140,7 @@ public class GameScreen extends ScreenAdapter {
             camera.unproject(input);
 
             //Her velger man 5 kort, trykk på venstre-nedre hjørne av kortet for å velge
-            displayCards();
+
             if(hand.size() < 5 && chooseCards) {
                 for (Button button : cards.keySet()) {
                     if (button.buttonIsHovered(input)) {
