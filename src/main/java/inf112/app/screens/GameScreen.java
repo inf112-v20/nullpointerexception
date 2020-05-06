@@ -90,14 +90,14 @@ public class GameScreen extends InputAdapter implements Screen {
     public boolean touchDown(int screenX, int screenY, int pointer, int button){
         Vector3 input = new Vector3(screenX, screenY, 0);
         camera.unproject(input);
-        if(start_round.buttonIsHovered(input) && !chooseCards) {
+        if(start_round.buttonIsHovered(input,270,250) && !chooseCards) {
             System.out.println("Starting round!");
             round();
 
         } else {
             if(chooseCards) {
                 for (Button b : cards.keySet()) {
-                    if (b.buttonIsHovered(input)) {
+                    if (b.buttonIsHovered(input,GameRunner.CARD_WIDTH,GameRunner.CARD_HEIGHT)) {
                         if (!hand.contains(cards.get(b))) {
                             tempHand.add(cards.get(b));
                             dealtCards.remove(cards.get(b));

@@ -41,12 +41,8 @@ public class Button {
      * @param input  input
      * @return true or false
      */
-    public boolean buttonIsHovered(Vector3 input) {
-        return input.x < this.getButtonX() + this.getButtonTexture().getWidth() && input.x > this.getButtonX()
-                && input.y < this.getButtonY() + this.getButtonTexture().getHeight() && input.y > this.getButtonY();
-    }
-    public boolean buttonIsHovered(int x, int y) {
-        return x < this.getButtonX() + this.getButtonTexture().getWidth() && x > this.getButtonX()
-                && y < this.getButtonY() + this.getButtonTexture().getHeight() && y > this.getButtonY();
+    public boolean buttonIsHovered(Vector3 input, int width, int height) {
+        return input.x < this.getButtonX() + width && input.x > this.getButtonX()
+                && input.y < this.getButtonY() + height && input.y > this.getButtonY();
     }
 }
