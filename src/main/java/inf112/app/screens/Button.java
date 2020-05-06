@@ -45,4 +45,8 @@ public class Button {
         return input.x < this.getButtonX() + this.getButtonTexture().getWidth() && input.x > this.getButtonX()
                 && input.y < this.getButtonY() + this.getButtonTexture().getHeight() && input.y > this.getButtonY();
     }
+    public boolean buttonIsHovered(int x, int y) {
+        return x < this.getButtonX() + this.getButtonTexture().getWidth() && x > this.getButtonX()
+                && y < this.getButtonY() + this.getButtonTexture().getHeight() && y > this.getButtonY();
+    }
 }

@@ -65,7 +65,6 @@ public class Player implements IActor {
             loseLife();
             System.out.println("Player lost a life.");
         } else {
-            System.out.println("Player lost one hit point.");
             hitPoints -= 1;
         }
     }
@@ -89,8 +88,6 @@ public class Player implements IActor {
         System.out.println("Player has max hit points.");
 
     }
-
-
 
     @Override
     public void isOnFlag(Integer tileID) {
@@ -197,4 +194,6 @@ public class Player implements IActor {
         }
         return discardList;
     }
+
+
 }
