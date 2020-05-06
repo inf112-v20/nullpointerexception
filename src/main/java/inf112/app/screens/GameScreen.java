@@ -49,7 +49,7 @@ public class GameScreen extends InputAdapter implements Screen {
     private boolean chooseCards;
     private HashMap<Button, Card> cards;
     private boolean startOfRound = true;
-
+    private int counter = 0;
 
 
     public GameScreen() {
@@ -89,9 +89,15 @@ public class GameScreen extends InputAdapter implements Screen {
         Vector3 input = new Vector3(screenX, screenY, 0);
         camera.unproject(input);
         if(start_round.buttonIsHovered(input) && !chooseCards) {
-            System.out.println("Starting round!");
-            round();
-
+             if((counter+1) < 5) {
+                 System.out.println("Starting round!");
+                round(counter);
+                counter++;
+            } else {
+                 counter = 0;
+                 startOfRound = true;
+                 game.discard();
+             }
         } else {
             if(chooseCards) {
                 for (Button b : cards.keySet()) {
@@ -219,21 +225,9 @@ public class GameScreen extends InputAdapter implements Screen {
     /**
      * Method takes the first card out of hand and makes the move.
      */
-    private void round() {
+    private void round(int counter) {
 
-        int counter = 0;
-
-        while (counter < 5) {
-            game.moveActorsByCards(counter);
-            counter++;
-        }
-        game.discard();
-
-        //game.dealCards();
-        //dealtCards = game.getPlayersDealtCards();
-        //drawDealtCards();
-
-        startOfRound = true;
+        game.moveActorsByCards(counter);
     }
 
     private void drawCards(ArrayList<Card> list){
