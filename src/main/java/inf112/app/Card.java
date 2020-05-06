@@ -2,9 +2,8 @@ package inf112.app;
 
 
 public class Card {
-    private int priority;
-    private CardType type;
-
+    private final Integer priority;
+    private final CardType type;
 
     public Card(int priority, CardType type) {
         this.priority = priority;

@@ -65,7 +65,6 @@ public class Player implements IActor {
             loseLife();
             System.out.println("Player lost a life.");
         } else {
-            System.out.println("Player lost one hit point.");
             hitPoints -= 1;
         }
     }
@@ -89,8 +88,6 @@ public class Player implements IActor {
         System.out.println("Player has max hit points.");
 
     }
-
-
 
     @Override
     public void isOnFlag(Integer tileID) {
@@ -192,9 +189,11 @@ public class Player implements IActor {
 
     public ArrayList<Card> discard() {
         ArrayList<Card> discardList = new ArrayList<>();
-        //for (int i = 0; i < Math.min(hitPoints, 5); i++) {
+        for (int i = 0; i < Math.min(hitPoints, 5); i++) {
             discardList.add(hand.remove(0));
-        //}
+        }
         return discardList;
     }
+
+
 }

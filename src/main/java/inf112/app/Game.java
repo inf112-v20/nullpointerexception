@@ -9,7 +9,6 @@ import inf112.app.player.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 
 public class Game {
     public static final float TILE_SIZE = 300;
@@ -24,7 +23,6 @@ public class Game {
 
     private List<TextureRegion> robotTextures;
     private ArrayList<Position> spawnPoints;
-    private Map<Integer, Position> flags;
 
     /**
      * Initializing a board, camera, renderer and player in addition to creating the needed TiledMap layers.
@@ -50,9 +48,8 @@ public class Game {
             actors.add(new Actor(spawnPoints.remove(0), robotTextures.remove(0)));
             setActorTexture(actors.get(i));
         }
-        //actors.add(player);
+
         deck = new Deck();
-        dealCards();
         //new Input(player, this);
     }
 
@@ -89,10 +86,6 @@ public class Game {
 
     public void dealCards() {
         player.setDealtCards(deck.dealCards(Math.min(9, player.getHitPoints())));
-        //player.setHand();
-        //deck.setDiscardPile(player.getDealtCards());
-        //player.resetDealtCards();
-
         for (IActor actor : actors) {
             actor.setDealtCards(deck.dealCards(Math.min(9, actor.getHitPoints())));
             actor.setHand();
@@ -176,11 +169,13 @@ public class Game {
     /**
      * Moves all the actors
      *
-     * @param counter counter
+     * @param i counter
      */
-    public void moveActorsByCards(int counter) {
+    public void moveActorsByCards(int i) {
+        actors.add(player);
+
         for (IActor actor : actors) {
-            movedByCard(actor, actor.getCard(counter).getType());
+            movedByCard(actor, actor.getCard(i).getType());
         }
         for (IActor actor : actors) {
             checkPosition(actor);
@@ -188,13 +183,14 @@ public class Game {
         for (IActor actor : actors) {
             shootLaser(actor.getPos().getNextPos(actor.getDirection()), actor.getDirection());
         }
+        actors.remove(player);
     }
 
     public void discard() {
         for (IActor actor : actors) {
-            actor.discard();
+            deck.setDiscardPile(actor.discard());
         }
-        player.discard();
+        deck.setDiscardPile(player.discard());
     }
 
     public void resetActors() {
@@ -215,7 +211,6 @@ public class Game {
         Position newPos = new Position(actor.getPos().getNextPos(direction));
 
         if (!canMove(actor, newPos, direction)) {
-            System.out.println("Something is blocking");
             return false;
         }
 
@@ -227,14 +222,12 @@ public class Game {
                 return false;
             else if (!moveActor(otherActor, direction)) {
                 setActorTexture(actor);
-                System.out.println("didnt move");
                 return false;
             }
         }
 
         if (outOfBoard(newPos)) {
             actor.loseLife();
-            System.out.println("Actor respawned");
             spawnActor(actor);
         } else
             actor.setPos(newPos);
@@ -246,7 +239,6 @@ public class Game {
     private void spawnActor(IActor actor) {
         if (getActor(actor.getSpawnPoint()) == null) {
             actor.setPos(actor.getSpawnPoint());
-            System.out.println("on spawnpoint");
         } else {
             ArrayList<Position> spawnPositions = new ArrayList<>();
             for (Direction dir : Direction.values()) {
@@ -255,7 +247,6 @@ public class Game {
                 }
             }
             actor.setPos(spawnPositions.get(0));
-            System.out.println("Next to spawnpoint");
         }
     }
 
@@ -268,7 +259,6 @@ public class Game {
         if (getActor(position) != null) {
             IActor actor = getActor(position);
             actor.handleDamage();
-            System.out.println("A player got shot.");
             System.out.println("Player now has:" + actor.getHitPoints() + " left.");
             return;
         }
@@ -322,11 +312,9 @@ public class Game {
     public void checkPosition(IActor actor) {
         if (boardObjects.tileHasHole(actor.getPos())) {
             actor.setPos(actor.getSpawnPoint());
-            System.out.println("player stepped in a hole!");
             return;
         }
         if (boardObjects.tileHasFlag(actor.getPos())) {
-            System.out.println("player is standing on a flag!");
             actor.isOnFlag(board.getBoardLayers().get("flag").getCell(actor.getPos().getX(), actor.getPos().getY()).getTile().getId());
             actor.repairHitPoints();
             actor.setSpawnPoint(actor.getPos());
@@ -336,7 +324,6 @@ public class Game {
             if (boardObjects.hasExpressConveyor(actor.getPos())) {
                 conveyor(actor);
             }
-            System.out.println("PLayer was moved by a conveyorbelt");
         }
         if (boardObjects.tileHasTurnWheel(actor.getPos(), actor.getDirection())) {
             System.out.println("player was turned by a turnwheel");
@@ -344,11 +331,9 @@ public class Game {
                     actor.getPos().getX(), actor.getPos().getY()).getTile().getId() == 53, actor);
         }
         if (boardObjects.tileHasLaser(actor.getPos())) {
-            System.out.println("player is standing on a laser!");
             actor.handleDamage();
         }
         if (boardObjects.tileHasRepair(actor.getPos())) {
-            System.out.println("player is standing on a repair kit!");
             actor.repairHitPoints();
             actor.setSpawnPoint(actor.getPos());
         }
@@ -395,7 +380,6 @@ public class Game {
         else {
             actor.setDirection(actor.getDirection().turnRight());
         }
-
 
     }
 

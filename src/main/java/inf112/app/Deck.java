@@ -8,14 +8,15 @@ public class Deck {
     private ArrayList<Card> deck;
     private final ArrayList<Integer> priority; // to keep track of used priorities
     private ArrayList<Card> discardPile;
+    private static int test;
 
     public Deck() {
         priority = new ArrayList<>();
         deck = new ArrayList<>();
+        discardPile = new ArrayList<>();
         makeDeck(new int[]{18, 12, 6, 6, 18, 18, 6});
         deck = shuffleDeck(deck);
-        discardPile = new ArrayList<>();
-
+        test = 0;
     }
 
     /**
@@ -36,9 +37,6 @@ public class Deck {
         return deck;
     }
 
-    public ArrayList<Card> getDiscardPile() {
-        return discardPile;
-    }
 
     /**
      * Sets the discardPile given an ArrayList.
@@ -46,7 +44,10 @@ public class Deck {
      * @param d ArrayList<Card>
      */
     public void setDiscardPile(ArrayList<Card> d) {
-        discardPile.addAll(d);
+        test++;
+        for (Card card : d) {
+            discardPile.add(card);
+        }
     }
 
     /**
@@ -98,6 +99,7 @@ public class Deck {
     public ArrayList<Card> dealCards(int n) {
         ArrayList<Card> cards = new ArrayList<>();
 
+        System.out.println("deck size: " + deck.size() + "    " + "n: " + n + "    " + "discard: " + discardPile.size() + "  " + test);
         if (deck.size() < n)
             shuffleDiscardPile();
         for (int i = 0; i < n; i++) {
