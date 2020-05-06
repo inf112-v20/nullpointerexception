@@ -43,6 +43,7 @@ public class GameScreen extends InputAdapter implements Screen {
     private final OrthographicCamera camera;
     private ArrayList<Card> dealtCards;
     private final ArrayList<Card> hand;
+    private ArrayList<Card> tempHand;
     private final BitmapFont font = new BitmapFont();
     private final Deck deck;
     private final Player player;
@@ -68,6 +69,7 @@ public class GameScreen extends InputAdapter implements Screen {
         player = game.getPlayerObject();
 
         hand = player.getHand();
+        tempHand = new ArrayList<>();
 
         camera = new OrthographicCamera();
         camera.setToOrtho(false,
@@ -97,14 +99,15 @@ public class GameScreen extends InputAdapter implements Screen {
                 for (Button b : cards.keySet()) {
                     if (b.buttonIsHovered(input)) {
                         if (!hand.contains(cards.get(b))) {
-                            hand.add(0, cards.get(b));
+                            tempHand.add(cards.get(b));
                             dealtCards.remove(cards.get(b));
-                            //System.out.println("A card has been added to the hand");
                             String c = cards.get(b).toString();
-                            System.out.println(c);
-                            if (hand.size() == 5) {
+                            System.out.println("Added to hand: " + c);
+                            if ((hand.size() + tempHand.size()) == 5) {
+                                hand.addAll(0, tempHand);
                                 deck.setDiscardPile(dealtCards);
                                 player.resetDealtCards();
+                                tempHand = new ArrayList<>();
                             }
                         } else {
                             System.out.println("hand is full/has that card");
