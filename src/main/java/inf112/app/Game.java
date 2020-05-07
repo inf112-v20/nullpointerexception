@@ -173,7 +173,6 @@ public class Game {
      */
     public void moveActorsByCards(int i) {
         actors.add(player);
-
         for (IActor actor : actors) {
             movedByCard(actor, actor.getCard(i).getType());
         }
@@ -186,12 +185,16 @@ public class Game {
         actors.remove(player);
     }
 
+    /**
+     * takes the discarded cards from player and puts it in the discarpile in Deck.
+     */
     public void discard() {
         for (IActor actor : actors) {
             deck.setDiscardPile(actor.discard());
         }
         deck.setDiscardPile(player.discard());
     }
+
 
     public void resetActors() {
         for (IActor actor : actors) {
@@ -236,6 +239,11 @@ public class Game {
         return true;
     }
 
+    /**
+     * spawns the actor at it's spawnpoint
+     *
+     * @param actor current actor
+     */
     private void spawnActor(IActor actor) {
         if (getActor(actor.getSpawnPoint()) == null) {
             actor.setPos(actor.getSpawnPoint());
@@ -373,35 +381,88 @@ public class Game {
         }
     }
 
+    /**
+     * Turns the actor right if a left rotating turnwheel and right otherwise
+     *
+     * @param leftTurn if its a left rotating turnwheel
+     * @param actor    the actor on the turnwheel
+     */
     private void turnWheel(boolean leftTurn, IActor actor) {
         if (leftTurn) {
             actor.setDirection(actor.getDirection().turnLeft());
-        }
-        else {
+        } else {
             actor.setDirection(actor.getDirection().turnRight());
         }
 
     }
 
+    /**
+     *
+     * @return the board
+     */
     public Board getBoard() {
         return board;
     }
 
+    /**
+     *
+     * @return players life
+     */
     public int getPlayersLifeCount() {
         return player.getLifeCount();
     }
+
+    /**
+     *
+     * @return players hitpoints
+     */
     public int getPlayersHitPoints() {
         return player.getHitPoints();
     }
 
+    /**
+     *
+     * @return the cards dealt to player
+     */
     public ArrayList<Card> getPlayersDealtCards() {
         return player.getDealtCards();
     }
 
+    /**
+     *
+     * @return deck object
+     */
     public Deck getDeckObject() {
         return deck;
     }
+
+    /**
+     *
+     * @return player object
+     */
     public Player getPlayerObject(){
         return player;
+    }
+
+    /**
+     * Sorts the list of actors from highest to lowest priority
+     *
+     * @param actors ArrayList of actors
+     * @param count  Round count
+     */
+    private void sort(ArrayList<IActor> actors, int count) {
+        for (int i = 0; i < actors.size(); i++) {
+            IActor temp = actors.get(i);
+            int idx = i;
+            for (int j = i + 1; j < actors.size(); j++) {
+                if (actors.get(j).getCard(count).getPriority() > temp.getCard(count).getPriority()) {
+                    temp = actors.get(j);
+                    idx = j;
+                }
+            }
+            actors.remove(idx);
+            actors.add(i, temp);
+        }
+
     }
 }
