@@ -23,6 +23,7 @@ public class Game {
 
     private final Player player;
     private final ArrayList<IActor> actors;
+    private ArrayList<IActor> deadActors;
 
     private List<TextureRegion> robotTextures;
     private ArrayList<Position> spawnPoints;
@@ -42,8 +43,9 @@ public class Game {
         spawnPoints();
 
         actors = new ArrayList<>();
+        deadActors = new ArrayList<>();
 
-        player = new Player(spawnPoints.remove(0), robotTextures.remove(4));
+        player = new Player(spawnPoints.remove(1), robotTextures.remove(4));
         setActorTexture(player);
 
         int activeActors = 7;
@@ -163,18 +165,27 @@ public class Game {
      * @param i counter
      */
     public void moveActorsByCards(int i) {
-        actors.add(player);
+        if (!player.isDead())
+            actors.add(player);
+        sort(actors, i);
 
-        sort(actors,i);
         for (IActor actor : actors) {
             moveByCard(actor, actor.getCard(i).getType());
+            if (actor.isDead()) {
+                killActor(actor);
+            }
         }
+
+        actors.removeAll(deadActors);
+
         for (IActor actor : actors) {
             checkPosition(actor);
         }
         for (IActor actor : actors) {
-            shootLaser(actor.getPos().getNextPos(actor.getDirection()), actor.getDirection());
+            if (canMove(actor, actor.getPos().getNextPos(actor.getDirection()), actor.getDirection()))
+                shootLaser(actor.getPos().getNextPos(actor.getDirection()), actor.getDirection());
         }
+
         actors.remove(player);
     }
 
@@ -186,7 +197,7 @@ public class Game {
     public Boolean moveActor(IActor actor, Direction direction) {
         Position newPos = new Position(actor.getPos().getNextPos(direction));
 
-        if (!canMove(actor, newPos, direction)) {
+        if (!canMove(actor, newPos, direction) || actor.isDead()) {
             return false;
         }
 
@@ -204,7 +215,7 @@ public class Game {
 
         if (outOfBoard(newPos)) {
             actor.loseLife();
-            spawnActor(actor);
+            return true;
         } else
             actor.setPos(newPos);
 
@@ -247,6 +258,17 @@ public class Game {
         }
     }
 
+    public void spawnActors() {
+        for (IActor actor : deadActors) {
+            spawnActor(actor);
+            setActorTexture(actor);
+            actors.add(actor);
+            actor.respawn();
+        }
+        deadActors = new ArrayList<>();
+        actors.remove(player);
+    }
+
     /**
      * spawns the actor at it's spawnpoint
      *
@@ -264,6 +286,12 @@ public class Game {
             }
             actor.setPos(spawnPositions.get(0));
         }
+    }
+
+    private void killActor(IActor actor) {
+        removeActorTexture(actor);
+        actor.setPos(new Position(-1, -1));
+        deadActors.add(actor);
     }
 
     /**
@@ -284,11 +312,14 @@ public class Game {
             return;
         if (getActor(position) != null) {
             IActor actor = getActor(position);
+            if (actor == null)
+                return;
             actor.handleDamage();
             return;
         }
         if (boardObjects.tileHasWall(position, position.getNextPos(direction), direction))
             return;
+
         shootLaser(position.getNextPos(direction), direction);
     }
 
@@ -298,10 +329,6 @@ public class Game {
      * @param actor actor object
      */
     public void checkPosition(IActor actor) {
-        if (boardObjects.tileHasHole(actor.getPos())) {
-            actor.setPos(actor.getSpawnPoint());
-            return;
-        }
         if (boardObjects.tileHasFlag(actor.getPos())) {
             actor.isOnFlag(board.getBoardLayers().get("flag").getCell(actor.getPos().getX(), actor.getPos().getY()).getTile().getId());
             actor.repairHitPoints();
@@ -314,12 +341,14 @@ public class Game {
             }
         }
         if (boardObjects.tileHasTurnWheel(actor.getPos(), actor.getDirection())) {
-            System.out.println("player was turned by a turnwheel");
             turnWheel(board.getBoardLayers().get("turnwheel").getCell(
                     actor.getPos().getX(), actor.getPos().getY()).getTile().getId() == 53, actor);
         }
         if (boardObjects.tileHasLaser(actor.getPos())) {
             actor.handleDamage();
+            if (actor.isDead()) {
+                killActor(actor);
+            }
         }
         if (boardObjects.tileHasRepair(actor.getPos())) {
             actor.repairHitPoints();

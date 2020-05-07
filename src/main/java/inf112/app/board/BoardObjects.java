@@ -9,17 +9,12 @@ import java.util.Map;
 
 public class BoardObjects {
 
-    private final Game game;
     private final Map<String, TiledMapTileLayer> board;
 
     public BoardObjects(Map<String, TiledMapTileLayer> board, Game game) {
         this.board = board;
-        this.game = game;
     }
 
-    public void setTile(Position pos, String layer, TiledMapTileLayer.Cell newValue) {
-        board.get("layer").setCell(pos.getX(), pos.getY(), newValue);
-    }
 
     /**
      * Returns true if the tile has a wall.

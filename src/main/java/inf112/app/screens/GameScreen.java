@@ -24,7 +24,7 @@ public class GameScreen extends InputAdapter implements Screen {
 
     private static final int TILE_SIZE = 300;
     private final OrthogonalTiledMapRenderer renderer;
-    private final inf112.app.Game game;
+    private final Game game;
     private final Board board;
     private final Button powerdown;
     private final Texture lifes;
@@ -58,7 +58,7 @@ public class GameScreen extends InputAdapter implements Screen {
     private int counter = 0;
     private boolean gameLost;
     //GameRunner object used to invoke the MenuScreen
-    private GameRunner gr;
+    private final GameRunner gr;
 
     public GameScreen(GameRunner gr) {
         this.gr = gr;
@@ -184,9 +184,9 @@ public class GameScreen extends InputAdapter implements Screen {
         font.draw(GameRunner.batch, "x " + lifepoints, 210, board.getBoardHeight() * TILE_SIZE + 100);
         font.draw(GameRunner.batch, "x " + (9 - healthpoints), 210, board.getBoardHeight() * TILE_SIZE + 250);
         font.draw(GameRunner.batch, "x " + flagCount, 210, board.getBoardHeight() * TILE_SIZE + 400);
-        if(player.isDead()) {
+        if (player.hasWon()) {
             gameLost = true;
-            messageFont.draw(GameRunner.batch, "GAME OVER: PRESS A MOUSEBUTTON TO GO TO MENU", 300, (board.getBoardHeight() * TILE_SIZE)/2);
+            messageFont.draw(GameRunner.batch, "GAME OVER: PRESS A MOUSEBUTTON TO GO TO MENU", 300, (float) (board.getBoardHeight() * TILE_SIZE) / 2);
         }
         setUp();
 
@@ -262,6 +262,7 @@ public class GameScreen extends InputAdapter implements Screen {
         if (startOfRound) {
             game.dealCards();
             dealtCards = game.getPlayersDealtCards();
+            game.spawnActors();
         }
         startOfRound = false;
     }
@@ -271,6 +272,7 @@ public class GameScreen extends InputAdapter implements Screen {
      */
     private void round(int counter) {
         game.moveActorsByCards(counter);
+        System.out.println(player.getPos());
     }
 
     /**
@@ -318,6 +320,7 @@ public class GameScreen extends InputAdapter implements Screen {
                     BACKUP.setButtonCoords(x, yCard);
                     cards.put(BACKUP,card);
                     break;
+                default:
             }
         }
     }
@@ -377,10 +380,6 @@ public class GameScreen extends InputAdapter implements Screen {
                 break;
             case com.badlogic.gdx.Input.Keys.Q:
                 game.checkPosition(player);
-                break;
-            case com.badlogic.gdx.Input.Keys.X:
-                game.moveActorsByCards(counter % 5);
-                counter++;
                 break;
             default:
         }
