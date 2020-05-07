@@ -31,6 +31,7 @@ public class GameScreen extends InputAdapter implements Screen {
     // y value for priority labels of cards
     private final int yPriority;
     private final int yCard;
+    //all of the cards
     private Button MOVE1;
     private Button MOVE2;
     private Button MOVE3;
@@ -38,6 +39,7 @@ public class GameScreen extends InputAdapter implements Screen {
     private Button TURNLEFT;
     private Button BACKUP;
     private Button TURN180;
+    //button to start the rounds
     private final Button start_round;
 
     private final OrthographicCamera camera;
@@ -81,11 +83,22 @@ public class GameScreen extends InputAdapter implements Screen {
         renderer.setView(camera);
         Gdx.input.setInputProcessor(this);
 
+        //Setting the continous rendering to false so that screen renders changes only when input occurs (saves some memory)
         Gdx.graphics.setContinuousRendering(false);
         Gdx.graphics.requestRendering();
         //chooseCards = true;
     }
 
+    /**
+     * A method which is called whenever a mouse is clicked,
+     * If the hand is full and the "start" button is clicked, calls the round() method and starts the rounds until a hand is empty
+     * If its the start of a new phase, checks if cards are being clicked, then picks a clicked card until a hand is full
+     * @param screenX
+     * @param screenY
+     * @param pointer
+     * @param button
+     * @return
+     */
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button){
         Vector3 input = new Vector3(screenX, screenY, 0);
@@ -122,12 +135,12 @@ public class GameScreen extends InputAdapter implements Screen {
 
     @Override
     public void show() {
-
     }
 
     /**
      * A loop method which renders the changes on the screen
      * Shows the player default/winning/dying state on the board
+     * Shows the hud changes, works as a game loop
      */
     @Override
     public void render(float v) {
@@ -178,7 +191,9 @@ public class GameScreen extends InputAdapter implements Screen {
     }
 
 
-
+    /**
+     * disposing of textures when the screen is changed/terminated
+     */
     @Override
     public void dispose() {
         renderer.dispose();
@@ -195,10 +210,16 @@ public class GameScreen extends InputAdapter implements Screen {
         GameRunner.batch.dispose();
     }
 
+    /**
+     * Places dealt cards onto the screen
+     */
     private void drawDealtCards(){
         drawCards(dealtCards);
     }
 
+    /**
+     * Displaying the drawn cards together with their priorities
+     */
     private void displayCards() {
         for (Button button : cards.keySet()) {
             GameRunner.batch.draw(button.getButtonTexture(), button.getButtonX(), button.getButtonY(), 390, 490);
@@ -206,11 +227,16 @@ public class GameScreen extends InputAdapter implements Screen {
         }
     }
 
+    /**
+     * Places the hands cards onto the screen, check the drawCards method for more info
+     */
     private void drawHand() {
         drawCards(hand);
     }
 
-
+    /**
+     * Sets the new phase where new cards are being dealt to players.
+     */
     private void setUp() {
         if (startOfRound == true) {
             game.dealCards();
@@ -239,6 +265,10 @@ public class GameScreen extends InputAdapter implements Screen {
         startOfRound = true;
     }
 
+    /**
+     * Sets the screen coordinates for all of the cards in the list, the cards are not displayed until the displayCards method is called
+     * @param list a list of cards which will be placed on the screen
+     */
     private void drawCards(ArrayList<Card> list){
         cards = new HashMap<>();
         int x = powerdown.getButtonX() + 300;

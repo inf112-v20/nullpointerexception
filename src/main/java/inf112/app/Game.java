@@ -173,6 +173,7 @@ public class Game {
      */
     public void moveActorsByCards(int i) {
         actors.add(player);
+        sort(actors,i);
         for (IActor actor : actors) {
             movedByCard(actor, actor.getCard(i).getType());
         }
