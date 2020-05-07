@@ -184,7 +184,7 @@ public class GameScreen extends InputAdapter implements Screen {
         font.draw(GameRunner.batch, "x " + lifepoints, 210, board.getBoardHeight() * TILE_SIZE + 100);
         font.draw(GameRunner.batch, "x " + (9 - healthpoints), 210, board.getBoardHeight() * TILE_SIZE + 250);
         font.draw(GameRunner.batch, "x " + flagCount, 210, board.getBoardHeight() * TILE_SIZE + 400);
-        if (player.hasWon()) {
+        if (player.gameOver()) {
             gameLost = true;
             messageFont.draw(GameRunner.batch, "GAME OVER: PRESS A MOUSEBUTTON TO GO TO MENU", 300, (float) (board.getBoardHeight() * TILE_SIZE) / 2);
         }

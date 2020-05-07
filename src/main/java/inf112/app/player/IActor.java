@@ -153,5 +153,5 @@ public interface IActor {
     /**
      * @return boolean
      */
-    boolean hasWon();
+    boolean gameOver();
 }

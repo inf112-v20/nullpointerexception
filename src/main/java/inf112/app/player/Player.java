@@ -198,7 +198,7 @@ public class Player implements IActor {
     }
 
     @Override
-    public boolean hasWon() {
-        return listOfFlags.isEmpty();
+    public boolean gameOver() {
+        return listOfFlags.isEmpty() || lifeCount <= 0;
     }
 }
