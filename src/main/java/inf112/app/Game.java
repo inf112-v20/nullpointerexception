@@ -4,6 +4,9 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import inf112.app.board.Board;
 import inf112.app.board.BoardObjects;
+import inf112.app.cards.Card;
+import inf112.app.cards.CardType;
+import inf112.app.cards.Deck;
 import inf112.app.player.*;
 
 import java.util.ArrayList;
@@ -28,8 +31,8 @@ public class Game {
      * Initializing a board, camera, renderer and player in addition to creating the needed TiledMap layers.
      */
     public Game() {
-        //String boardName = "boards/Risky_Exchange.tmx";
-        //String boardName = "boards/Whirlwind Tour.tmx";
+//        String boardName = "boards/Risky_Exchange.tmx";
+//        String boardName = "boards/Whirlwind Tour.tmx";
         String boardName = "boards/Robot Stew.tmx";
 
         board = new Board(boardName);
@@ -48,9 +51,7 @@ public class Game {
             actors.add(new Actor(spawnPoints.remove(0), robotTextures.remove(0)));
             setActorTexture(actors.get(i));
         }
-
         deck = new Deck();
-        //new Input(player, this);
     }
 
 
@@ -84,6 +85,9 @@ public class Game {
     }
 
 
+    /**
+     * Deals cards to all the players
+     */
     public void dealCards() {
         player.setDealtCards(deck.dealCards(Math.min(9, player.getHitPoints())));
         for (IActor actor : actors) {
@@ -152,19 +156,6 @@ public class Game {
         return !boardObjects.tileHasWall(actor.getPos(), newPos, direction);
     }
 
-    /**
-     * Moves all the actors
-     */
-    public void moveActors() {
-        for (IActor actor : actors) {
-            moveActor(actor, actor.getDirection());
-            checkPosition(actor);
-            shootLaser(actor.getPos().getNextPos(actor.getDirection()), actor.getDirection());
-        }
-        moveActor(player, player.getDirection());
-        checkPosition(player);
-        shootLaser(player.getPos().getNextPos(player.getDirection()), player.getDirection());
-    }
 
     /**
      * Moves all the actors
@@ -173,6 +164,7 @@ public class Game {
      */
     public void moveActorsByCards(int i) {
         actors.add(player);
+
         sort(actors,i);
         for (IActor actor : actors) {
             movedByCard(actor, actor.getCard(i).getType());

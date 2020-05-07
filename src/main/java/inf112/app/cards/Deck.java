@@ -1,4 +1,4 @@
-package inf112.app;
+package inf112.app.cards;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -8,7 +8,6 @@ public class Deck {
     private ArrayList<Card> deck;
     private final ArrayList<Integer> priority; // to keep track of used priorities
     private ArrayList<Card> discardPile;
-    private static int test;
 
     public Deck() {
         priority = new ArrayList<>();
@@ -16,7 +15,6 @@ public class Deck {
         discardPile = new ArrayList<>();
         makeDeck(new int[]{18, 12, 6, 6, 18, 18, 6});
         deck = shuffleDeck(deck);
-        test = 0;
     }
 
     /**
@@ -37,26 +35,15 @@ public class Deck {
         return deck;
     }
 
-
     /**
      * Sets the discardPile given an ArrayList.
      *
      * @param d ArrayList<Card>
      */
     public void setDiscardPile(ArrayList<Card> d) {
-        test++;
         for (Card card : d) {
             discardPile.add(card);
         }
-    }
-
-    /**
-     * Sets the discardPile given a Card.
-     *
-     * @param c Card
-     */
-    public void setDiscardPile(Card c) {
-        discardPile.add(c);
     }
 
     /**
@@ -98,8 +85,6 @@ public class Deck {
      */
     public ArrayList<Card> dealCards(int n) {
         ArrayList<Card> cards = new ArrayList<>();
-
-        System.out.println("deck size: " + deck.size() + "    " + "n: " + n + "    " + "discard: " + discardPile.size() + "  " + test);
         if (deck.size() < n)
             shuffleDiscardPile();
         for (int i = 0; i < n; i++) {

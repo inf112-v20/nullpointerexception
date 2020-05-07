@@ -3,25 +3,29 @@ package inf112.app.player;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.tiles.StaticTiledMapTile;
-import inf112.app.Card;
+import inf112.app.cards.Card;
 
 import java.util.ArrayList;
 
 
 public class Player implements IActor {
 
-    //Vector holds players position
     private final TiledMapTileLayer.Cell playerCell;
-    private Position currentPos;
-    private Direction direction;
+
     protected ArrayList<Card> hand;
     protected ArrayList<Card> dealtCards;
-    private Position spawnPoint;
-    private final ArrayList<Integer> flagIDList;
+    private final ArrayList<Integer> listOfFlags;
+
     private int hitPoints;
     private int lifeCount;
+    private int flagCount;
+
+    private boolean poweringDown;
     private boolean isDead;
-    private final boolean win;
+
+    private Direction direction;
+    private Position currentPos;
+    private Position spawnPoint;
 
 
     /**
@@ -35,17 +39,16 @@ public class Player implements IActor {
     public Player(Position spawn, TextureRegion texture) {
         hitPoints = MAX_HP;
         lifeCount = MAX_LIFE;
+        flagCount = 0;
 
         dealtCards = new ArrayList<>();
         hand = new ArrayList<>();
-        flagIDList = new ArrayList<>();
-        flagIDList.add(55);
-        flagIDList.add(63);
-        flagIDList.add(71);
+        listOfFlags = new ArrayList<>();
+        listOfFlags.add(55);
+        listOfFlags.add(63);
+        listOfFlags.add(71);
 
         playerCell = new TiledMapTileLayer.Cell().setTile(new StaticTiledMapTile(texture));
-        isDead = false;
-        win = false;
 
         spawnPoint = spawn;
         currentPos = spawn;
@@ -53,10 +56,11 @@ public class Player implements IActor {
     }
 
 
-    public void printCards() {
-        for (Card card : hand) {
-            System.out.println(card.toString());
-        }
+    /**
+     * @return how many flags have been captured
+     */
+    public int getFlagCount() {
+        return flagCount;
     }
 
     @Override
@@ -75,7 +79,8 @@ public class Player implements IActor {
             isDead = true;
         else {
             lifeCount -= 1;
-            hitPoints = MAX_HP;
+            hitPoints = MAX_HP - 2;
+            isDead = true;
         }
     }
 
@@ -91,8 +96,9 @@ public class Player implements IActor {
 
     @Override
     public void isOnFlag(Integer tileID) {
-        if (!flagIDList.isEmpty() && tileID.equals(flagIDList.get(0))) {
-            flagIDList.remove(0);
+        if (!listOfFlags.isEmpty() && tileID.equals(listOfFlags.get(0))) {
+            listOfFlags.remove(0);
+            flagCount++;
         }
     }
 
@@ -100,12 +106,6 @@ public class Player implements IActor {
     public boolean isDead() {
         return isDead;
     }
-
-    @Override
-    public boolean win() {
-        return win;
-    }
-
 
     @Override
     public Position checkpoint() {
@@ -187,6 +187,16 @@ public class Player implements IActor {
         return hand;
     }
 
+    @Override
+    public boolean isPoweringDown() {
+        return poweringDown;
+    }
+
+    @Override
+    public void setPoweringDown(boolean poweringDown) {
+        this.poweringDown = poweringDown;
+    }
+
     public ArrayList<Card> discard() {
         ArrayList<Card> discardList = new ArrayList<>();
         for (int i = 0; i < Math.min(hitPoints, 5); i++) {
@@ -194,6 +204,4 @@ public class Player implements IActor {
         }
         return discardList;
     }
-
-
 }

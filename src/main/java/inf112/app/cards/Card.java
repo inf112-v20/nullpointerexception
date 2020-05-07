@@ -1,4 +1,4 @@
-package inf112.app;
+package inf112.app.cards;
 
 
 public class Card {

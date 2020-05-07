@@ -1,7 +1,7 @@
 package inf112.app.player;
 
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
-import inf112.app.Card;
+import inf112.app.cards.Card;
 
 import java.util.ArrayList;
 
@@ -133,11 +133,14 @@ public interface IActor {
     boolean isDead();
 
     /**
-     * Returns if the player have won
-     *
      * @return boolean
      */
-    boolean win();
+    boolean isPoweringDown();
+
+    /**
+     * @param poweringDown sets the boolean variable
+     */
+    void setPoweringDown(boolean poweringDown);
 
     /**
      * @return player sin hand

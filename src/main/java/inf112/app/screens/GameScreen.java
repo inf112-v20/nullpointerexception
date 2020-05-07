@@ -10,10 +10,11 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector3;
-import inf112.app.Card;
-import inf112.app.Deck;
 import inf112.app.Game;
 import inf112.app.board.Board;
+import inf112.app.cards.Card;
+import inf112.app.cards.Deck;
+import inf112.app.player.Direction;
 import inf112.app.player.Player;
 
 import java.util.ArrayList;
@@ -28,6 +29,7 @@ public class GameScreen extends InputAdapter implements Screen {
     private final Button powerdown;
     private final Texture lifes;
     private final Texture health;
+    private final Texture flag;
     // y value for priority labels of cards
     private final int yPriority;
     private final int yCard;
@@ -52,19 +54,20 @@ public class GameScreen extends InputAdapter implements Screen {
     private boolean chooseCards;
     private HashMap<Button, Card> cards;
     private boolean startOfRound = true;
-
+    private int counter;
 
 
     public GameScreen() {
         game = new Game();
         board = game.getBoard();
         dealtCards = game.getPlayersDealtCards();
-        powerdown = new Button("powerdown.png");
+        powerdown = new Button("icons/powerdown.png");
         powerdown.setButtonCoords(0, board.getBoardHeight() * TILE_SIZE + 500);
-        start_round = new Button("start_round.png");
+        start_round = new Button("icons/start_round.png");
         start_round.setButtonCoords(powerdown.getButtonTexture().getWidth() + 250, board.getBoardHeight() * TILE_SIZE + 550);
-        lifes = new Texture("life.png");
-        health = new Texture("healthpoints.png");
+        lifes = new Texture("icons/life.png");
+        health = new Texture("icons/healthpoints.png");
+        flag = new Texture("icons/flag.png");
         yPriority = board.getBoardHeight() * TILE_SIZE + 800;
         yCard = board.getBoardHeight() * TILE_SIZE + 200;
         deck = game.getDeckObject();
@@ -150,42 +153,42 @@ public class GameScreen extends InputAdapter implements Screen {
         renderer.render();
 
         GameRunner.batch.setProjectionMatrix(camera.combined);
-        int lifepoints = game.getPlayersLifeCount();
-        int healthpoints = game.getPlayersHitPoints();
         GameRunner.batch.begin();
 
+        int lifepoints = game.getPlayersLifeCount();
+        int healthpoints = game.getPlayersHitPoints();
+        int flagCount = player.getFlagCount();
 
         GameRunner.batch.draw(powerdown.getButtonTexture(), powerdown.getButtonX(), powerdown.getButtonY(), 350, 350);
         GameRunner.batch.draw(start_round.getButtonTexture(), start_round.getButtonX(), start_round.getButtonY(), 270, 250);
-        GameRunner.batch.draw(lifes, 20, board.getBoardHeight() * TILE_SIZE + 50, 150, 150);
-        GameRunner.batch.draw(health, 0, board.getBoardHeight() * TILE_SIZE + 50 + 200, 220, 220);
+        GameRunner.batch.draw(lifes, 20, board.getBoardHeight() * TILE_SIZE, 150, 150);
+        GameRunner.batch.draw(health, 0, board.getBoardHeight() * TILE_SIZE + 100, 220, 220);
+        GameRunner.batch.draw(flag, 5, board.getBoardHeight() * TILE_SIZE + 300, 300, 150);
         font.getData().setScale(7, 7);
         font.setColor(Color.BLACK);
-        font.draw(GameRunner.batch, "x " + lifepoints, 170, board.getBoardHeight() * TILE_SIZE + 50 + lifes.getHeight() / 2);
-        font.draw(GameRunner.batch, "x " + healthpoints, 210, board.getBoardHeight() * TILE_SIZE + 400 + health.getHeight() / 2);
-
+        font.draw(GameRunner.batch, "x " + lifepoints, 210, board.getBoardHeight() * TILE_SIZE + 100);
+        font.draw(GameRunner.batch, "x " + (9 - healthpoints), 210, board.getBoardHeight() * TILE_SIZE + 250);
+        font.draw(GameRunner.batch, "x " + flagCount, 210, board.getBoardHeight() * TILE_SIZE + 400);
 
         setUp();
+
+        // Must choose cards untilt here's 5 cards in the hand
         if (hand.size() != 5) {
             chooseCards = true;
-            //System.out.println("choosing cards!");
         }
 
+        // Stops choosing card when there's 5 cards in the hand
         if (hand.size() == 5) {
             chooseCards = false;
-            //player.setDealtCards(deck.dealCards(Math.min(9, player.getHitPoints())));
-            //game.dealCards();
-            //dealtCards = game.getPlayersDealtCards();
-            //System.out.println("round starts, press start to move a player");
         }
 
+        // Draws cards depending on you're choosing cards or have a full hand
         if(chooseCards){
             drawDealtCards();
         } else {
             drawHand();
         }
         displayCards();
-
 
         GameRunner.batch.end();
     }
@@ -332,5 +335,57 @@ public class GameScreen extends InputAdapter implements Screen {
     @Override
     public void hide() {
 
+    }
+
+    /**
+     * Refreshing the former players position to null
+     * Implements the board-movement of a player
+     * Prints out the current position
+     *
+     * @param keycode - an integer representation of different possible inputs
+     * @return true/false
+     */
+    @Override
+    public boolean keyUp(int keycode) {
+        Direction dir = player.getDirection();
+
+        switch (keycode) {
+            case com.badlogic.gdx.Input.Keys.RIGHT:
+                if (dir != Direction.EAST)
+                    player.setDirection(Direction.EAST);
+                else
+                    game.moveActor(player, player.getDirection());
+                break;
+            case com.badlogic.gdx.Input.Keys.LEFT:
+                if (dir != Direction.WEST)
+                    player.setDirection(Direction.WEST);
+                else
+                    game.moveActor(player, player.getDirection());
+                break;
+            case com.badlogic.gdx.Input.Keys.UP:
+                if (dir != Direction.NORTH)
+                    player.setDirection(Direction.NORTH);
+                else
+                    game.moveActor(player, player.getDirection());
+                break;
+            case com.badlogic.gdx.Input.Keys.DOWN:
+                if (dir != Direction.SOUTH)
+                    player.setDirection(Direction.SOUTH);
+                else
+                    game.moveActor(player, player.getDirection());
+                break;
+            case com.badlogic.gdx.Input.Keys.Q:
+                game.checkPosition(player);
+                break;
+            case com.badlogic.gdx.Input.Keys.X:
+                game.moveActorsByCards(counter % 5);
+                counter++;
+                break;
+            case com.badlogic.gdx.Input.Keys.C:
+                game.resetActors();
+                break;
+            default:
+        }
+        return super.keyDown(keycode);
     }
 }

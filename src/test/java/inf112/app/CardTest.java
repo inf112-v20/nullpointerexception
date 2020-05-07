@@ -1,5 +1,8 @@
 package inf112.app;
 
+import inf112.app.cards.Card;
+import inf112.app.cards.CardType;
+import inf112.app.cards.Deck;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -8,7 +11,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 
 public class CardTest {
-    private Card card;
+    private final Card card;
     private Deck deck;
 
     public CardTest() {
