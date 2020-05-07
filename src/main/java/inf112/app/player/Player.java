@@ -65,10 +65,9 @@ public class Player implements IActor {
 
     @Override
     public void handleDamage() {
+        hitPoints -= 1;
         if (hitPoints <= 0)
-            loseLife();
-        else
-            hitPoints -= 1;
+            isDead = true;
     }
 
     @Override
@@ -100,7 +99,7 @@ public class Player implements IActor {
 
     @Override
     public void respawn() {
-        if (lifeCount > 0)
+        if (lifeCount >= 0)
             isDead = false;
     }
 
@@ -132,6 +131,10 @@ public class Player implements IActor {
 
     @Override
     public void setHand() {
+        int size = getDealtCards().size();
+        for (int i = 0; i < Math.min(size, 5); i++) {
+            hand.add(0, dealtCards.remove(0));
+        }
     }
 
     @Override
@@ -199,6 +202,6 @@ public class Player implements IActor {
 
     @Override
     public boolean gameOver() {
-        return listOfFlags.isEmpty() || lifeCount <= 0;
+        return listOfFlags.isEmpty() || lifeCount < 0;
     }
 }

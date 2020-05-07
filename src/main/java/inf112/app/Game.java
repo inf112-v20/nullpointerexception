@@ -91,7 +91,6 @@ public class Game {
      * Deals cards to all the players
      */
     public void dealCards() {
-        player.setDealtCards(deck.dealCards(Math.min(9, player.getHitPoints())));
         for (IActor actor : actors) {
             actor.setDealtCards(deck.dealCards(Math.min(9, actor.getHitPoints())));
             actor.setHand();
@@ -212,7 +211,7 @@ public class Game {
             }
         }
 
-        if (outOfBoard(newPos)) {
+        if (outOfBoard(newPos) && !deadActors.contains(actor)) {
             killActor(actor);
             return true;
         } else
@@ -321,6 +320,18 @@ public class Game {
             return;
 
         shootLaser(position.getNextPos(direction), direction);
+    }
+
+    public void laserTest() {
+        actors.add(player);
+        for (IActor actor : actors) {
+            if (canMove(actor, actor.getPos().getNextPos(actor.getDirection()), actor.getDirection()))
+                shootLaser(actor.getPos().getNextPos(actor.getDirection()), actor.getDirection());
+            if (actor.isDead() && !deadActors.contains(actor))
+                killActor(actor);
+        }
+
+        actors.remove(player);
     }
 
     /**

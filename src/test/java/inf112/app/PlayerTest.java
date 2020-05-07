@@ -6,7 +6,7 @@ import inf112.app.player.Position;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 public class PlayerTest {
     private Player player;
@@ -48,8 +48,34 @@ public class PlayerTest {
     }
 
     @Test
+    public void repairHitPointsTest() {
+        player.repairHitPoints();
+        assertEquals(player.getHitPoints(), 9);
+    }
+
+    @Test
+    public void isDeadTest() {
+        assertFalse(player.isDead());
+    }
+
+    @Test
     public void loseLifeTest() {
         player.loseLife();
         assertEquals(player.getLifeCount(), 2);
+        assertTrue(player.isDead());
+    }
+
+    @Test
+    public void respawnTest() {
+        player.respawn();
+        assertFalse(player.isDead());
+    }
+
+    @Test
+    public void setAndGetSpawnTest() {
+        Position newSpawn = new Position(10, 10);
+        player.setSpawnPoint(newSpawn);
+        player.setPos(player.getSpawnPoint());
+        assertEquals(player.getPos(), newSpawn);
     }
 }

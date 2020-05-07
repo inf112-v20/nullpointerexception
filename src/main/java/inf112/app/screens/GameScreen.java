@@ -260,6 +260,7 @@ public class GameScreen extends InputAdapter implements Screen {
      */
     private void setUp() {
         if (startOfRound) {
+            player.setDealtCards(deck.dealCards(Math.min(9, player.getHitPoints())));
             game.dealCards();
             dealtCards = game.getPlayersDealtCards();
             game.spawnActors();
@@ -389,10 +390,11 @@ public class GameScreen extends InputAdapter implements Screen {
             case com.badlogic.gdx.Input.Keys.Q:
                 game.checkPosition(player);
                 break;
-            case com.badlogic.gdx.Input.Keys.C:
-                game.spawnActors();
+            case com.badlogic.gdx.Input.Keys.L:
+                game.laserTest();
+                if (player.isDead())
+                    game.spawnActors();
                 break;
-
             default:
         }
         return super.keyDown(keycode);
