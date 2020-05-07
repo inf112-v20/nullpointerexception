@@ -79,7 +79,7 @@ public class Player implements IActor {
         else {
             lifeCount -= 1;
             hitPoints = MAX_HP - 2;
-            isDead = true;
+            //isDead = true;
         }
     }
 
