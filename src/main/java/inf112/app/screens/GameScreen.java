@@ -49,6 +49,7 @@ public class GameScreen extends InputAdapter implements Screen {
     private final ArrayList<Card> hand;
     private ArrayList<Card> tempHand;
     private final BitmapFont font = new BitmapFont();
+    private final BitmapFont messageFont = new BitmapFont();
     private final Deck deck;
     private final Player player;
     private boolean chooseCards;
@@ -56,9 +57,11 @@ public class GameScreen extends InputAdapter implements Screen {
     private boolean startOfRound = true;
     private int counter = 0;
     private boolean gameLost;
+    //GameRunner object used to invoke the MenuScreen
+    private GameRunner gr;
 
-
-    public GameScreen() {
+    public GameScreen(GameRunner gr) {
+        this.gr = gr;
         game = new Game();
         board = game.getBoard();
         dealtCards = game.getPlayersDealtCards();
@@ -107,6 +110,9 @@ public class GameScreen extends InputAdapter implements Screen {
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         Vector3 input = new Vector3(screenX, screenY, 0);
         camera.unproject(input);
+        if(gameLost){
+            gr.setScreen(new MenuScreen(gr));
+        }
         if (start_round.buttonIsHovered(input, 270, 250) && !chooseCards) {
             if (counter < 5) {
                 System.out.println("Starting round!");
@@ -173,12 +179,14 @@ public class GameScreen extends InputAdapter implements Screen {
         GameRunner.batch.draw(flag, 5, board.getBoardHeight() * TILE_SIZE + 300, 300, 150);
         font.getData().setScale(7, 7);
         font.setColor(Color.BLACK);
+        messageFont.getData().setScale(11,11);
+        messageFont.setColor(Color.WHITE);
         font.draw(GameRunner.batch, "x " + lifepoints, 210, board.getBoardHeight() * TILE_SIZE + 100);
         font.draw(GameRunner.batch, "x " + (9 - healthpoints), 210, board.getBoardHeight() * TILE_SIZE + 250);
         font.draw(GameRunner.batch, "x " + flagCount, 210, board.getBoardHeight() * TILE_SIZE + 400);
         if(lifepoints <= 0 && healthpoints <= 0) {
             gameLost = true;
-            font.draw(GameRunner.batch, "GAME OVER: PRESS A MOUSEBUTTON TO GO TO MENU", 1000, board.getBoardHeight() * TILE_SIZE + 50 + lifes.getHeight() / 2);
+            messageFont.draw(GameRunner.batch, "GAME OVER: PRESS A MOUSEBUTTON TO GO TO MENU", 600, (board.getBoardHeight() * TILE_SIZE)/2);
         }
         setUp();
 

@@ -72,7 +72,7 @@ public class MenuScreen extends ScreenAdapter {
             //If mouse is clicked - start the game
             if (Gdx.input.isTouched()) {
                 dispose();
-                gameRunner.setScreen(new GameScreen());
+                gameRunner.setScreen(new GameScreen(gameRunner));
             }
         } else if (exitButton.buttonIsHovered(input,exitButton.getButtonTexture().getWidth(),exitButton.getButtonTexture().getHeight())) {
             GameRunner.batch.draw(exitButtonActive.getButtonTexture(), exitButton.getButtonX(), exitButton.getButtonY());
