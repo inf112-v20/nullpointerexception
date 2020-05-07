@@ -54,7 +54,7 @@ public class GameScreen extends InputAdapter implements Screen {
     private boolean chooseCards;
     private HashMap<Button, Card> cards;
     private boolean startOfRound = true;
-    private int counter;
+    private int counter = 0;
 
 
     public GameScreen() {
@@ -89,31 +89,37 @@ public class GameScreen extends InputAdapter implements Screen {
         //Setting the continous rendering to false so that screen renders changes only when input occurs (saves some memory)
         Gdx.graphics.setContinuousRendering(false);
         Gdx.graphics.requestRendering();
-        //chooseCards = true;
     }
 
     /**
      * A method which is called whenever a mouse is clicked,
      * If the hand is full and the "start" button is clicked, calls the round() method and starts the rounds until a hand is empty
      * If its the start of a new phase, checks if cards are being clicked, then picks a clicked card until a hand is full
-     * @param screenX
-     * @param screenY
-     * @param pointer
-     * @param button
-     * @return
+     *
+     * @param screenX xcoord
+     * @param screenY ycoord
+     * @param pointer mouse pointer
+     * @param button  button
+     * @return boolean
      */
     @Override
-    public boolean touchDown(int screenX, int screenY, int pointer, int button){
+    public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         Vector3 input = new Vector3(screenX, screenY, 0);
         camera.unproject(input);
-        if(start_round.buttonIsHovered(input,270,250) && !chooseCards) {
-            System.out.println("Starting round!");
-            round();
-
+        if (start_round.buttonIsHovered(input, 270, 250) && !chooseCards) {
+            if ((counter + 1) < 5) {
+                System.out.println("Starting round!");
+                round(counter);
+                counter++;
+            } else {
+                counter = 0;
+                startOfRound = true;
+                game.discard();
+            }
         } else {
-            if(chooseCards) {
+            if (chooseCards) {
                 for (Button b : cards.keySet()) {
-                    if (b.buttonIsHovered(input,GameRunner.CARD_WIDTH,GameRunner.CARD_HEIGHT)) {
+                    if (b.buttonIsHovered(input, GameRunner.CARD_WIDTH, GameRunner.CARD_HEIGHT)) {
                         if (!hand.contains(cards.get(b))) {
                             tempHand.add(cards.get(b));
                             dealtCards.remove(cards.get(b));
@@ -155,8 +161,8 @@ public class GameScreen extends InputAdapter implements Screen {
         GameRunner.batch.setProjectionMatrix(camera.combined);
         GameRunner.batch.begin();
 
-        int lifepoints = game.getPlayersLifeCount();
-        int healthpoints = game.getPlayersHitPoints();
+        int lifepoints = player.getLifeCount();
+        int healthpoints = player.getHitPoints();
         int flagCount = player.getFlagCount();
 
         GameRunner.batch.draw(powerdown.getButtonTexture(), powerdown.getButtonX(), powerdown.getButtonY(), 350, 350);
@@ -241,7 +247,7 @@ public class GameScreen extends InputAdapter implements Screen {
      * Sets the new phase where new cards are being dealt to players.
      */
     private void setUp() {
-        if (startOfRound == true) {
+        if (startOfRound) {
             game.dealCards();
             dealtCards = game.getPlayersDealtCards();
         }
@@ -251,21 +257,8 @@ public class GameScreen extends InputAdapter implements Screen {
     /**
      * Method takes the first card out of hand and makes the move.
      */
-    private void round() {
-
-        int counter = 0;
-
-        while (counter < 5) {
-            game.moveActorsByCards(counter);
-            counter++;
-        }
-        game.discard();
-
-        //game.dealCards();
-        //dealtCards = game.getPlayersDealtCards();
-        //drawDealtCards();
-
-        startOfRound = true;
+    private void round(int counter) {
+        game.moveActorsByCards(counter);
     }
 
     /**
@@ -319,22 +312,18 @@ public class GameScreen extends InputAdapter implements Screen {
 
     @Override
     public void resize(int i, int i1) {
-
     }
 
     @Override
     public void pause() {
-
     }
 
     @Override
     public void resume() {
-
     }
 
     @Override
     public void hide() {
-
     }
 
     /**
@@ -380,9 +369,6 @@ public class GameScreen extends InputAdapter implements Screen {
             case com.badlogic.gdx.Input.Keys.X:
                 game.moveActorsByCards(counter % 5);
                 counter++;
-                break;
-            case com.badlogic.gdx.Input.Keys.C:
-                game.resetActors();
                 break;
             default:
         }

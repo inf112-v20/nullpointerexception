@@ -67,7 +67,6 @@ public class Player implements IActor {
     public void handleDamage() {
         if (hitPoints <= 0) {
             loseLife();
-            System.out.println("Player lost a life.");
         } else {
             hitPoints -= 1;
         }
@@ -88,10 +87,7 @@ public class Player implements IActor {
     public void repairHitPoints() {
         if (hitPoints < 9) {
             hitPoints += 1;
-            System.out.println("Player gained one hit point.");
         }
-        System.out.println("Player has max hit points.");
-
     }
 
     @Override

@@ -167,7 +167,7 @@ public class Game {
 
         sort(actors,i);
         for (IActor actor : actors) {
-            movedByCard(actor, actor.getCard(i).getType());
+            moveByCard(actor, actor.getCard(i).getType());
         }
         for (IActor actor : actors) {
             checkPosition(actor);
@@ -176,26 +176,6 @@ public class Game {
             shootLaser(actor.getPos().getNextPos(actor.getDirection()), actor.getDirection());
         }
         actors.remove(player);
-    }
-
-    /**
-     * takes the discarded cards from player and puts it in the discarpile in Deck.
-     */
-    public void discard() {
-        for (IActor actor : actors) {
-            deck.setDiscardPile(actor.discard());
-        }
-        deck.setDiscardPile(player.discard());
-    }
-
-
-    public void resetActors() {
-        for (IActor actor : actors) {
-            removeActorTexture(actor);
-            actor.setPos(actor.getSpawnPoint());
-            setActorTexture(actor);
-            shootLaser(actor.getPos().getNextPos(actor.getDirection()), actor.getDirection());
-        }
     }
 
     /**
@@ -233,49 +213,12 @@ public class Game {
     }
 
     /**
-     * spawns the actor at it's spawnpoint
-     *
-     * @param actor current actor
-     */
-    private void spawnActor(IActor actor) {
-        if (getActor(actor.getSpawnPoint()) == null) {
-            actor.setPos(actor.getSpawnPoint());
-        } else {
-            ArrayList<Position> spawnPositions = new ArrayList<>();
-            for (Direction dir : Direction.values()) {
-                if (!outOfBoard(actor.getSpawnPoint().getNextPos(dir)) && getActor(actor.getSpawnPoint().getNextPos(dir)) == null) {
-                    spawnPositions.add(actor.getSpawnPoint().getNextPos(dir));
-                }
-            }
-            actor.setPos(spawnPositions.get(0));
-        }
-    }
-
-    /**
-     * Shoots lasers from the players and walls
-     */
-    private void shootLaser(Position position, Direction direction) {
-        if (outOfBoard(position))
-            return;
-        if (getActor(position) != null) {
-            IActor actor = getActor(position);
-            actor.handleDamage();
-            System.out.println("Player now has:" + actor.getHitPoints() + " left.");
-            return;
-        }
-        if (boardObjects.tileHasWall(position, position.getNextPos(direction), direction))
-            return;
-        shootLaser(position.getNextPos(direction), direction);
-    }
-
-
-    /**
      * Moves an actor depending on its card
      *
      * @param actor    actor
      * @param cardType card type
      */
-    public void movedByCard(IActor actor, CardType cardType) {
+    public void moveByCard(IActor actor, CardType cardType) {
         switch (cardType) {
             case MOVE1:
                 moveActor(actor, actor.getDirection());
@@ -304,6 +247,50 @@ public class Game {
         }
     }
 
+    /**
+     * spawns the actor at it's spawnpoint
+     *
+     * @param actor current actor
+     */
+    private void spawnActor(IActor actor) {
+        if (getActor(actor.getSpawnPoint()) == null) {
+            actor.setPos(actor.getSpawnPoint());
+        } else {
+            ArrayList<Position> spawnPositions = new ArrayList<>();
+            for (Direction dir : Direction.values()) {
+                if (!outOfBoard(actor.getSpawnPoint().getNextPos(dir)) && getActor(actor.getSpawnPoint().getNextPos(dir)) == null) {
+                    spawnPositions.add(actor.getSpawnPoint().getNextPos(dir));
+                }
+            }
+            actor.setPos(spawnPositions.get(0));
+        }
+    }
+
+    /**
+     * takes the discarded cards from player and puts it in the discarpile in Deck.
+     */
+    public void discard() {
+        for (IActor actor : actors) {
+            deck.setDiscardPile(actor.discard());
+        }
+        deck.setDiscardPile(player.discard());
+    }
+
+    /**
+     * Shoots lasers from the players and walls
+     */
+    private void shootLaser(Position position, Direction direction) {
+        if (outOfBoard(position))
+            return;
+        if (getActor(position) != null) {
+            IActor actor = getActor(position);
+            actor.handleDamage();
+            return;
+        }
+        if (boardObjects.tileHasWall(position, position.getNextPos(direction), direction))
+            return;
+        shootLaser(position.getNextPos(direction), direction);
+    }
 
     /**
      * Checks what objects is on the player tile.
@@ -397,21 +384,6 @@ public class Game {
         return board;
     }
 
-    /**
-     *
-     * @return players life
-     */
-    public int getPlayersLifeCount() {
-        return player.getLifeCount();
-    }
-
-    /**
-     *
-     * @return players hitpoints
-     */
-    public int getPlayersHitPoints() {
-        return player.getHitPoints();
-    }
 
     /**
      *
