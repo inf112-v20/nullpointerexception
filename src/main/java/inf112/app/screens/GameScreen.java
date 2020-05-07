@@ -107,7 +107,7 @@ public class GameScreen extends InputAdapter implements Screen {
         Vector3 input = new Vector3(screenX, screenY, 0);
         camera.unproject(input);
         if (start_round.buttonIsHovered(input, 270, 250) && !chooseCards) {
-            if ((counter + 1) < 5) {
+            if (counter < 5) {
                 System.out.println("Starting round!");
                 round(counter);
                 counter++;
