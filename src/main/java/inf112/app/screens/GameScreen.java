@@ -359,28 +359,40 @@ public class GameScreen extends InputAdapter implements Screen {
                     player.setDirection(Direction.EAST);
                 else
                     game.moveActor(player, player.getDirection());
+                if (player.isDead())
+                    game.spawnActors();
                 break;
             case com.badlogic.gdx.Input.Keys.LEFT:
                 if (dir != Direction.WEST)
                     player.setDirection(Direction.WEST);
                 else
                     game.moveActor(player, player.getDirection());
+                if (player.isDead())
+                    game.spawnActors();
                 break;
             case com.badlogic.gdx.Input.Keys.UP:
                 if (dir != Direction.NORTH)
                     player.setDirection(Direction.NORTH);
                 else
                     game.moveActor(player, player.getDirection());
+                if (player.isDead())
+                    game.spawnActors();
                 break;
             case com.badlogic.gdx.Input.Keys.DOWN:
                 if (dir != Direction.SOUTH)
                     player.setDirection(Direction.SOUTH);
                 else
                     game.moveActor(player, player.getDirection());
+                if (player.isDead())
+                    game.spawnActors();
                 break;
             case com.badlogic.gdx.Input.Keys.Q:
                 game.checkPosition(player);
                 break;
+            case com.badlogic.gdx.Input.Keys.C:
+                game.spawnActors();
+                break;
+
             default:
         }
         return super.keyDown(keycode);

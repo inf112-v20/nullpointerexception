@@ -1,7 +1,6 @@
 package inf112.app.board;
 
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
-import inf112.app.Game;
 import inf112.app.player.Direction;
 import inf112.app.player.Position;
 
@@ -11,10 +10,9 @@ public class BoardObjects {
 
     private final Map<String, TiledMapTileLayer> board;
 
-    public BoardObjects(Map<String, TiledMapTileLayer> board, Game game) {
+    public BoardObjects(Map<String, TiledMapTileLayer> board) {
         this.board = board;
     }
-
 
     /**
      * Returns true if the tile has a wall.
@@ -121,7 +119,6 @@ public class BoardObjects {
         return false;
     }
 
-
     /**
      * Checks the direction of the conveyor belt
      *
@@ -138,7 +135,6 @@ public class BoardObjects {
         }
         return null;
     }
-
 
     /**
      * Checks if the current tile has a express conveyor belt.

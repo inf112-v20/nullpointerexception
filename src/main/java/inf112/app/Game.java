@@ -37,7 +37,7 @@ public class Game {
         String boardName = "boards/Robot Stew.tmx";
 
         board = new Board(boardName);
-        boardObjects = new BoardObjects(board.getBoardLayers(), this);
+        boardObjects = new BoardObjects(board.getBoardLayers());
 
         robotTextures();
         spawnPoints();
@@ -169,11 +169,10 @@ public class Game {
             actors.add(player);
         sort(actors, i);
 
+        actors.removeAll(deadActors);
+
         for (IActor actor : actors) {
             moveByCard(actor, actor.getCard(i).getType());
-            if (actor.isDead()) {
-                killActor(actor);
-            }
         }
 
         actors.removeAll(deadActors);
@@ -214,7 +213,7 @@ public class Game {
         }
 
         if (outOfBoard(newPos)) {
-            actor.loseLife();
+            killActor(actor);
             return true;
         } else
             actor.setPos(newPos);
@@ -290,6 +289,7 @@ public class Game {
 
     private void killActor(IActor actor) {
         removeActorTexture(actor);
+        actor.loseLife();
         actor.setPos(new Position(-1, -1));
         deadActors.add(actor);
     }
