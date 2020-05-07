@@ -55,6 +55,7 @@ public class GameScreen extends InputAdapter implements Screen {
     private HashMap<Button, Card> cards;
     private boolean startOfRound = true;
     private int counter = 0;
+    private boolean gameLost;
 
 
     public GameScreen() {
@@ -175,7 +176,10 @@ public class GameScreen extends InputAdapter implements Screen {
         font.draw(GameRunner.batch, "x " + lifepoints, 210, board.getBoardHeight() * TILE_SIZE + 100);
         font.draw(GameRunner.batch, "x " + (9 - healthpoints), 210, board.getBoardHeight() * TILE_SIZE + 250);
         font.draw(GameRunner.batch, "x " + flagCount, 210, board.getBoardHeight() * TILE_SIZE + 400);
-
+        if(lifepoints <= 0 && healthpoints <= 0) {
+            gameLost = true;
+            font.draw(GameRunner.batch, "GAME OVER: PRESS A MOUSEBUTTON TO GO TO MENU", 1000, board.getBoardHeight() * TILE_SIZE + 50 + lifes.getHeight() / 2);
+        }
         setUp();
 
         // Must choose cards untilt here's 5 cards in the hand
