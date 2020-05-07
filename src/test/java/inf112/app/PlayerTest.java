@@ -34,19 +34,6 @@ public class PlayerTest {
         assertEquals(player.getPos().getY(), testPosition.getY());
     }
 
-    /**
-     * Checks if the players checkpoint() works correctly
-     * checkpoint() sets the player to the (0,0) position
-     */
-    @Test
-    public void checkpointPositionTest() {
-        //Setting players position to (0,0)
-        player.checkpoint();
-        //position at (0,0)
-        Position testPosition = new Position(0, 0);
-        assertEquals(player.getPos().getX(), testPosition.getX());
-        assertEquals(player.getPos().getY(), testPosition.getY());
-    }
 
     /**
      * Checks if the players setDirection() works correctly

@@ -65,27 +65,22 @@ public class Player implements IActor {
 
     @Override
     public void handleDamage() {
-        if (hitPoints <= 0) {
+        if (hitPoints <= 0)
             loseLife();
-        } else {
+        else
             hitPoints -= 1;
-        }
     }
 
     @Override
     public void loseLife() {
-        if (lifeCount <= 0)
-            isDead = true;
-        else {
-            lifeCount -= 1;
-            hitPoints = MAX_HP - 2;
-            isDead = true;
-        }
+        isDead = true;
+        lifeCount -= 1;
+        hitPoints = MAX_HP - 2;
     }
 
     @Override
     public void repairHitPoints() {
-        if (hitPoints < 9) {
+        if (hitPoints < MAX_HP) {
             hitPoints += 1;
         }
     }
@@ -104,8 +99,9 @@ public class Player implements IActor {
     }
 
     @Override
-    public Position checkpoint() {
-        return currentPos = new Position(0, 0);
+    public void respawn() {
+        if (lifeCount > 0)
+            isDead = false;
     }
 
     @Override
@@ -199,5 +195,10 @@ public class Player implements IActor {
             discardList.add(hand.remove(0));
         }
         return discardList;
+    }
+
+    @Override
+    public boolean hasWon() {
+        return listOfFlags.isEmpty();
     }
 }

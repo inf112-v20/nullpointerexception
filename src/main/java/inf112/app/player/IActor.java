@@ -23,13 +23,6 @@ public interface IActor {
     void setHand();
 
     /**
-     * Changes the position of the player to a predetermined position
-     *
-     * @return the new position
-     */
-    Position checkpoint();
-
-    /**
      * Gets the current position of the player
      *
      * @return position
@@ -133,6 +126,11 @@ public interface IActor {
     boolean isDead();
 
     /**
+     * Sets the actor to dead or alive
+     */
+    void respawn();
+
+    /**
      * @return boolean
      */
     boolean isPoweringDown();
@@ -151,4 +149,9 @@ public interface IActor {
      * @return list of cards to discard
      */
     ArrayList<Card> discard();
+
+    /**
+     * @return boolean
+     */
+    boolean hasWon();
 }

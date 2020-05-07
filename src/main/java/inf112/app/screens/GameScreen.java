@@ -24,7 +24,7 @@ public class GameScreen extends InputAdapter implements Screen {
 
     private static final int TILE_SIZE = 300;
     private final OrthogonalTiledMapRenderer renderer;
-    private final inf112.app.Game game;
+    private final Game game;
     private final Board board;
     private final Button powerdown;
     private final Texture lifes;
@@ -250,6 +250,7 @@ public class GameScreen extends InputAdapter implements Screen {
         if (startOfRound) {
             game.dealCards();
             dealtCards = game.getPlayersDealtCards();
+            game.spawnActors();
         }
         startOfRound = false;
     }
@@ -259,6 +260,7 @@ public class GameScreen extends InputAdapter implements Screen {
      */
     private void round(int counter) {
         game.moveActorsByCards(counter);
+        System.out.println(player.getPos());
     }
 
     /**
@@ -306,6 +308,7 @@ public class GameScreen extends InputAdapter implements Screen {
                     BACKUP.setButtonCoords(x, yCard);
                     cards.put(BACKUP,card);
                     break;
+                default:
             }
         }
     }
@@ -365,10 +368,6 @@ public class GameScreen extends InputAdapter implements Screen {
                 break;
             case com.badlogic.gdx.Input.Keys.Q:
                 game.checkPosition(player);
-                break;
-            case com.badlogic.gdx.Input.Keys.X:
-                game.moveActorsByCards(counter % 5);
-                counter++;
                 break;
             default:
         }
