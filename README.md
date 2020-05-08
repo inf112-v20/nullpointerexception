@@ -17,7 +17,6 @@ when the java version used is >8. This has no effect on function or performance,
 Powerdown functionality has not been implemented because of the shortage of time and our priority of other game functionalities.
 Some bugs might appear when it comes to the player being shot/pushed by AI.
 
-
 ## Requirements
 *   java 11
 *   git
