@@ -149,6 +149,9 @@ public class GameScreen extends InputAdapter implements Screen {
         return false;
     }
 
+    /**
+     * Called when this screen becomes the current screen for a Game.
+     */
     @Override
     public void show() {
     }
@@ -326,18 +329,33 @@ public class GameScreen extends InputAdapter implements Screen {
         }
     }
 
+    /**
+     * Called when the Application is resized.
+     *
+     * @param i  the new width in pixels
+     * @param i1 the new height in pixels
+     */
     @Override
     public void resize(int i, int i1) {
     }
 
+    /**
+     * Called when the Application is paused, usually when it's not active or visible on-screen.
+     */
     @Override
     public void pause() {
     }
 
+    /**
+     * Called when the Application is resumed from a paused state, usually when it regains focus.
+     */
     @Override
     public void resume() {
     }
 
+    /**
+     * Called when this screen is no longer the current screen for a Game.
+     */
     @Override
     public void hide() {
     }
