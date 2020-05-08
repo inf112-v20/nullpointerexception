@@ -25,9 +25,9 @@ brukargrensesnitt der brukaren kan kunne lese informasjon og ta valg i spelet.
 #### Krav	
     1.  Ein spelar må kunna vinna eller tapa
     2.  Ein brukar må kunna få velga kort
-    4.  Ein brukar må kunne sjå informasjon frå spelet
-    5.  Ein brukar må ha motspelarar
-    6.  Ha ein gameloop
+    3.  Ein brukar må kunne sjå informasjon frå spelet
+    4.  Ein brukar må ha motspelarar
+    5.  Ha ein gameloop
 #### Krav 1 
 ##### Brukarhistorie:
 *   Ein spelar må ha verdiar som endrer seg slik at spelet kan bli avsluttet

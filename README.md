@@ -1,7 +1,10 @@
 # INF112 - RoboRally Project
 HOW TO PLAY:
-Start the game and choose 5 cards from the dealt cards, after that the round will begin.
+Start the game and choose 5 cards from the dealt cards. The order of the cards being picked determines the execution order of these cards. 
+After picking 5 cards the round will begin.
 Click on "Start" button to start each phase until the player used all of his cards.
+To win, a player must walk onto the flags from number 1-3 respectively.
+ 
 
 TESTING:
 To test the movement and functionality use the arrow keys to move and "Q" while being on the conveyor belts/lasers/repairkits
