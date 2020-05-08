@@ -4,7 +4,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import inf112.app.board.Board;
 import inf112.app.board.BoardObjects;
-import inf112.app.cards.Card;
 import inf112.app.cards.CardType;
 import inf112.app.cards.Deck;
 import inf112.app.player.*;
@@ -125,6 +124,8 @@ public class Game {
      * @return actor
      */
     private IActor getActor(Position position) {
+        if (player.getPos().equals(position))
+            return player;
         for (IActor actor : actors) {
             if (actor.getPos().equals(position))
                 return actor;
@@ -157,6 +158,15 @@ public class Game {
         return !boardObjects.tileHasWall(actor.getPos(), newPos, direction);
     }
 
+    /**
+     * Only moves all the none player-actors
+     */
+    public void moveOnlyActors() {
+        for (IActor actor : actors) {
+            moveActor(actor, actor.getDirection());
+        }
+    }
+
 
     /**
      * Moves all the actors
@@ -179,11 +189,14 @@ public class Game {
         for (IActor actor : actors) {
             checkPosition(actor);
         }
+        actors.removeAll(deadActors);
+
         for (IActor actor : actors) {
             if (canMove(actor, actor.getPos().getNextPos(actor.getDirection()), actor.getDirection()))
                 shootLaser(actor.getPos().getNextPos(actor.getDirection()), actor.getDirection());
         }
 
+        actors.removeAll(deadActors);
         actors.remove(player);
     }
 
@@ -195,23 +208,26 @@ public class Game {
     public Boolean moveActor(IActor actor, Direction direction) {
         Position newPos = new Position(actor.getPos().getNextPos(direction));
 
-        if (!canMove(actor, newPos, direction) || actor.isDead()) {
+        if (!canMove(actor, newPos, direction)) {
             return false;
         }
 
-        removeActorTexture(actor);
+        if (actor.isDead())
+            return true;
 
         if (boardObjects.tileHasActor(newPos)) {
             IActor otherActor = getActor(newPos);
-            if (otherActor == null)
+
+            if (otherActor == null) {
                 return false;
-            else if (!moveActor(otherActor, direction)) {
-                setActorTexture(actor);
+            } else if (!moveActor(otherActor, direction)) {
                 return false;
             }
         }
 
-        if (outOfBoard(newPos) && !deadActors.contains(actor)) {
+        removeActorTexture(actor);
+
+        if (outOfBoard(newPos)) {
             killActor(actor);
             return true;
         } else
@@ -256,12 +272,17 @@ public class Game {
         }
     }
 
+    /**
+     * Respawns all the dead actors
+     */
     public void spawnActors() {
         for (IActor actor : deadActors) {
-            spawnActor(actor);
-            setActorTexture(actor);
-            actors.add(actor);
-            actor.respawn();
+            if (actor.getLifeCount() >= 0) {
+                spawnActor(actor);
+                setActorTexture(actor);
+                actors.add(actor);
+                actor.respawn();
+            }
         }
         deadActors = new ArrayList<>();
         actors.remove(player);
@@ -286,6 +307,9 @@ public class Game {
         }
     }
 
+    /**
+     * @param actor kills the actor
+     */
     private void killActor(IActor actor) {
         removeActorTexture(actor);
         actor.loseLife();
@@ -322,6 +346,9 @@ public class Game {
         shootLaser(position.getNextPos(direction), direction);
     }
 
+    /**
+     * Shoots lasers from the players
+     */
     public void laserTest() {
         actors.add(player);
         for (IActor actor : actors) {
@@ -422,15 +449,6 @@ public class Game {
      */
     public Board getBoard() {
         return board;
-    }
-
-
-    /**
-     *
-     * @return the cards dealt to player
-     */
-    public ArrayList<Card> getPlayersDealtCards() {
-        return player.getDealtCards();
     }
 
     /**
