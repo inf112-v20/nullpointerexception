@@ -3,6 +3,7 @@ HOW TO PLAY:
 Start the game and choose 5 cards from the dealt cards. The order of the cards being picked determines the execution order of these cards. 
 After picking 5 cards the round will begin.
 Click on "Start" button to start each phase until the player used all of his cards.
+When a player falls of the board/hole or is destroyed it stays out of the game until the next round starts.
 To win, a player must walk onto the flags from number 1-3 respectively.
  
 
