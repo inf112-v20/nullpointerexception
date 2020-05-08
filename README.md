@@ -6,7 +6,6 @@ Click on "Start" button to start each phase until the player used all of his car
 When a player falls of the board/hole or is destroyed it stays out of the game until the next round starts.
 To win, a player must walk onto the flags from number 1-3 respectively.
  
-
 TESTING:
 To test the movement and functionality use the arrow keys to move and "Q" while being on the conveyor belts/lasers/repairkits
 You can find more information about testing in the ManualBoardTests and ManualGameTests md. files in the test directory.
