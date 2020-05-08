@@ -1,21 +1,28 @@
 # Obligatorisk oppgåve 4 
 ## Nullpointerexception
 ### Deloppgave 1: Team og prosjekt
+
+#### Møtereferat
+Møtereferat ligg i Wiki på git.
 #### Erfaringer team-messig og prosjektmetodikk
-Team-messig har prosjektet gått ganske greitt. Alle har kome godt overens og alle har møtt opp til
-avtalte møter eller vore tilgjengelig på Slack/Discord ved behov. Me har hovudsaklig jobba individuelt og sjølvstending, 
-men hadde òg økter der me jobba sammen noko som gjerne gjorde det lettare å finna feil i koden.
+Team-messig har prosjektet gått ganske greit. Alle har kome godt overens og alle har møtt opp til
+avtalte møter eller vore tilgjengelig på Slack/Discord ved behov. Vi har hovudsakleg jobba individuelt og sjølvstending, 
+men hadde òg økter der me jobba sammen noko som gjerne gjorde det lettare å finne feil i koden.
 #### Retrospektiv 
-På generell basis har prosjektet gått bra. Til tider har me hatt behov for sprinter for å ikkje komme bakpå. 
-I retrospekt burde me nok ha fordelt det betre over vekene.
-Når det gjelder implementering av koden brukte me tid på å diskutera korleis me ynskte at koden skulle fungera, men
-istadenfor for å gå for det første som fungerte, kunne me ha tenkt meir på korleis koden ville fungera framover.
+På generell basis har prosjektet gått bra. Til tider har vi hatt behov for sprinter for å ikkje komme bakpå. 
+I retrospekt burde vi nok ha fordelt det betre over vekene.
+Når det gjelder implementering av koden brukte vi tid på å diskutere korleis vi ynskte at koden skulle fungere, men
+istadenfor for å gå for det første som fungerte, kunne vi ha tenkt meir på korleis koden ville fungera framover.
+Vi kunne også tatt i bruk Discord eller andre verktøy mykje tidligare som kunne gjort det enklare for oss å samlast
+utanom dei fastsatte seminartidene. 
 #### Gruppedynamikk og kommunikasjon i forhold til starten
-Gruppedynamikken har vore god, og det har vore lett å kommunisera med alle. Hovudsaklig har kommunikasjonen gått over Slack,
-men etter at universitet blei stengd ned byrja me å bruka Discord for tale-samtaler og skjermdeling. Skjermdeling har vore
-ein god måte å visa problem ein har støtt på og til å få hjelp til å løysa dei.
-Etter nedstegninga blei prosjektet nedpriortert ein del sidan alle måtte omstilla seg, ikkje bare i INF112
-men i alle faga. I tillegg har fleire av oss fortsatt jobba under koronakrisen.
+Gruppedynamikken har vore god, og det har vore lett å kommunisere med alle. Hovudsaklig har kommunikasjonen gått over Slack,
+men etter at universitet blei stengd ned byrja vi å bruke Discord for tale-samtaler og skjermdeling. Skjermdeling har vore
+ein god måte å vise problem ein har støtt på og til å få hjelp til å løyse dei.
+Etter nedstegninga blei prosjektet nedpriortert ein del sidan alle måtte omstille seg, ikkje berre i INF112
+men i alle faga. I tillegg har fleire av oss fortsatt jobba under koronakrisen. Dette har gjort det vanskelig for oss å
+finne tider der vi alle kan jobbe i lag utanfor dei fastsette seminargruppene. Vi har likevel klart å samle oss før 
+viktige innleveringar og presentasjonar for å få diskutert en del rundt desse.
 
 ### Deloppgave 2: Krav
 #### Kva krav har me prioritert:
@@ -25,9 +32,9 @@ brukargrensesnitt der brukaren kan kunne lese informasjon og ta valg i spelet.
 #### Krav	
     1.  Ein spelar må kunna vinna eller tapa
     2.  Ein brukar må kunna få velga kort
-    3.  Ein brukar må kunne sjå informasjon frå spelet
-    4.  Ein brukar må ha motspelarar
-    5.  Ha ein gameloop
+    4.  Ein brukar må kunne sjå informasjon frå spelet
+    5.  Ein brukar må ha motspelarar
+    6.  Ha ein gameloop
 #### Krav 1 
 ##### Brukarhistorie:
 *   Ein spelar må ha verdiar som endrer seg slik at spelet kan bli avsluttet
