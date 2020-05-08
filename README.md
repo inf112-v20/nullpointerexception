@@ -1,9 +1,17 @@
 # INF112 - RoboRally Project
-A simple board with a movable player 
+HOW TO PLAY:
+Start the game and choose 5 cards from the dealt cards, after that the round will begin.
+Click on "Start" button to start each phase until the player used all of his cards.
+
+TESTING:
+To test the movement and functionality use the arrow keys to move and "Q" while being on the conveyor belts/lasers/repairkits
 
 ## Known bugs
 Currently throws "WARNING: An illegal reflective access operation has occurred", 
 when the java version used is >8. This has no effect on function or performance, and is just a warning.
+
+Powerdown funksjonen ble ikke implementert pga. lite tid og prioriteringen til andre funksjonaliteter av spillet.
+The AI cannot win but it can destroy the player.
 
 ## Buttons
 *   Use arrow keys to move the player
