@@ -5,13 +5,14 @@ Click on "Start" button to start each phase until the player used all of his car
 
 TESTING:
 To test the movement and functionality use the arrow keys to move and "Q" while being on the conveyor belts/lasers/repairkits
+You can find more information about testing in the ManualBoardTests and ManualGameTests md. files in the test directory.
 
 ## Known bugs
 Currently throws "WARNING: An illegal reflective access operation has occurred", 
 when the java version used is >8. This has no effect on function or performance, and is just a warning.
 
-Powerdown funksjonen ble ikke implementert pga. lite tid og prioriteringen til andre funksjonaliteter av spillet.
-The AI cannot win but it can destroy the player.
+Powerdown functionality has not been implemented because of the shortage of time and our priority of other game functionalities.
+Some bugs might appear when it comes to the player being shot/pushed by AI.
 
 ## Buttons
 *   Use arrow keys to move the player
