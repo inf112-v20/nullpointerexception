@@ -4,6 +4,25 @@
 
 #### Møtereferat
 Møtereferat ligg i Wiki på git.
+
+Oversikta på desse kan du finne her:
+
+[Møtereferat](https://github.com/inf112-v20/nullpointerexception/wiki)
+
+Under her er link til kvart av referata mellom denne obligen og forrige:
+
+[Møtereferat 11](https://github.com/inf112-v20/nullpointerexception/wiki/Referat-11.-Seminar-01.04.2020)
+
+[Møtereferat 12](https://github.com/inf112-v20/nullpointerexception/wiki/Referat-12.-Seminar-15.04.2020)
+
+[Møtereferat 13](https://github.com/inf112-v20/nullpointerexception/wiki/Referat-13.-Seminar-22.04.2020)
+
+[Møtereferat 14](https://github.com/inf112-v20/nullpointerexception/wiki/Referat-14.-Seminar-29.04.2020)
+
+[Møtereferat 15](https://github.com/inf112-v20/nullpointerexception/wiki/Referat-15.-Seminar-06.05.2020)
+
+[Møtereferat Ekstra](https://github.com/inf112-v20/nullpointerexception/wiki/Referat-f%C3%B8r-presentasjon-04.05.2020)
+
 #### Erfaringer team-messig og prosjektmetodikk
 Team-messig har prosjektet gått ganske greit. Alle har kome godt overens og alle har møtt opp til
 avtalte møter eller vore tilgjengelig på Slack/Discord ved behov. Vi har hovudsakleg jobba individuelt og sjølvstending, 
