@@ -64,7 +64,7 @@ public class GameScreen extends InputAdapter implements Screen {
         this.gr = gr;
         game = new Game();
         board = game.getBoard();
-        dealtCards = game.getPlayersDealtCards();
+
         powerdown = new Button("icons/powerdown.png");
         powerdown.setButtonCoords(0, board.getBoardHeight() * TILE_SIZE + 500);
         start_round = new Button("icons/start_round.png");
@@ -77,6 +77,7 @@ public class GameScreen extends InputAdapter implements Screen {
         deck = game.getDeckObject();
         player = game.getPlayerObject();
 
+        dealtCards = player.getDealtCards();
         hand = player.getHand();
         tempHand = new ArrayList<>();
 
@@ -265,7 +266,7 @@ public class GameScreen extends InputAdapter implements Screen {
         if (startOfRound) {
             player.setDealtCards(deck.dealCards(Math.min(9, player.getHitPoints())));
             game.dealCards();
-            dealtCards = game.getPlayersDealtCards();
+            dealtCards = player.getDealtCards();
             game.spawnActors();
         }
         startOfRound = false;
@@ -276,7 +277,6 @@ public class GameScreen extends InputAdapter implements Screen {
      */
     private void round(int counter) {
         game.moveActorsByCards(counter);
-        System.out.println(player.getPos());
     }
 
     /**
@@ -412,6 +412,12 @@ public class GameScreen extends InputAdapter implements Screen {
                 game.laserTest();
                 if (player.isDead())
                     game.spawnActors();
+                break;
+            case com.badlogic.gdx.Input.Keys.C:
+                game.spawnActors();
+                break;
+            case com.badlogic.gdx.Input.Keys.Z:
+                game.moveOnlyActors();
                 break;
             default:
         }
